@@ -1,5 +1,5 @@
 <template>
   <footer>
-    Visit our website for more documentation : <a href="https://nuxtjs.org" target="_blank">nuxtjs.org</a>
+    Team 33: Nicholas Chim, Desmond Leung, Bryan Chiu, Cynthia Deng
   </footer>
 </template>

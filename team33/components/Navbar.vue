@@ -3,12 +3,14 @@
     <div class="inner">
       <nav class="navbar__menu">
         <router-link to="/" exact>
-          <img class="logo" src="~/assets/img/happy.png" alt="logo">
+         <!--<img class="logo" src="~/assets/img/ubc-sig.png" alt="logo"> -->
+         <span class="home"> Home </span>
         </router-link>
         <nuxt-link to="/users">Users</nuxt-link>
-        <a class="github" href="https://github.com/belinghy/cpsc304" target="_blank" rel="noopener">
+        <!--<a class="github" href="https://github.com/belinghy/cpsc304" target="_blank" rel="noopener">
           Github
         </a>
+        -->
       </nav>
     </div>
   </div>
@@ -58,6 +60,9 @@ export default {}
   margin-right 10px
   display inline-block
   vertical-align middle
+.home
+  font-weight 600px
+  font-size 13px
 
 @media (max-width 860px)
   .header .inner
