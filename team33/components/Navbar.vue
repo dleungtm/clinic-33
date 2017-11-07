@@ -60,9 +60,6 @@ export default {}
   margin-right 10px
   display inline-block
   vertical-align middle
-.home
-  font-weight 600px
-  font-size 13px
 
 @media (max-width 860px)
   .header .inner

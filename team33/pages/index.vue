@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div>
-    <Logo />
+    <!--<Logo />-->
       <h1 class="title">
         Team 33 Clinic Project
       </h1>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+/*
 import Logo from '~/components/Logo.vue'
 
 export default {
@@ -20,15 +21,17 @@ export default {
     Logo
   }
 }
+*/
 </script>
 
 <style lang="stylus" scoped>
 .container
   min-height 90vh
   display flex
-  justify-content center
-  align-items center
-  text-align center
+  //justify-content center
+  margin-top 30px
+  //align-items center
+  text-align left
 
 @media (min-height 1080px)
   .container
@@ -38,9 +41,10 @@ export default {
   font-family "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif /* 1 */
   display block
   font-weight 300
-  font-size 100px
+  font-size 50px
   color #35495e
-  letter-spacing 1px
+  letter-spacing 2px
+  text-transform uppercase
 
 .subtitle
   font-weight 300
