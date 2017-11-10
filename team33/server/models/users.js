@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 
 var attributes = {
-    userid: {
+    user_id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true

@@ -47,7 +47,7 @@ export default {
           },
         data:
           {
-            userid: self.user.userid,
+            user_id: self.user.user_id,
             username: self.user.username,
             password: self.user.password
           }})

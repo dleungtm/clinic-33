@@ -25,7 +25,7 @@ export default {
 
   data () {
     return {
-      userid: '',
+      user_id: '',
       username: '',
       password: ''
     }
@@ -42,7 +42,7 @@ export default {
           },
         data:
           {
-            userid: self.userid,
+            user_id: self.user_id,
             username: self.username,
             password: self.password
           }})
