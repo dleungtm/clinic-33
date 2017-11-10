@@ -1,8 +1,11 @@
 {
-  "name": "demoui",
+  "name": "Clinic 33",
   "version": "1.0.0",
-  "description": "Nuxt.js project",
-  "author": "Ben Ling <belinghy@gmail.com>",
+  "engines": {
+    "node": "8.9.0",
+    "npm": "5.5.x"
+  },
+  "description": "CPSC 304 Project",
   "private": true,
   "scripts": {
     "dev": "backpack dev",
