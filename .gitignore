@@ -14,4 +14,4 @@ dist
 build
 
 # idea
-.idea/**
+.idea/
