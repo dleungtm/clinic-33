@@ -1,27 +1,53 @@
 <template>
-  <section class="container">
-    <div>
-    <!--<Logo />-->
-      <h1 class="title">
-        Team 33 Clinic Project
-      </h1>
-      <div class="links">
-        <nuxt-link class="button--grey link" style="margin-left: 15px;" to="/users">View Users</nuxt-link>
-      </div>
+  <div class="container">
+    <h1>Welcome! Please login to continue.</h1>
+    <form v-if="!$store.state.authUser" @submit.prevent="login">
+      <p class="error" v-if="formError">{{ formError }}</p>
+      <p>Username: <input type="text" v-model="formUsername" name="username" /></p>
+      <p>Password: <input type="password" v-model="formPassword" name="password" /></p>
+      <button type="submit">Login</button>
+    </form>
+    <div v-else>
+      Hello {{ $store.state.authUser.username }}!
+      <pre>I am the secret content, I am shown only when the use is connected.</pre>
+      <p><i>You can also refresh this page, you'll still be connected!</i></p>
+      <button @click="logout">Logout</button>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
-/*
-import Logo from '~/components/Logo.vue'
-
 export default {
-  components: {
-    Logo
+  data () {
+    return {
+      formError: null,
+      formUsername: '',
+      formPassword: ''
+    }
+  },
+  methods: {
+    async login () {
+      try {
+        await this.$store.dispatch('login', {
+          username: this.formUsername,
+          password: this.formPassword
+        })
+        this.formUsername = ''
+        this.formPassword = ''
+        this.formError = null
+      } catch (e) {
+        this.formError = e.message
+      }
+    },
+    async logout () {
+      try {
+        await this.$store.dispatch('logout')
+      } catch (e) {
+        this.formError = e.message
+      }
+    }
   }
 }
-*/
 </script>
 
 <style lang="stylus" scoped>
