@@ -1,17 +1,24 @@
 <template>
   <div class="container">
-    <h1>Welcome! Please login to continue.</h1>
-    <form v-if="!$store.state.authUser" @submit.prevent="login">
-      <p class="error" v-if="formError">{{ formError }}</p>
-      <p>Username: <input type="text" v-model="formUsername" name="username" /></p>
-      <p>Password: <input type="password" v-model="formPassword" name="password" /></p>
-      <button type="submit">Login</button>
-    </form>
+    <div class="row-fluid">
+      <div class="span12">
+        <h1> Welcome! Please login to continue.</h1>
+      </div>
+      <div class="span9">
+      <form v-if="!$store.state.authUser" @submit.prevent="login">
+        <p class="error" v-if="formError">{{ formError }}</p>
+        <p>Username: <input type="text" v-model="formUsername" name="username" /></p>
+        <p>Password: <input type="password" v-model="formPassword" name="password" /></p>
+        <button type="submit" class="button--grey">Login</button>
+      </form>
     <div v-else>
       Hello {{ $store.state.authUser.username }}!
       <pre>I am the secret content, I am shown only when the use is connected.</pre>
       <p><i>You can also refresh this page, you'll still be connected!</i></p>
-      <button @click="logout">Logout</button>
+      <button  @click="logout">Logout</button>
+    </div>
+    </div>
+
     </div>
   </div>
 </template>

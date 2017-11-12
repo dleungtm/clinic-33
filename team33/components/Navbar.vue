@@ -4,13 +4,11 @@
       <nav class="navbar__menu">
         <router-link to="/" exact>
          <!--<img class="logo" src="~/assets/img/ubc-sig.png" alt="logo"> -->
-         <span class="home"> Home </span>
+         <span class="home">Dashboard</span>
         </router-link>
         <nuxt-link to="/users">Users</nuxt-link>
-        <!--<a class="github" href="https://github.com/belinghy/cpsc304" target="_blank" rel="noopener">
-          Github
-        </a>
-        -->
+        <nuxt-link to="/appointments">Appointments</nuxt-link>
+        <nuxt-link to="/pharmacy">Pharmacy</nuxt-link>
       </nav>
     </div>
   </div>
@@ -22,7 +20,7 @@ export default {}
 
 <style lang="stylus" scoped>
 .header
-  background-color #111111
+  background-color #3366ff
   position fixed
   z-index 999
   height 55px
