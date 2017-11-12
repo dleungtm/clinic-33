@@ -32,7 +32,7 @@ CREATE TABLE "timeblock" (
 
 CREATE TABLE "availability" (
 	timeblock_id int,
-	day_of_week time,
+	day_of_week int,
 	clinician_id int,
 	is_active boolean DEFAULT true,
 	PRIMARY KEY (timeblock_id, day_of_week, clinician_id),
@@ -42,7 +42,7 @@ CREATE TABLE "availability" (
 
 CREATE TABLE "appointment" (
 	appointment_id serial,
-	date time,
+	date timestamp,
 	timeblock_id int,
 	patient_id int,
 	clinician_id int,
@@ -64,8 +64,8 @@ CREATE TABLE "appointment_record" (
 
 CREATE TABLE "user_health_info" (
 	user_id int,
-	phn int,
-	dob time,
+	phn bigint,
+	dob date,
 	height int,
 	blood_type varchar(5),
 	sex varchar(2),
@@ -77,8 +77,8 @@ CREATE TABLE "user_health_info" (
 CREATE TABLE "billing_history" (
 	patient_id int,
 	appointment_id int,
-	amount int,
-	date_paid time,
+	amount decimal,
+	date_paid timestamp,
 	PRIMARY KEY (patient_id, appointment_id),
 	FOREIGN KEY (patient_id) REFERENCES "clinic_user"(user_id),
 	FOREIGN KEY (appointment_id) REFERENCES "appointment"(appointment_id)
@@ -88,7 +88,7 @@ CREATE TABLE "medication" (
 	medication_id serial,
 	name varchar(30) NOT NULL,
 	inventory int,
-	unit_price int,
+	unit_price decimal,
 	PRIMARY KEY (medication_id)
 );
 
@@ -96,7 +96,7 @@ CREATE TABLE "prescription" (
 	patient_id int,
 	clinician_id int,
 	medication_id int,
-	date_prescribed time,
+	date_prescribed timestamp,
 	dosage int NOT NULL,
 	filled_by int,
 	PRIMARY KEY (patient_id, clinician_id, medication_id, date_prescribed),

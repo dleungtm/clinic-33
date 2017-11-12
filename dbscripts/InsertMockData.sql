@@ -17,3 +17,15 @@ INSERT INTO user_role("user_id", "role_id") VALUES(2, 2);
 INSERT INTO user_role("user_id", "role_id") VALUES(3, 4);
 INSERT INTO user_role("user_id", "role_id") VALUES(4, 5);
 INSERT INTO user_role("user_id", "role_id") VALUES(1, 2);
+
+-- POPULATE MEDICATIONS
+INSERT INTO medication("name", "inventory", "unit_price") VALUES('Benadryl', 100, '2.33');
+INSERT INTO medication("name", "inventory", "unit_price") VALUES('Claritin', 100, '0.56');
+INSERT INTO medication("name", "inventory", "unit_price") VALUES('Ampicillin', 100, '0.32');
+INSERT INTO medication("name", "inventory", "unit_price") VALUES('Vasotec', 100, '0.68');
+INSERT INTO medication("name", "inventory", "unit_price") VALUES('Effexor XR', 100, '0.85e');
+INSERT INTO medication("name", "inventory", "unit_price") VALUES('Glucotrol XL', 100, '0.46');
+INSERT INTO medication("name", "inventory", "unit_price") VALUES('Metformin', 100, '0.35');
+INSERT INTO medication("name", "inventory", "unit_price") VALUES('Aleve', 100, '1.00');
+INSERT INTO medication("name", "inventory", "unit_price") VALUES('Aspirin', 100, '0.42');
+INSERT INTO medication("name", "inventory", "unit_price") VALUES('Tylenol', 100, '0.35');
