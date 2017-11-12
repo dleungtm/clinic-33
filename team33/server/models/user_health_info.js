@@ -12,12 +12,12 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     phn: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: true,
       unique: true
     },
     dob: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATEONLY,
       allowNull: true
     },
     height: {

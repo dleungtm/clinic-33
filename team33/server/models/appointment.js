@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
     },
     date: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATE,
       allowNull: true,
       unique: true
     },

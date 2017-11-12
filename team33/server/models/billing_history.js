@@ -20,11 +20,11 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     amount: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DOUBLE,
       allowNull: true
     },
     date_paid: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATE,
       allowNull: true
     }
   }, {

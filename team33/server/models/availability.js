@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     day_of_week: {
-      type: DataTypes.TIME,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },

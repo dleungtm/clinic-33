@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     date_prescribed: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATE,
       allowNull: false,
       primaryKey: true
     },
