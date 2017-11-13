@@ -4,7 +4,7 @@
       <div class="span12">
         <h1> Welcome! Please login to continue.</h1>
       </div>
-      <div class="span9">
+      <div class="span12">
       <form v-if="!$store.state.authUser" @submit.prevent="login">
         <p class="error" v-if="formError">{{ formError }}</p>
         <p>Username: <input type="text" v-model="formUsername" name="username" /></p>
@@ -18,7 +18,12 @@
       <button  @click="logout">Logout</button>
     </div>
     </div>
+    </div>
 
+    <div class="row-fluid">
+      <div class="span3">
+        <nuxt-link to="/user_roles">user_roles</nuxt-link>
+      </div>
     </div>
   </div>
 </template>
