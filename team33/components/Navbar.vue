@@ -3,7 +3,6 @@
     <div class="inner">
       <nav class="navbar__menu">
         <router-link to="/" exact>
-         <!--<img class="logo" src="~/assets/img/ubc-sig.png" alt="logo"> -->
          <span class="home">Dashboard</span>
         </router-link>
         <nuxt-link to="/users">Users</nuxt-link>
@@ -20,10 +19,10 @@ export default {}
 
 <style lang="stylus" scoped>
 .header
-  background-color #3366ff
+  background-color #2d3e50
   position fixed
   z-index 999
-  height 55px
+  height 8vh
   top 0
   left 0
   right 0
@@ -38,9 +37,10 @@ export default {}
       transition color .15s ease
       display inline-block
       vertical-align middle
-      font-weight 300
+      font-weight 400
       letter-spacing .075em
       margin-right 1.8em
+      text-decoration none
       &:hover
         color #fff
       &.router-link-active
@@ -52,12 +52,6 @@ export default {}
       font-size .9em
       margin 0
       float right
-
-.logo
-  width 24px
-  margin-right 10px
-  display inline-block
-  vertical-align middle
 
 @media (max-width 860px)
   .header .inner

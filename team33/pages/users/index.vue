@@ -3,16 +3,21 @@
     <div class="content">
       <div class="subsection">
         <div style="margin: 25px 10px;">
-          <span class="subsection-title" style="vertical-align: middle;">Users in Database</span>
-          <nuxt-link class="button--grey" style="padding: 5px 20px; text-decoration: none;" to="/users/add">Add User</nuxt-link>
+          <span class="subsection-title" style="vertical-align: middle;">Clinic Staff</span>
         </div>
-        <ul style="list-style-type: none; padding: 0; margin: 0;">
-          <li v-for="(user, index) in users" :key="index" style="padding: 10px 20px; margin: 0 25px; position: relative;">
-            <nuxt-link :to="{ path: `/users/${user.username}`, params: { username: user.username }}">
-              {{ user.user_id + ' ' + user.username }}
-            </nuxt-link>
-          </li>
-        </ul>
+
+        <form id="search">
+          Search <input name="query" v-model="searchQuery">
+          <nuxt-link class="button--default" style="padding: 5px 20px; text-decoration: none;" to="/users/add">Add User</nuxt-link>
+          <nuxt-link class="button--default" style="padding: 5px 20px; text-decoration: none;" to="/users/roles">User Roles</nuxt-link>
+        </form>
+        <br>
+        <grid
+          :data="users"
+          :columns="gridColumns"
+          :filter-key="searchQuery">
+        </grid>
+
       </div>
     </div>
   </section>
@@ -22,9 +27,18 @@
 import axios from '~/plugins/axios'
 
 export default {
+
   async asyncData () {
-    let { data } = await axios.get('/api/users')
-    return { users: data }
+    let { data } = await axios.get('/api/users/staff')
+    return {
+      searchQuery: '',
+      gridColumns: [
+        { key: 'user_id', displayName: 'User ID' },
+        { key: 'first_name', displayName: 'First Name' },
+        { key: 'last_name', displayName: 'Last Name' }
+      ],
+      users: data
+    }
   },
 
   head () {
@@ -60,6 +74,6 @@ export default {
   a
     text-decoration underline
     &:hover
-      color #515ec4
+      color #fff
 
 </style>

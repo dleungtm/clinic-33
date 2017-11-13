@@ -36,9 +36,12 @@ module.exports = {
       }
     }
   },
-
   modules: [
     '@nuxtjs/pwa',
     'bootstrap-vue/nuxt'
+  ],
+  // Custom Components
+  plugins: [
+    '~/plugins/global.js'
   ]
 }

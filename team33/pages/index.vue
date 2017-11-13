@@ -9,21 +9,15 @@
         <p class="error" v-if="formError">{{ formError }}</p>
         <p>Username: <input type="text" v-model="formUsername" name="username" /></p>
         <p>Password: <input type="password" v-model="formPassword" name="password" /></p>
-        <button type="submit" class="button--grey">Login</button>
+        <button type="submit" class="button--default">Login</button>
       </form>
     <div v-else>
       Hello {{ $store.state.authUser.username }}!
-      <pre>I am the secret content, I am shown only when the use is connected.</pre>
+      <pre>I am the secret content, I am shown only when the user is connected.</pre>
       <p><i>You can also refresh this page, you'll still be connected!</i></p>
       <button  @click="logout">Logout</button>
     </div>
     </div>
-    </div>
-
-    <div class="row-fluid">
-      <div class="span3">
-        <nuxt-link to="/user_roles">user_roles</nuxt-link>
-      </div>
     </div>
   </div>
 </template>

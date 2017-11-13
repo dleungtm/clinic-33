@@ -6,7 +6,7 @@ const router = Router()
 
 /* Get all appointments */
 router.get('/appointments', function (req, res, next) {
-  const query = 'SELECT * FROM appointments;'
+  const query = 'SELECT * FROM appointment;'
   connection.query(query, {type: connection.QueryTypes.SELECT})
     .then(appointments => {
       console.log(appointments)

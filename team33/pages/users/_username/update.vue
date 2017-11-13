@@ -12,7 +12,7 @@
               <input type="password" v-model="user.password"></input>
             </div>
         </form>
-        <button type="button" class="button--grey" @click="submitUpdate">Update</button>
+        <button type="button" class="button--default" @click="submitUpdate">Update</button>
       </div>
     </div>
   </section>

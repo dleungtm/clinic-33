@@ -12,7 +12,7 @@
         <input type="password" v-model="password"></input>
       </div>
     </form>
-    <button type="button" class="button--grey" @click="submitInsert">Add User</button>
+    <button type="button" class="button--default" @click="submitInsert">Add User</button>
     </div>
   </div>
   </section>
@@ -95,6 +95,6 @@ export default {
   a
     text-decoration underline
   &:hover
-    color #515ec4
+    color #fff
 
 </style>

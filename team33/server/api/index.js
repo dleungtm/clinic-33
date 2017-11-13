@@ -26,6 +26,5 @@ router.use(roles)
 router.use(timeblock)
 router.use(user_health_info)
 router.use(user_role)
-router.use(users)
 
 export default router

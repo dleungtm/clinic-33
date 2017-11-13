@@ -4,9 +4,22 @@ const bodyParser = require('body-parser')
 
 const router = Router()
 
-/* GET users listing. */
+/* GET all users. */
 router.get('/users', function (req, res, next) {
   const query = 'SELECT * FROM clinic_user;'
+  connection.query(query,
+    {
+      type: connection.QueryTypes.SELECT
+    })
+    .then(users => {
+      console.log(users)
+      res.json(users)
+    })
+})
+
+/* GET all clinic staff. */
+router.get('/users/staff', function (req, res, next) {
+  const query = 'SELECT DISTINCT c.user_id, first_name, last_name FROM clinic_user c INNER JOIN user_role u ON u.user_id = c.user_id WHERE u.role_id IN (1, 2, 3, 4);'
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT

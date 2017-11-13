@@ -1,19 +1,16 @@
 <template>
-  <section class="users-view">
+  <section class="roles-view">
     <div class="content">
       <div class="subsection">
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">User Roles</span>
-          <nuxt-link class="button--grey" style="padding: 5px 20px; text-decoration: none;" to="/user_role/add">Add User</nuxt-link>
+          <nuxt-link class="button--default" style="padding: 5px 20px; text-decoration: none;" to="/users/assign">Assign User Role</nuxt-link>
         </div>
-        <ul style="list-style-type: none; padding: 0; margin: 0;">
-          <li v-for="(user, index) in user_roles" :key="index" style="padding: 10px 20px; margin: 0 25px; position: relative;">
-            <!-- need to change -->
-            <nuxt-link :to="{ path: `/user/${user.username}`, params: { username: user.username }}">
-              {{ user.user_id + ' ' + user.username }}
-            </nuxt-link>
-          </li>
-        </ul>
+          <grid
+          :data="users"
+          :columns="gridColumns"
+          :filter-key="searchQuery">
+        </grid>
       </div>
     </div>
   </section>
@@ -23,9 +20,19 @@
 import axios from '~/plugins/axios'
 
 export default {
+
   async asyncData () {
-    let { data } = await axios.get('/api/users')
-    return { users: data }
+    let { data } = await axios.get('/api/user_roles')
+    return {
+      searchQuery: '',
+      gridColumns: [
+        { key: 'user_id', displayName: 'User ID' },
+        { key: 'first_name', displayName: 'First Name' },
+        { key: 'last_name', displayName: 'Last Name' },
+        { key: 'role_name', displayName: 'User Role' }
+      ],
+      users: data
+    }
   },
 
   head () {
@@ -37,12 +44,13 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.users-view
+.roles-view
   padding-top 0
 
 .content
   position absolute
   width 100%
+  padding 0 0 8vh 0
 
 .subsection
   background-color #fff
@@ -61,6 +69,6 @@ export default {
   a
     text-decoration underline
     &:hover
-      color #515ec4
+      color #fff
 
 </style>

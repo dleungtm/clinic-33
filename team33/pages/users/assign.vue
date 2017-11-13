@@ -1,5 +1,5 @@
 <template>
-  <section class="user-view">
+  <section class="assign-view">
   <div class="content">
     <div class="subsection">
     <form style="margin: 15px 15px;">
@@ -12,7 +12,7 @@
         <input type="role_id" v-model="role_id"></input>
       </div>
     </form>
-    <button type="button" class="button--grey" @click="submitInsert">Add User</button>
+    <button type="button" class="button--default" @click="submitInsert">Add User</button>
     </div>
   </div>
   </section>
@@ -34,7 +34,7 @@ export default {
     submitInsert () {
       let self = this
 
-      axios.post('/api/user_role/add', {
+      axios.post('/api/user_roles/add', {
         headers:
           {
             'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ export default {
         data:
           {
             user_id: self.user_id,
-            rold_id: self.role_id
+            role_id: self.role_id
           }})
         .then((res) => {
           console.log('print')
@@ -64,7 +64,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.user-view
+.assign-view
   padding-top 0
 
 .content
