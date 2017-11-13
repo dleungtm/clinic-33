@@ -4,9 +4,6 @@ const bodyParser = require('body-parser')
 
 const router = Router()
 
-// Appointment - DESMOND
-
-
 /* Get all appointments */
 router.get('/appointments', function (req, res, next) {
   const query = 'SELECT * FROM appointments;'
@@ -62,3 +59,5 @@ router.post('/appointments/add', bodyParser.json(), function (req, res, next) {
       res.send('/users')
     })
 })
+
+export default router

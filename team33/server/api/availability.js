@@ -4,12 +4,6 @@ const bodyParser = require('body-parser')
 
 const router = Router()
 
-// Availability- DESMOND
-// timeblock_id
-// day_of_the_week
-// clinician_id
-// is_active
-
 /* Returns all availabilities */
 router.get('/availability', function (req, res, next) {
   const query = 'SELECT * FROM availability'
@@ -41,3 +35,5 @@ router.get('/availability/:id', function (req, res, next) {
       }
     })
 })
+
+export default router
