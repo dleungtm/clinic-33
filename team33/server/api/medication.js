@@ -16,14 +16,14 @@ router.get('/medications', function (req, res, next) {
 
 /* GET medication by id */
 router.get('/medications/:id', function (req, res, next) {
-  const medication = req.params.id
+  const medication_id = req.params.medication_id
   const query = 'SELECT * FROM medication WHERE medication_id = :id ;'
 
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,
       replacements: {
-        id: medication
+        medication_id: medication_id
       }
     })
     .then(medication => {
