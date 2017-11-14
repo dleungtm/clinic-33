@@ -12,7 +12,7 @@
         <input type="role_id" v-model="role_id"></input>
       </div>
     </form>
-    <button type="button" class="button--default" @click="submitInsert">Add User</button>
+    <button type="button" class="button--default" @click="submitInsert">Update User</button>
     </div>
   </div>
   </section>
