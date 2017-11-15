@@ -11,6 +11,7 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      
     ]
   },
   /*
@@ -38,6 +39,7 @@ module.exports = {
   },
   modules: [
     '@nuxtjs/pwa',
+    '@nuxtjs/font-awesome',
     'bootstrap-vue/nuxt'
   ],
   // Custom Components

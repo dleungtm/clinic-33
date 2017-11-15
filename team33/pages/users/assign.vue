@@ -2,19 +2,23 @@
   <section class="assign-view">
   <div class="content">
     <div class="subsection">
-    <form style="margin: 15px 15px;">
-      <div style="margin: 10px 0;">
-        <span >User ID: </span>
-        <input type="text" :value="user_id" v-model="user_id"></input>
+      <div style="margin: 25px 10px;">
+          <span class="subsection-title" style="vertical-align: middle;">Assign User Role</span>
       </div>
-      <div style="margin: 10px 0;">
-        <span >Role ID: </span>
-        <input type="role_id" v-model="role_id"></input>
+      <form>
+        <div class="form-field">
+          <label>User ID:</label>
+          <input type="text" v-model="user_id"></input>
+        </div>
+        <br>
+        <div class="form-field">
+          <label>Role ID:</label>
+          <input type="text" v-model="role_id"></input>
+        </div>
+      </form>
+      <nuxt-link class="button--default" to="#" @click.native="submitInsert">Update User</nuxt-link>
       </div>
-    </form>
-    <button type="button" class="button--default" @click="submitInsert">Update User</button>
     </div>
-  </div>
   </section>
 </template>
 
@@ -64,36 +68,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+
 .assign-view
   padding-top 0
-
-.content
-  position absolute
-  width 100%
-
-.subsection
-  background-color #fff
-  border-radius 2px
-  margin 25px 0
-  transition all .5s cubic-bezier(.55,0,.1,1)
-  padding 10px 30px 10px 30px
-  position relative
-  line-height 20px
-  .subsection-title
-    margin 25px 10px
-    font-size 26px
-    font-weight 500
-  .user-username
-    font-size 24px
-    font-weight 500
-    color #707070
-  .user-password
-    font-size 24px
-    font-weight 500
-    color #707070
-  a
-    text-decoration underline
-  &:hover
-    color #515ec4
 
 </style>

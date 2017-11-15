@@ -13,6 +13,7 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
+    "@nuxtjs/font-awesome": "^1.0.2",
     "@nuxtjs/pwa": "^1.0.2",
     "axios": "^0.16.2",
     "body-parser": "^1.18.2",
