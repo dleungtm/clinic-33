@@ -4,15 +4,14 @@ const bodyParser = require('body-parser')
 
 const router = Router()
 
-/* GET all users. */
+/* GET all users along with their roles. */
 router.get('/users', function (req, res, next) {
-  const query = 'SELECT * FROM clinic_user;'
+  const query = 'SELECT c.user_id, first_name, last_name, role_name FROM clinic_user c LEFT JOIN user_role u ON u.user_id = c.user_id INNER JOIN role r ON r.role_id = u.role_id;'
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT
     })
     .then(users => {
-      console.log(users)
       res.json(users)
     })
 })
@@ -25,7 +24,6 @@ router.get('/users/staff', function (req, res, next) {
       type: connection.QueryTypes.SELECT
     })
     .then(users => {
-      console.log(users)
       res.json(users)
     })
 })

@@ -3,7 +3,7 @@
   <div class="content">
     <div class="subsection">
     <form style="margin: 15px 15px;">
-    <div style="margin: 10px 0;">
+      <div style="margin: 10px 0;">
         <span class="user-password">User ID: </span>
         <input type="text" v-model="user_id"></input>
       </div>
@@ -27,15 +27,10 @@
         <span class="user-password">Phone: </span>
         <input type="text" v-model="phone_number"></input>
       </div>
-        <div style="margin: 10px 0;">
+      <div style="margin: 10px 0;">
         <span class="user-password">address: </span>
         <input type="text" v-model="address"></input>
       </div>
-        <div style="margin: 10px 0;">
-        <span class="user-password">active: </span>
-        <input type="text" v-model="is_active"></input>
-      </div>
-      
     </form>
     <button type="button" class="button--default" @click="submitInsert">Add User</button>
     </div>

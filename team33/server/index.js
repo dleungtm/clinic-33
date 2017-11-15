@@ -30,7 +30,6 @@ app.post('/api/login', function (req, res) {
   const query = "SELECT user_id, username FROM clinic_user WHERE username LIKE '" + req.body.username + "' AND password LIKE '" + req.body.password + "';"
   connection.query(query, { type: connection.QueryTypes.SELECT })
     .then(user => {
-      console.log(user[0])
       if (user[0]) {
         req.session.authUser = user[0]
         return res.json(user[0])

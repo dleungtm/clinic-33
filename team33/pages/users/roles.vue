@@ -22,7 +22,7 @@ import axios from '~/plugins/axios'
 export default {
 
   async asyncData () {
-    let { data } = await axios.get('/api/user_roles')
+    let { data } = await axios.get('/api/users/')
     return {
       searchQuery: '',
       gridColumns: [

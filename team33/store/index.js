@@ -24,8 +24,8 @@ const store = () => new Vuex.Store({
       state.authUser = user
     },
 
-    SET_ROLES: function (state, roles) {
-      var roleIds = roles.map(function (obj) { return obj.role_id })
+    SET_ROLES: function (state, roleIds) {
+      // save roles onto state
       if (roleIds.includes(1)) {
         state.isAdmin = true
       } if (roleIds.includes(2)) {
@@ -44,13 +44,14 @@ const store = () => new Vuex.Store({
     nuxtServerInit ({ commit }, { req }) {
       if (req.session && req.session.authUser) {
         commit('SET_USER', req.session.authUser)
+      } if (req.session && req.session.roleIds) {
+        commit('SET_ROLES', req.session.roleIds)
       }
     },
 
     async login ({ commit }, { username, password }) {
       try {
         const { data } = await axios.post('/api/login', { username, password })
-        console.log(data)
         commit('SET_USER', data)
       } catch (error) {
         if (error.response && error.response.status === 401) {
@@ -63,7 +64,6 @@ const store = () => new Vuex.Store({
     async getRoles ({ commit }) {
       try {
         const { data } = await axios.get('/api/user_roles/' + this.state.authUser.user_id)
-        console.log(data)
         commit('SET_ROLES', data)
       } catch (error) {
         if (error.response && error.response.status === 401) {

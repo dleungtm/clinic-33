@@ -5,10 +5,15 @@
         <router-link to="/" exact>
          <span class="home">Dashboard</span>
         </router-link>
-        <nuxt-link to="/users">Users</nuxt-link>
-        <nuxt-link to="/appointments">Appointments</nuxt-link>
-        <nuxt-link to="/pharmacy">Pharmacy</nuxt-link>
-        <nuxt-link v-if="$store.state.authUser" style="float: right" to="#" @click.native="logout">Log Out</nuxt-link>
+        <span v-if="$store.state.authUser">
+          <nuxt-link v-if="$store.state.isAdmin" to="/users">Users</nuxt-link>
+          <nuxt-link v-if="!$store.state.isAdmin && !$store.state.isReceptionist" to="/appointments">My Appointments</nuxt-link>
+          <nuxt-link v-if="$store.state.isAdmin || $store.state.isReceptionist" to="/appointments">Appointments</nuxt-link>
+          <nuxt-link v-if="!$store.state.isAdmin && !$store.state.isReceptionist" to="/prescriptions">My Prescriptions</nuxt-link>
+          <nuxt-link v-if="$store.state.isAdmin || $store.state.isPharmacist" to="/prescriptions">Prescriptions</nuxt-link>
+          <nuxt-link v-if="$store.state.isAdmin || $store.state.isPharmacist" to="/pharmacy">Pharmacy</nuxt-link>
+          <nuxt-link v-if="$store.state.authUser" style="float: right" to="/" @click.native="logout">Log Out</nuxt-link>
+        </span>
       </nav>
     </div>
   </div>
