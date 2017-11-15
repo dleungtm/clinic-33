@@ -47,10 +47,6 @@ a
   margin-top 8vh
   text-align left
 
-@media (min-height 1080px)
-  .container
-    margin-top -200px
-
 .subsection
   background-color #fff
   border-radius 2px
