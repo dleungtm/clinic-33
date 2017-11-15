@@ -37,6 +37,15 @@ const store = () => new Vuex.Store({
       } if (roleIds.includes(5)) {
         state.isPatient = true
       }
+    },
+
+    CLEAR_ROLES: function (state) {
+      // save roles onto state
+      state.isAdmin = false
+      state.isClinician = false
+      state.isReceptionist = false
+      state.isReceptionist = false
+      state.isPatient = false
     }
   },
 
@@ -76,6 +85,7 @@ const store = () => new Vuex.Store({
     async logout ({ commit }) {
       await axios.post('/api/logout')
       commit('SET_USER', null)
+      commit('CLEAR_ROLES', null)
     }
   }
 
