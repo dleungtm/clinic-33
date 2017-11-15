@@ -4,10 +4,6 @@
     <div class="subsection">
     <form style="margin: 15px 15px;">
       <div style="margin: 10px 0;">
-        <span class="user-password">User ID: </span>
-        <input type="text" v-model="user_id"></input>
-      </div>
-      <div style="margin: 10px 0;">
         <span class="user-password">First Name: </span>
         <input type="text" v-model="first_name"></input>
       </div>
@@ -28,7 +24,7 @@
         <input type="text" v-model="phone_number"></input>
       </div>
       <div style="margin: 10px 0;">
-        <span class="user-password">address: </span>
+        <span class="user-password">Address: </span>
         <input type="text" v-model="address"></input>
       </div>
     </form>
@@ -45,7 +41,6 @@ export default {
 
   data () {
     return {
-      user_id: '',
       first_name: '',
       last_name: '',
       phone_number: '',
@@ -59,14 +54,13 @@ export default {
   methods: {
     submitInsert () {
       let self = this
-
       axios.post('/api/users/add', {
         headers:
           {
             'Content-Type': 'application/json'
           },
         data:
-          { user_id: self.user_id,
+          {
             first_name: self.first_name,
             last_name: self.last_name,
             phone_number: self.phone_number,

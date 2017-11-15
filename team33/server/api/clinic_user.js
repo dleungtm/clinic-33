@@ -89,12 +89,11 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
   const password = req.body.data.password
   const is_active = req.body.data.is_active
 
-  const query = 'INSERT INTO clinic_user (user_id, first_name, last_name, phone_number, address, username, password, is_active) VALUES (:user_id, :first_name, :last_name, :phone_number, :address, :username, :password, :is_active) ;'
+  const query = 'INSERT INTO clinic_user (first_name, last_name, phone_number, address, username, password, is_active) VALUES (:first_name, :last_name, :phone_number, :address, :username, :password, :is_active) ;'
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,
       replacements: {
-        user_id: user_id,
         first_name: first_name,
         last_name: last_name,
         phone_number: phone_number,
