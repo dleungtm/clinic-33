@@ -111,4 +111,29 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
     })
 })
 
+/* GET 'all' patient information including health info by user_id */
+router.get('/users/all_info/:user_id', function (req, res, next) {
+  const user_id = req.params.user_id
+  const query = `SELECT c.user_id, c.first_name, c.last_name, u.phn, u.dob, u.height, u.blood_type, u.sex
+	                FROM clinic_user c
+                  INNER JOIN user_health_info u ON c.user_id = u.user_id
+                  WHERE c.user_id = :user_id;`
+
+  connection.query(query,
+    {
+      type: connection.QueryTypes.SELECT,
+      replacements: {
+        user_id: user_id
+      }
+    })
+    .then(info => {
+      if (info.length === 1) {
+        console.log(info[0])
+        res.json(info[0])
+      } else {
+        res.status(404).json({})
+      }
+    })
+})
+
 export default router

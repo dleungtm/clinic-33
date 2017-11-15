@@ -8,6 +8,8 @@
         <nuxt-link to="/users">Users</nuxt-link>
         <nuxt-link to="/appointments">Appointments</nuxt-link>
         <nuxt-link to="/pharmacy">Pharmacy</nuxt-link>
+        <nuxt-link to="/personal_health_info">Your Record</nuxt-link>
+        <nuxt-link to="/user_health_info">Medical Records</nuxt-link>
         <nuxt-link v-if="$store.state.authUser" style="float: right" to="#" @click.native="logout">Log Out</nuxt-link>
       </nav>
     </div>

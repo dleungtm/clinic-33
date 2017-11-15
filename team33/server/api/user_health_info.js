@@ -14,10 +14,10 @@ router.get('/userhealthinfo', function (req, res, next) {
     })
 })
 
-/* GET user health information by id */
-router.get('/userhealthinfo/:id', function (req, res, next) {
+/* GET user health information by user_id */
+router.get('/userhealthinfo/:user_id', function (req, res, next) {
   const user_id = req.params.user_id
-  const query = 'SELECT * FROM user_health_info WHERE user_id = :id ;'
+  const query = 'SELECT * FROM user_health_info WHERE user_id = :user_id;'
 
   connection.query(query,
     {
@@ -26,9 +26,10 @@ router.get('/userhealthinfo/:id', function (req, res, next) {
         user_id: user_id
       }
     })
-    .then(medication => {
-      if (medication.length === 1) {
-        res.json(medication[0])
+    .then(info => {
+      if (info.length === 1) {
+        console.log(info[0])
+        res.json(info[0])
       } else {
         res.status(404).json({})
       }
