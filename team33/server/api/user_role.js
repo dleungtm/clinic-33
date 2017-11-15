@@ -5,18 +5,9 @@ const bodyParser = require('body-parser')
 const router = Router()
 
 /* Get list of all user roles */
-router.get('/user_roles', function (req, res, next) {
 
-  const query = 'SELECT c.user_id, first_name, last_name, role_name FROM clinic_user c LEFT JOIN user_role u ON u.user_id = c.user_id INNER JOIN role r ON r.role_id = u.role_id;'
-  connection.query(query,
-    {
-      type: connection.QueryTypes.SELECT
-    })
-    .then(result => {
-      console.log(result)
-      res.json(result)
-    })
-})
+// router.get('/user_roles')
+// MOVED TO clinic_user.js AS GET ALL USERS
 
 /* Get a user's role by user_id */
 router.get('/user_roles/:user_id', function (req, res, next) {
@@ -31,9 +22,10 @@ router.get('/user_roles/:user_id', function (req, res, next) {
       }
     })
     .then(roles => {
-      console.log(roles)
       if (roles.length > 0) {
-        res.json(roles)
+        var roleIds = roles.map(function (obj) { return obj.role_id })
+        req.session.roleIds = roleIds
+        res.json(roleIds)
       } else {
         res.status(404).json({})
       }

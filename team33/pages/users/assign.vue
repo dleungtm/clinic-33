@@ -16,7 +16,7 @@
           <input type="text" v-model="role_id"></input>
         </div>
       </form>
-      <nuxt-link class="button--default" to="#" @click.native="submitInsert">Update User</nuxt-link>
+      <nuxt-link class="button--default" to="/user/roles" @click.native="submitInsert">Update User</nuxt-link>
       </div>
     </div>
   </section>
@@ -49,8 +49,6 @@ export default {
             role_id: self.role_id
           }})
         .then((res) => {
-          console.log('print')
-          // res.data should contain the url for redirecting... bad practice
           self.$nuxt.$router.replace({ path: res.data })
         })
         .catch((e) => {
