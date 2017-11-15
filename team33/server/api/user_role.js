@@ -13,29 +13,27 @@ router.get('/user_roles', function (req, res, next) {
       type: connection.QueryTypes.SELECT
     })
     .then(result => {
-      console.log(result)      
+      console.log(result)
       res.json(result)
     })
 })
 
-/* Get a user role by user_id and role_id? */
-router.get('/user_roles/:user_id/:role_id', function (req, res, next) {
+/* Get a user's role by user_id */
+router.get('/user_roles/:user_id', function (req, res, next) {
   const user_id = req.params.user_id
-  const role_id = req.params.role_id
 
-  const query = 'SELECT * FROM user_role WHERE user_id = :user_id AND role_id = :role_id ;'
+  const query = 'SELECT role_id FROM user_role WHERE user_id = :user_id;'
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,
       replacements: {
-        user_id: user_id,
-        role_id: role_id
+        user_id: user_id
       }
     })
-    // TODO: CATCH UNIQUE CONSTRAINT ERROR
-    .then(user => {
-      if (user.length === 1) {
-        res.json(user[0])
+    .then(roles => {
+      console.log(roles)
+      if (roles.length > 0) {
+        res.json(roles)
       } else {
         res.status(404).json({})
       }
@@ -60,7 +58,14 @@ router.post('/user_roles/add', bodyParser.json(), function (req, res, next) {
       res.send('/users/roles')
     })
     .catch((error) => {
-      console.log(error)
+      for (var i in error.errors) {
+        console.log(error.errors[i])
+        if (error.errors[i].type === 'unique violation') {
+          console.log('Unique Constraint Violation - Insertion Failed.')
+          res.json({'message': 'Unique Constraint Violation - Insertion Failed.'})
+          return
+        }
+      }
     })
 })
 

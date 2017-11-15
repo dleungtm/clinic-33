@@ -27,7 +27,7 @@ var connection = require('./configs/sequelize.js')
 
 // POST `/api/login` to log in the user and add user to the `req.session.authUser`
 app.post('/api/login', function (req, res) {
-  const query = "SELECT c.user_id, c.username, u.role_id FROM clinic_user c LEFT JOIN user_role u ON c.user_id = u.user_id WHERE c.username LIKE '" + req.body.username + "' AND c.password LIKE '" + req.body.password + "';"
+  const query = "SELECT user_id, username FROM clinic_user WHERE username LIKE '" + req.body.username + "' AND password LIKE '" + req.body.password + "';"
   connection.query(query, { type: connection.QueryTypes.SELECT })
     .then(user => {
       console.log(user[0])
@@ -35,7 +35,7 @@ app.post('/api/login', function (req, res) {
         req.session.authUser = user[0]
         return res.json(user[0])
       } else {
-        res.status(401).json({ err: 'User does not exist.' })
+        res.status(401).json({ err: 'Invalid username/password.' })
       }
     })
     .catch(err => {
@@ -43,9 +43,14 @@ app.post('/api/login', function (req, res) {
     })
 })
 
-// POST `/api/logout` to log out the user and remove it from the `req.session`
+// POST `/api/logout` to log out the user and remove it from the `req.session` and clear role flags
 app.post('/api/logout', function (req, res) {
   delete req.session.authUser
+  req.session.isAdmin = false
+  req.session.isClinician = false
+  req.session.isReceptionist = false
+  req.session.isPharmacist = false
+  req.session.isPatient = false
   res.json({ ok: true })
 })
 

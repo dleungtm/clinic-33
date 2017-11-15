@@ -2,22 +2,41 @@
   <div class="container">
     <div class="row-fluid">
       <div class="span12">
-        <h1> Welcome! Please login to continue.</h1>
+        <div v-if="!$store.state.authUser">
+          <h1>Welcome!</h1>
+          <h5>Please login to continue.</h5>
+        </div>
+        <h1 v-if="$store.state.authUser"> Hello, {{ $store.state.authUser.username }}!</h1>
+        <br>
       </div>
       <div class="span12">
-      <form v-if="!$store.state.authUser" @submit.prevent="login">
-        <p class="error" v-if="formError">{{ formError }}</p>
-        <p>Username: <input type="text" v-model="formUsername" name="username" /></p>
-        <p>Password: <input type="password" v-model="formPassword" name="password" /></p>
-        <button type="submit" class="button--default">Login</button>
-      </form>
-    <div v-else>
-      Hello {{ $store.state.authUser.username }}!
-      <pre>I am the secret content, I am shown only when the user is connected.</pre>
-      <p><i>You can also refresh this page, you'll still be connected!</i></p>
-      <button  @click="logout">Logout</button>
-    </div>
-    </div>
+        <form v-if="!$store.state.authUser" @submit.prevent="login">
+          <p class="error" v-if="formError">{{ formError }}</p>
+          <div class="form-field">
+            <label for="username">Username:</label>
+            <input type="text" v-model="formUsername" name="username" />
+          </div>
+          <br>
+          <div class="form-field">
+            <label for="password">Password:</label>
+            <input type="password" v-model="formPassword" name="password" />
+          </div>
+          <br>
+          <div class="form-field">
+            <button type="submit" class="button--default">Login</button>
+          </div>
+        </form>
+        <div v-else>
+          <h5>This account is associated with the following roles:</h5>
+          <ul>
+            <li v-if="$store.state.isAdmin">Administrator</li>
+            <li v-if="$store.state.isClinician">Clinician</li>
+            <li v-if="$store.state.isReceptionist">Receptionist</li>
+            <li v-if="$store.state.isPharmacist">Pharmacist</li>
+            <li v-if="$store.state.isPatient">Patient</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -38,16 +57,10 @@ export default {
           username: this.formUsername,
           password: this.formPassword
         })
+        await this.$store.dispatch('getRoles')
         this.formUsername = ''
         this.formPassword = ''
         this.formError = null
-      } catch (e) {
-        this.formError = e.message
-      }
-    },
-    async logout () {
-      try {
-        await this.$store.dispatch('logout')
       } catch (e) {
         this.formError = e.message
       }
@@ -57,47 +70,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.container
-  min-height 90vh
-  display flex
-  //justify-content center
-  margin-top 30px
-  //align-items center
-  text-align left
 
-@media (min-height 1080px)
-  .container
-    margin-top -200px
-
-.title
-  font-family "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif /* 1 */
-  display block
-  font-weight 300
-  font-size 50px
-  color #35495e
-  letter-spacing 2px
-  text-transform uppercase
-
-.subtitle
-  font-weight 300
-  font-size 42px
-  color #526488
-  word-spacing 5px
-  padding-bottom 15px
-
-.links
-  padding-top 15px
-
-@media (max-width 860px)
-  .title
-    font-size 64px
-  .subtitle
-    font-size 32px
-
-@media (max-width 860px)
-  .links
-    .link
-      width 50%
-      margin-bottom 15px
-      display relative
 </style>
