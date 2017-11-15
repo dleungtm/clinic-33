@@ -89,12 +89,11 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
   const password = req.body.data.password
   const is_active = req.body.data.is_active
 
-  const query = 'INSERT INTO clinic_user (user_id, first_name, last_name, phone_number, address, username, password, is_active) VALUES (:user_id, :first_name, :last_name, :phone_number, :address, :username, :password, :is_active) ;'
+  const query = 'INSERT INTO clinic_user (first_name, last_name, phone_number, address, username, password, is_active) VALUES (:first_name, :last_name, :phone_number, :address, :username, :password, :is_active) ;'
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,
       replacements: {
-        user_id: user_id,
         first_name: first_name,
         last_name: last_name,
         phone_number: phone_number,
@@ -106,6 +105,31 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
     })
     .then(result => {
       res.send('/users')
+    })
+})
+
+/* GET 'all' patient information including health info by user_id */
+router.get('/users/all_info/:user_id', function (req, res, next) {
+  const user_id = req.params.user_id
+  const query = `SELECT c.user_id, c.first_name, c.last_name, u.phn, u.dob, u.height, u.blood_type, u.sex
+	                FROM clinic_user c
+                  INNER JOIN user_health_info u ON c.user_id = u.user_id
+                  WHERE c.user_id = :user_id;`
+
+  connection.query(query,
+    {
+      type: connection.QueryTypes.SELECT,
+      replacements: {
+        user_id: user_id
+      }
+    })
+    .then(info => {
+      if (info.length === 1) {
+        console.log(info[0])
+        res.json(info[0])
+      } else {
+        res.status(404).json({})
+      }
     })
 })
 

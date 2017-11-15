@@ -39,6 +39,33 @@ router.get('/prescriptions', bodyParser.json(), function (req, res, next) {
     })
 })
 
+/* lookup all prescriptions for a patient */
+router.get('/prescriptions/:patient_id', function (req, res, next) {
+  const patient_id = req.params.patient_id
+
+  const query = `SELECT uc.first_name cfn, uc.last_name cln, up.first_name pfn, up.last_name pln, p.date_prescribed, p.dosage, m.name
+	                FROM prescription p
+                  INNER JOIN clinic_user uc ON p.clinician_id = uc.user_id
+                  LEFT JOIN clinic_user up ON p.filled_by = up.user_id
+                  INNER JOIN medication m ON p.medication_id = m.medication_id
+                  WHERE p.patient_id = :patient_id`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.SELECT,
+      replacements: {
+        patient_id:  patient_id
+      }
+    })
+    .then(prescriptions => {
+      console.log(prescriptions)
+      if (prescriptions.length > 0) {
+        res.json(prescriptions)
+      } else {
+        res.status(404).json({})
+      }
+    })
+})
+
 // /* lookup all prescriptions for a patient */
 // router.get('/prescriptions', bodyParser.json(), function (req, res, next) {
 //   const patient_id = req.body.data.patient_id
