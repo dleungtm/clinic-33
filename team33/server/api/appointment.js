@@ -6,7 +6,11 @@ const router = Router()
 
 /* Get all appointments */
 router.get('/appointments', function (req, res, next) {
-  const query = 'SELECT appointment_id, to_char(date, :date_format) as date, to_char(start_time, :time_format) as start_time, p.first_name as patient_fname, p.last_name as patient_lname, c.last_name FROM appointment a, timeblock t, clinic_user c, clinic_user p WHERE a.patient_id = p.user_id AND a.clinician_id = c.user_id AND t.timeblock_id = a.timeblock_id;'
+  const query = `SELECT appointment_id, to_char(date, :date_format) as date, to_char(start_time, :time_format) as start_time, p.first_name as patient_fname, p.last_name as patient_lname, c.last_name
+                  FROM appointment a, timeblock t, clinic_user c, clinic_user p 
+                  WHERE a.patient_id = p.user_id
+                    AND a.clinician_id = c.user_id
+                    AND t.timeblock_id = a.timeblock_id;`
   connection.query(query, {
     type: connection.QueryTypes.SELECT,
     replacements: {
@@ -22,7 +26,11 @@ router.get('/appointments', function (req, res, next) {
 /* Get Appointments by User ID */
 router.get('/appointments/user/:user_id', function (req, res, next) {
   const user_id = req.params.user_id
-  const query = 'SELECT appointment_id, to_char(date, :date_format) as date, to_char(start_time, :time_format) as start_time, last_name FROM appointment a, timeblock t, clinic_user c WHERE a.clinician_id = :user_id OR a.patient_id = :user_id AND c.user_id = :user_id AND t.timeblock_id = a.timeblock_id;'
+  const query = `SELECT appointment_id, to_char(date, :date_format) as date, to_char(start_time, :time_format) as start_time, last_name
+                  FROM appointment a, timeblock t, clinic_user c
+                  WHERE a.clinician_id = :user_id OR a.patient_id = :user_id
+                    AND c.user_id = :user_id
+                    AND t.timeblock_id = a.timeblock_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,
