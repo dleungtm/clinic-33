@@ -24,7 +24,7 @@
         <input type="text" v-model="phone_number"></input>
       </div>
       <div style="margin: 10px 0;">
-        <span class="user-password">Address: </span>
+        <span class="user-password">address: </span>
         <input type="text" v-model="address"></input>
       </div>
     </form>
@@ -41,6 +41,7 @@ export default {
 
   data () {
     return {
+      user_id: '',
       first_name: '',
       last_name: '',
       phone_number: '',
@@ -54,6 +55,7 @@ export default {
   methods: {
     submitInsert () {
       let self = this
+
       axios.post('/api/users/add', {
         headers:
           {

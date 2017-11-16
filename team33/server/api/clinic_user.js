@@ -89,7 +89,7 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
   const password = req.body.data.password
   const is_active = req.body.data.is_active
 
-  const query = 'INSERT INTO clinic_user (first_name, last_name, phone_number, address, username, password, is_active) VALUES (:first_name, :last_name, :phone_number, :address, :username, :password, :is_active) ;'
+  const query = 'INSERT INTO clinic_user (first_name, last_name, phone_number, address, username, password, is_active) VALUES (:first_name, :last_name, :phone_number, :address, :username, :password, :is_active) RETURNING user_id ;'
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,
@@ -103,7 +103,7 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
         is_active: is_active
       }
     })
-    .then(result => {
+    .then(result => {     
       res.send('/users')
     })
 })
