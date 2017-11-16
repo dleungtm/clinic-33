@@ -29,8 +29,7 @@ import axios from '~/plugins/axios'
 
 export default {
 
-  async asyncData ({store}) {
-    let { data } = await axios.get('/api/users/')
+  data () {
     return {
       searchQuery: '',
       gridColumns: [
@@ -39,8 +38,14 @@ export default {
         { key: 'last_name', displayName: 'Last Name' },
         { key: 'role_name', displayName: 'User Role' }
       ],
-      users: data
+      users: []
     }
+  },
+
+  mounted () {
+    axios.get('/api/users/').then(response => {
+      this.users = response.data
+    })
   },
 
   head () {

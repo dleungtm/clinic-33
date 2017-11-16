@@ -1,3 +1,17 @@
+-- DROP TABLES
+DROP TABLE "appointment"
+DROP TABLE "appointment_record"
+DROP TABLE "availability"
+DROP TABLE "billing_history"
+DROP TABLE "clinic_user"
+DROP TABLE "medication"
+DROP TABLE "prescription"
+DROP TABLE "role"
+DROP TABLE "timeblock"
+DROP TABLE "user_health_info"
+DROP TABLE "user_role"
+
+-- CREATE TABLES
 CREATE TABLE "clinic_user" (
 	user_id serial,
 	first_name varchar(30) NOT NULL,

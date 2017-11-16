@@ -9,12 +9,17 @@
           <span class="arrow" :class="sortOrders[attr.key] > 0 ? 'asc' : 'dsc'">
           </span>
         </th>
+        <th v-if="hasAction">
+        </th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="entry in filteredData">
         <td v-for="attr in columns">
           {{entry[attr.key]}}
+        </td>
+        <td v-if="hasAction">
+          <button class="button--default" @click="buttonAction(entry)">{{ buttonLabel }}</button>
         </td>
       </tr>
     </tbody>
@@ -26,7 +31,10 @@ export default {
   props: {
     data: Array,
     columns: Array,
-    filterKey: String
+    filterKey: String,
+    hasAction: Boolean,
+    buttonLabel: String,
+    buttonAction: Function
   },
   data: function () {
     var sortOrders = {}

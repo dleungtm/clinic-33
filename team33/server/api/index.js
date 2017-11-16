@@ -2,7 +2,6 @@ import { Router } from 'express'
 
 import appointments from './appointment'
 import appointment_record from './appointment_record'
-import availability from './availability'
 import billing_history from './billing_history'
 import clinic_users from './clinic_user'
 import medications from './medication'
@@ -17,7 +16,6 @@ const router = Router()
 // Add USERS Routes
 router.use(appointments)
 router.use(appointment_record)
-router.use(availability)
 router.use(billing_history)
 router.use(clinic_users)
 router.use(medications)

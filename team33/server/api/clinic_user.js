@@ -108,6 +108,67 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
     })
 })
 
+/* get Availabilities by User ID */
+router.get('/users/:user_id/availability/', function (req, res, next) {
+  const user_id = req.params.user_id
+  const query = `SELECT a.timeblock_id, to_char(start_time, :time_format) as start_time, day_of_week, day_of_week as day, clinician_id, is_active
+                  FROM availability a, timeblock t
+                  WHERE clinician_id = :user_id
+                    AND a.timeblock_id = t.timeblock_id;`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.SELECT,
+      replacements: {
+        user_id: user_id,
+        time_format: 'HH24:MI'
+      }
+    })
+    .then(availabilities => {
+      res.json(availabilities)
+    })
+})
+
+// Toggle Availability
+router.post('/users/:user_id/availability/', bodyParser.json(), function (req, res, next) {
+  const timeblock_id = req.body.data.timeblock_id
+  const day_of_week = req.body.data.day_of_week
+  const clinician_id = req.params.user_id
+
+  const query = `UPDATE availability
+                  SET is_active = NOT is_active
+                  WHERE timeblock_id = :timeblock_id
+                    AND day_of_week = :day_of_week
+                    AND clinician_id = :clinician_id`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.INSERT,
+      replacements: {
+        timeblock_id: timeblock_id,
+        day_of_week: day_of_week,
+        clinician_id: clinician_id
+      }
+    })
+    .then(result => {
+      res.send('/users/availabilities')
+    })
+})
+
+// /* Initialize Availabilities by User ID */
+// router.post('/users/:user_id/availability/', function (req, res, next) {
+//   const user_id = req.params.user_id
+//   const query = 'SELECT * FROM availability WHERE clinician_id = :user_id ;'
+//   connection.query(query,
+//     {
+//       type: connection.QueryType.SELECT,
+//       replacements: {
+//         user_id: user_id
+//       }
+//     })
+//     .then(availabilities => {
+//       res.json(availabilities)
+//     })
+// })
+
 /* GET 'all' patient information including health info by user_id */
 router.get('/users/all_info/:user_id', function (req, res, next) {
   const user_id = req.params.user_id
