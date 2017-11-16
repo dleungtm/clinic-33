@@ -1,37 +1,30 @@
 <template>
-  <section class="container">
-    <img src="../assets/img/logo.png" alt="Nuxt.js Logo" class="logo" />
-    <h1 class="title">
-      {{ error.statusCode }}
-    </h1>
-    <h2 class="info">
-      {{ error.message }}
-    </h2>
-    <nuxt-link class="button" to="/" v-if="error.statusCode === 404">
-      Homepage
-    </nuxt-link>
-  </section>
+  <div>
+    <navbar />
+      <div class="container view">
+        <div class="row-fluid">
+          <h1>Oops! An unexpected error has occurred.</h1>
+          <h5>You are likely not authenticated properly, please re-login to the app.</h5>
+          <br>
+          <a class="button--default" style="text-decoration: none" href="/">Login</a>
+        </div>
+      </div>
+    <footer-component />
+  </div>
 </template>
+
 <script>
+import Navbar from '~/components/Navbar.vue'
+import FooterComponent from '~/components/Footer.vue'
+
 export default {
+  components: {
+    Navbar,
+    FooterComponent
+  },
   props: ['error']
 }
 </script>
 
 <style scoped>
-.title
-{
-  margin-top: 15px;
-  font-size: 5em;
-}
-.info
-{
-  font-weight: 300;
-  color: #9aabb1;
-  margin: 0;
-}
-.button
-{
-  margin-top: 50px;
-}
 </style>

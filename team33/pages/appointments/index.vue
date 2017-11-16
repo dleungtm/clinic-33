@@ -54,31 +54,29 @@ import axios from '~/plugins/axios'
 
 export default {
 
-  async asyncData ({store}) {
-    if (store.state.isAdmin || store.state.isReceptionist) {
-      let { data } = await axios.get('/api/appointments/')
-      return {
-        searchQuery: '',
-        gridColumns: [
-          { key: 'date', displayName: 'Date' },
-          { key: 'start_time', displayName: 'Time' },
-          { key: 'patient_fname', displayName: 'First Name' },
-          { key: 'patient_lname', displayName: 'Last Name' },
-          { key: 'last_name', displayName: 'Clinician' }
-        ],
-        appointments: data
-      }
+  data () {
+    return {
+      searchQuery: '',
+      gridColumns: [
+        { key: 'date', displayName: 'Date' },
+        { key: 'start_time', displayName: 'Time' },
+        { key: 'patient_fname', displayName: 'First Name' },
+        { key: 'patient_lname', displayName: 'Last Name' },
+        { key: 'last_name', displayName: 'Clinician' }
+      ],
+      appointments: []
+    }
+  },
+
+  mounted () {
+    if (this.$store.state.isAdmin || this.$store.state.isReceptionist) {
+      axios.get('/api/appointments/').then(response => {
+        this.appointments = response.data
+      })
     } else {
-      let { data } = await axios.get('/api/appointments/user/' + store.state.authUser.user_id)
-      return {
-        searchQuery: '',
-        gridColumns: [
-          { key: 'date', displayName: 'Date' },
-          { key: 'start_time', displayName: 'Time' },
-          { key: 'last_name', displayName: 'Clinician' }
-        ],
-        appointments: data
-      }
+      axios.get('/api/appointments/user/' + this.$store.state.authUser.user_id).then(response => {
+        this.appointments = response.data
+      })
     }
   },
 
