@@ -1,15 +1,15 @@
 -- DROP TABLES
-DROP TABLE "appointment"
-DROP TABLE "appointment_record"
-DROP TABLE "availability"
-DROP TABLE "billing_history"
-DROP TABLE "clinic_user"
-DROP TABLE "medication"
-DROP TABLE "prescription"
-DROP TABLE "role"
-DROP TABLE "timeblock"
-DROP TABLE "user_health_info"
-DROP TABLE "user_role"
+DROP TABLE IF EXISTS "appointment" CASCADE;
+DROP TABLE IF EXISTS "appointment_record" CASCADE;
+DROP TABLE IF EXISTS "availability" CASCADE;
+DROP TABLE IF EXISTS "billing_history" CASCADE;
+DROP TABLE IF EXISTS "clinic_user" CASCADE;
+DROP TABLE IF EXISTS "medication" CASCADE;
+DROP TABLE IF EXISTS "prescription" CASCADE;
+DROP TABLE IF EXISTS "role" CASCADE;
+DROP TABLE IF EXISTS "timeblock" CASCADE;
+DROP TABLE IF EXISTS "user_health_info" CASCADE;
+DROP TABLE IF EXISTS "user_role" CASCADE;
 
 -- CREATE TABLES
 CREATE TABLE "clinic_user" (
@@ -32,7 +32,7 @@ CREATE TABLE "role" (
 CREATE TABLE "user_role" (
 	user_id int,
 	role_id int,
-	PRIMARY KEY (user_id, role_id),
+	PRIMARY KEY (user_id),
 	FOREIGN KEY (user_id) REFERENCES "clinic_user"(user_id),
 	FOREIGN KEY (role_id) REFERENCES "role"(role_id)
 );
