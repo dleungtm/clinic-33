@@ -32,13 +32,27 @@ router.get('/users/staff', function (req, res, next) {
       res.json(users)
     })
 })
+/* GET All Active Patients. */
+router.get('/users/patients', function (req, res, next) {
+  const query = `SELECT DISTINCT c.user_id, first_name || ' ' || last_name as name
+                  FROM clinic_user c
+                  INNER JOIN user_role u ON u.user_id = c.user_id
+                  WHERE u.role_id = 5 AND is_active = true;`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.SELECT
+    })
+    .then(patients => {
+      res.json(patients)
+    })
+})
 
-/* GET all clinicians. */
+/* GET All Active Clinicians. */
 router.get('/users/clinicians', function (req, res, next) {
   const query = `SELECT DISTINCT c.user_id, first_name || ' ' || last_name as name
                   FROM clinic_user c
                   INNER JOIN user_role u ON u.user_id = c.user_id
-                  WHERE u.role_id = 2;`
+                  WHERE u.role_id = 2 AND is_active = TRUE;`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT
