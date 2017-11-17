@@ -108,8 +108,13 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
   const username = req.body.data.username
   const password = req.body.data.password
   const is_active = req.body.data.is_active
+  const dob = req.body.data.dob
+  const phn = req.body.data.phn
+  const height = req.body.data.height
+  const blood_type = req.body.data.blood_type
+  const sex = req.body.data.sex
 
-  const query = ' WITH rows AS(INSERT INTO clinic_user (first_name, last_name, phone_number, address, username, password, is_active) VALUES (:first_name, :last_name, :phone_number, :address, :username, :password, :is_active) RETURNING user_id ) INSERT INTO user_role (user_id, role_id) SELECT user_id, 5 FROM rows ;'
+  const query = ' WITH rows AS(INSERT INTO clinic_user (first_name, last_name, phone_number, address, username, password, is_active) VALUES (:first_name, :last_name, :phone_number, :address, :username, :password, :is_active) RETURNING user_id ), rows2 AS (INSERT INTO user_role (user_id, role_id) SELECT user_id, 5 FROM rows RETURNING user_id) INSERT INTO user_health_info (user_id, phn, dob, height, blood_type, sex) SELECT user_id, :phn, :dob, :height, :blood_type, :sex FROM rows2  ;'
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,
@@ -120,7 +125,12 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
         address: address,
         username: username,
         password: password,
-        is_active: is_active
+        is_active: is_active,
+        dob: dob,
+        phn: phn,
+        height: height,
+        blood_type: blood_type,
+        sex: sex
       }
     }
   )

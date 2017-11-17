@@ -12,8 +12,18 @@
         </div>
         <br>
         <div class="form-field">
-          <label>Role ID:</label>
-          <input type="text" v-model="role_id"></input>
+         <label>Role ID:</label>
+          <!-- <input type="text" v-model="role_id"></input>
+          -->
+           <select v-model="role_id">
+            <option disabled value="">Please Select One</option>
+            <option value="1"> Administrator</option>
+            <option value="2"> Clinician</option>
+            <option value="3"> Receptionist</option>
+            <option value="4"> Pharmacist</option>
+            <option value="5"> Patient</option>
+            </option>
+          </select>
         </div>
       </form>
       <nuxt-link class="button--default" to="/user/roles" @click.native="submitInsert">Update User</nuxt-link>
@@ -38,7 +48,7 @@ export default {
     submitInsert () {
       let self = this
 
-      axios.post('/api/user_roles/add', {
+      axios.post('/api/user_roles/update', {
         headers:
           {
             'Content-Type': 'application/json'
@@ -49,6 +59,7 @@ export default {
             role_id: self.role_id
           }})
         .then((res) => {
+          console.log(res.data)
           self.$nuxt.$router.replace({ path: res.data })
         })
         .catch((e) => {
