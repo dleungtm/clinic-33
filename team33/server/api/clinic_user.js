@@ -142,7 +142,7 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
 /* Get Availabilities by User ID */
 router.get('/users/:user_id/availability', function (req, res, next) {
   const user_id = req.params.user_id
-  const query = `SELECT a.timeblock_id, to_char(start_time, :time_format) as start_time, day_of_week, day_of_week as day, clinician_id, is_active
+  const query = `SELECT a.timeblock_id, to_char(start_time, :time_format) as start_time, day_of_week, clinician_id, is_active
                   FROM availability a, timeblock t
                   WHERE clinician_id = :user_id
                     AND a.timeblock_id = t.timeblock_id;`
