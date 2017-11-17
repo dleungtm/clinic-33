@@ -27,6 +27,28 @@
         <span class="user-password">Address: </span>
         <input type="text" v-model="address"></input>
       </div>
+      <hr/>
+      <h1>User Health Info</h1>
+      <div style="margin: 10px 0;">
+        <span class="user-password">DOB: </span>
+        <input type="text" v-model="dob"> (YYYY-MM-DD)</input>
+      </div>
+      <div style="margin: 10px 0;">
+        <span class="user-password">PHN: </span>
+        <input type="text" v-model="phn"></input>
+      </div>
+      <div style="margin: 10px 0;">
+        <span class="user-password">Height: </span>
+        <input type="text" v-model="height">cm</input>
+      </div>
+      <div style="margin: 10px 0;">
+        <span class="user-password">Blood Type: </span>
+        <input type="text" v-model="blood_type"></input>
+      </div>
+      <div style="margin: 10px 0;">
+        <span class="user-password">Sex: </span>
+        <input type="text" v-model="sex"></input>
+      </div>
     </form>
     <button type="button" class="button--default" @click="submitInsert">Add User</button>
     </div>
@@ -48,7 +70,12 @@ export default {
       address: '',
       username: '',
       password: '',
-      is_active: true
+      is_active: true,
+      dob: '',
+      phn: '',
+      height: '',
+      blood_type: '',
+      sex: ''
     }
   },
 
@@ -69,7 +96,12 @@ export default {
             address: self.address,
             username: self.username,
             password: self.password,
-            is_active: self.is_active
+            is_active: self.is_active,
+            dob: self.dob,
+            phn: self.phn,
+            height: self.height,
+            blood_type: self.blood_type,
+            sex: self.sex
           }})
         .then((res) => {
           // res.data should contain the url for redirecting... bad practice
