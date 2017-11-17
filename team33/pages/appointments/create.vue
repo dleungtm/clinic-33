@@ -10,12 +10,13 @@
         <div v-if="$store.state.isAdmin || $store.state.isReceptionist" class="form-field">
           <label>Select Patient: </label>
           <br>
-          <select v-model="selectedClinicianId">
+          <select v-model="selectedPatientId">
             <option disabled value="">Please Select One</option>
-            <option v-for="clinician in clinicians" :value="clinician.user_id">
-            {{ clinician.name }}
+            <option v-for="patient in patients" :value="patient.user_id">
+            {{ patient.name }}
             </option>
           </select>
+          {{ selectedPatientId }}
         </div>
         <br>
         <br>
@@ -28,6 +29,7 @@
             {{ clinician.name }}
             </option>
           </select>
+            {{ selectedClinicianId }}
         </div>
         <br>
         <br>
@@ -39,6 +41,7 @@
             :disabled="state.disabled">
           </datepicker>
         </div>
+        <p v-if="state.date">{{ state.date.toDateString() }}</p>
         <br>
         <br>
         <div class="form-field">
@@ -51,6 +54,7 @@
             {{ timeblock.start_time }}
             </option>
           </select>
+          {{ selectedTimeblockId }}
         </div>
       </div>
     </div>
@@ -66,6 +70,8 @@ export default {
     return {
       clinicians: [],
       selectedClinicianId: null,
+      patients: [],
+      selectedPatientId: null,
       timeblocks: [],
       selectedTimeblockId: null,
       allDays: [0, 1, 2, 3, 4, 5, 6],
@@ -81,6 +87,9 @@ export default {
   mounted () {
     axios.get('/api/users/clinicians').then(response => {
       this.clinicians = response.data
+    })
+    axios.get('/api/users/patients').then(response => {
+      this.patients = response.data
     })
   },
 
