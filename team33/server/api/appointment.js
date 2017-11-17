@@ -86,8 +86,25 @@ router.post('/appointments/add', bodyParser.json(), function (req, res, next) {
       }
     })
     .then(result => {
-      // result[1] is the number of rows changed
-      res.send('/users')
+      res.json({ message: 'Appointment Created.' })
+    })
+})
+
+/* Delete Appointment by ID */
+router.post('/appointments/delete', bodyParser.json(), function (req, res, next) {
+  const appointment_id = req.body.data.appointment_id
+
+  const query = `DELETE FROM appointment
+                  WHERE appointment_id = :appointment_id;`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.DELETE,
+      replacements: {
+        appointment_id: appointment_id
+      }
+    })
+    .then(result => {
+      res.json({ message: 'Appointment Cancelled.' })
     })
 })
 

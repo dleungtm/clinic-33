@@ -24,7 +24,7 @@
         <input type="text" v-model="phone_number"></input>
       </div>
       <div style="margin: 10px 0;">
-        <span class="user-password">address: </span>
+        <span class="user-password">Address: </span>
         <input type="text" v-model="address"></input>
       </div>
     </form>

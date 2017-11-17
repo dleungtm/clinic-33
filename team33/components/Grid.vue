@@ -19,7 +19,7 @@
           {{entry[attr.key]}}
         </td>
         <td v-if="hasAction">
-          <button class="button--default" @click="buttonAction(entry)">{{ buttonLabel }}</button>
+          <button v-if="hasAction(entry)" class="button--default" @click="buttonAction(entry)">{{ buttonLabel }}</button>
         </td>
       </tr>
     </tbody>
@@ -32,7 +32,7 @@ export default {
     data: Array,
     columns: Array,
     filterKey: String,
-    hasAction: Boolean,
+    hasAction: Function,
     buttonLabel: String,
     buttonAction: Function
   },

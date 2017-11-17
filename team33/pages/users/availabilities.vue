@@ -9,7 +9,7 @@
           :data="availabilities"
           :columns="gridColumns"
           :filter-key="searchQuery"
-          :hasAction="true"
+          :hasAction="hasAction"
           :buttonLabel="buttonLabel"
           :buttonAction="buttonAction">
         </grid>
@@ -68,6 +68,9 @@ export default {
   },
 
   methods: {
+    hasAction: function (entry) {
+      return true
+    },
     buttonAction: function (entry) {
       axios.post('/api/users/' + this.$store.state.authUser.user_id + '/availability/', {
         headers:
