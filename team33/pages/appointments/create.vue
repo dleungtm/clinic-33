@@ -57,20 +57,22 @@ export default {
 
   computed: {
     disabledDays: function () {
-      var inactiveAvailabilities
-      var inactiveDays
-      axios.get('/api/users/' + this.selectedClinicianId + '/availability').then(response => {
-        var data = response.data
-        inactiveAvailabilities = data.filter(function (obj) {
-          return (obj.is_active === false)
-        })
-        inactiveDays = Array.from(new Set(inactiveAvailabilities.map(
-          function (obj) {
-            return obj.day_of_week
+      if (this.selectedClinicianId !== null) {
+        var inactiveAvailabilities
+        var inactiveDays
+        axios.get('/api/users/' + this.selectedClinicianId + '/availability').then(response => {
+          var data = response.data
+          inactiveAvailabilities = data.filter(function (obj) {
+            return (obj.is_active === false)
           })
-        ))
-        this.state.disabled.days = inactiveDays
-      })
+          inactiveDays = Array.from(new Set(inactiveAvailabilities.map(
+            function (obj) {
+              return obj.day_of_week
+            })
+          ))
+          this.state.disabled.days = inactiveDays
+        })
+      }
     }
   },
 
