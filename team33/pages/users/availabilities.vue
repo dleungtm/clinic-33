@@ -37,7 +37,7 @@ export default {
   },
 
   mounted () {
-    axios.get('/api/users/' + this.$store.state.authUser.user_id + '/availability/').then(response => {
+    axios.get('/api/users/' + this.$store.state.authUser.user_id + '/availability').then(response => {
       var data = response.data.map(function (obj) {
         switch (obj.day) {
           case 0:
@@ -72,7 +72,7 @@ export default {
       return true
     },
     buttonAction: function (entry) {
-      axios.post('/api/users/' + this.$store.state.authUser.user_id + '/availability/', {
+      axios.post('/api/users/' + this.$store.state.authUser.user_id + '/availability', {
         headers:
           {
             'Content-Type': 'application/json'
@@ -83,7 +83,7 @@ export default {
             day_of_week: entry.day_of_week
           }
       }).then(response => {
-        axios.get('/api/users/' + this.$store.state.authUser.user_id + '/availability/').then(response => {
+        axios.get('/api/users/' + this.$store.state.authUser.user_id + '/availability').then(response => {
           var data = response.data.map(function (obj) {
             switch (obj.day) {
               case 0:

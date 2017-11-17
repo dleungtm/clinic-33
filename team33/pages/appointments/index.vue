@@ -44,9 +44,8 @@ export default {
       gridColumns: [
         { key: 'date', displayName: 'Date' },
         { key: 'start_time', displayName: 'Time' },
-        { key: 'patient_fname', displayName: 'First Name' },
-        { key: 'patient_lname', displayName: 'Last Name' },
-        { key: 'last_name', displayName: 'Clinician' }
+        { key: 'patient_name', displayName: 'Patient' },
+        { key: 'clinician_name', displayName: 'Clinician' }
       ],
       appointments: []
     }

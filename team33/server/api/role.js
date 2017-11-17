@@ -8,7 +8,6 @@ router.get('/roles', function (req, res, next) {
   const query = 'SELECT * FROM role;'
   connection.query(query, {type: connection.QueryTypes.SELECT})
     .then(roles => {
-      console.log(roles)
       res.json(roles)
     })
 })

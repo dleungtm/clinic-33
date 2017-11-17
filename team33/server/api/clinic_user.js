@@ -6,7 +6,10 @@ const router = Router()
 
 /* GET all users along with their roles. */
 router.get('/users', function (req, res, next) {
-  const query = 'SELECT c.user_id, first_name, last_name, role_name FROM clinic_user c LEFT JOIN user_role u ON u.user_id = c.user_id INNER JOIN role r ON r.role_id = u.role_id;'
+  const query = `SELECT c.user_id, first_name, last_name, role_name
+                  FROM clinic_user c
+                  LEFT JOIN user_role u ON u.user_id = c.user_id
+                  INNER JOIN role r ON r.role_id = u.role_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT
@@ -18,13 +21,30 @@ router.get('/users', function (req, res, next) {
 
 /* GET all clinic staff. */
 router.get('/users/staff', function (req, res, next) {
-  const query = 'SELECT DISTINCT c.user_id, first_name, last_name FROM clinic_user c INNER JOIN user_role u ON u.user_id = c.user_id WHERE u.role_id IN (1, 2, 3, 4);'
+  const query = `SELECT DISTINCT c.user_id, first_name, last_name
+                  FROM clinic_user c INNER JOIN user_role u ON u.user_id = c.user_id
+                  WHERE u.role_id IN (1, 2, 3, 4);`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT
     })
     .then(users => {
       res.json(users)
+    })
+})
+
+/* GET all clinicians. */
+router.get('/users/clinicians', function (req, res, next) {
+  const query = `SELECT DISTINCT c.user_id, first_name || ' ' || last_name as name
+                  FROM clinic_user c
+                  INNER JOIN user_role u ON u.user_id = c.user_id
+                  WHERE u.role_id = 2;`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.SELECT
+    })
+    .then(clinicians => {
+      res.json(clinicians)
     })
 })
 
@@ -108,8 +128,8 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
     })
 })
 
-/* get Availabilities by User ID */
-router.get('/users/:user_id/availability/', function (req, res, next) {
+/* Get Availabilities by User ID */
+router.get('/users/:user_id/availability', function (req, res, next) {
   const user_id = req.params.user_id
   const query = `SELECT a.timeblock_id, to_char(start_time, :time_format) as start_time, day_of_week, day_of_week as day, clinician_id, is_active
                   FROM availability a, timeblock t
@@ -129,7 +149,7 @@ router.get('/users/:user_id/availability/', function (req, res, next) {
 })
 
 // Toggle Availability
-router.post('/users/:user_id/availability/', bodyParser.json(), function (req, res, next) {
+router.post('/users/:user_id/availability', bodyParser.json(), function (req, res, next) {
   const timeblock_id = req.body.data.timeblock_id
   const day_of_week = req.body.data.day_of_week
   const clinician_id = req.params.user_id

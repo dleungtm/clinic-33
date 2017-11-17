@@ -17,7 +17,6 @@ router.get('/appointment_records/:patient_id', bodyParser.json(), function (req,
       }
     })
     .then(appointments => {
-      console.log(appointments)
       res.json(appointments)
     })
 })

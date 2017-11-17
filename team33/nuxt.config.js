@@ -10,8 +10,7 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'CPSC 304 Project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-      
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }    
     ]
   },
   /*

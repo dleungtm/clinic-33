@@ -113,9 +113,19 @@ a
 
   label
     float left
-    width 75px
+    min-width 80px
     padding-top 3px // to make the label vertically inline with the input element
 
+select
+  -webkit-appearance menulist-button
+  -webkit-user-select none
+  border 1px solid #35495e
+  color #35495e
+  height 34px
+  width 300px
+  overflow hidden
+  text-overflow ellipsis
+  
 .button--default
   display inline-block
   border-radius 4px

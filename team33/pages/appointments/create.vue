@@ -6,10 +6,26 @@
       <div class="subsection">
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">Create Appointment</span>
-          <dropdown
-            :options="options"
-            :selectedOption="selectedOption">
-          </dropdown>
+        </div>
+        <div class="form-field">
+          <label>Select Clinician: </label>
+          <br>
+          <select v-model="selectedClinicianId">
+            <option disabled value="">Please Select One</option>
+            <option v-for="clinician in clinicians" :value="clinician.user_id">
+            {{ clinician.name }}
+            </option>
+          </select>
+        </div>
+        <br>
+        <br>
+        <div class="form-field">
+          <label>Select Date: </label>
+          <br>
+          <p style="visibility: hidden">{{ disabledDays }}</p>
+          <datepicker
+            :disabled="state.disabled">
+          </datepicker>
         </div>
       </div>
     </div>
@@ -17,18 +33,44 @@
 </template>
 
 <script>
+import axios from '~/plugins/axios'
 
 export default {
 
   data () {
     return {
-      options: [
-        { name: 'Option 1', value: 1 },
-        { name: 'Option 2', value: 2 },
-        { name: 'Option 3', value: 3 },
-        { name: 'Option 4', value: 4 }
-      ],
-      selectedOption: { name: 'Option 1', value: 1 }
+      clinicians: [],
+      selectedClinicianId: null,
+      state: {
+        disabled: {
+          days: []
+        }
+      }
+    }
+  },
+
+  mounted () {
+    axios.get('/api/users/clinicians').then(response => {
+      this.clinicians = response.data
+    })
+  },
+
+  computed: {
+    disabledDays: function () {
+      var inactiveAvailabilities
+      var inactiveDays
+      axios.get('/api/users/' + this.selectedClinicianId + '/availability').then(response => {
+        var data = response.data
+        inactiveAvailabilities = data.filter(function (obj) {
+          return (obj.is_active === false)
+        })
+        inactiveDays = Array.from(new Set(inactiveAvailabilities.map(
+          function (obj) {
+            return obj.day_of_week
+          })
+        ))
+        this.state.disabled.days = inactiveDays
+      })
     }
   },
 
