@@ -10,7 +10,7 @@
         <form id="search">
           <i class="fa fa-search" aria-hidden="true"></i>
           <input name="query" v-model="searchQuery" >
-          <nuxt-link class="button--default" style="margin-left: 1em" to="/users/roles">Edit User Roles</nuxt-link>
+          <nuxt-link class="button--default" style="margin-left: 1em" to="/users/assign">Edit User Roles</nuxt-link>
         </form>
         <br>
         <grid

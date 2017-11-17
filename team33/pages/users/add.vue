@@ -3,6 +3,7 @@
   <div class="content">
     <div class="subsection">
     <form style="margin: 15px 15px;">
+      <h1> User Information </h1>
       <div style="margin: 10px 0;">
         <span class="user-password">First Name: </span>
         <input type="text" v-model="first_name"></input>
@@ -28,7 +29,7 @@
         <input type="text" v-model="address"></input>
       </div>
       <hr/>
-      <h1>User Health Info</h1>
+      <h1>User Health Information</h1>
       <div style="margin: 10px 0;">
         <span class="user-password">DOB: </span>
         <input type="text" v-model="dob"> (YYYY-MM-DD)</input>
