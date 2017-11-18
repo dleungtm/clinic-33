@@ -43,11 +43,11 @@
       return {
         medicationName: null,
         medicationInventory: null,
-        medicationPrice: null,
+        medicationPrice: '',
         money: {
           decimal: '.',
           thousands: ',',
-          prefix: '$ ',
+          prefix: '',
           suffix: '',
           precision: 2,
           masked: false /* doesn't work with directive */
@@ -55,7 +55,7 @@
       }
     },
     mounted () {
-      axios.get('/api/medications').then(response => {
+      axios.get('/api/medication/add').then(response => {
         this.medications = response.data
       })
     },
@@ -66,7 +66,7 @@
     },
     methods: {
       submitInsert () {
-        axios.post('/api/medications/add', {
+        axios.post('/api/medication/add', {
           headers:
             {
               'Content-Type': 'application/json'
@@ -80,7 +80,7 @@
         })
           .then((response) => {
             if (response.data.message === 'Medication Added.') {
-              self.$nuxt.$router.replace({path: '/pharmacy/'})
+              self.$nuxt.$router.replace({path: '/pharmacy'})
             }
           })
       }

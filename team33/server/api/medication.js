@@ -59,19 +59,17 @@ router.post('/medications/update/', bodyParser.json(), function (req, res, next)
     })
 })
 
-router.post('/medications/add', bodyParser.json(), function (req, res, next) {
-  const medication_id = req.body.data.medication_id
+router.post('/medication/add', bodyParser.json(), function (req, res, next) {
   const name = req.body.data.name
   const inventory = req.body.data.inventory
   const unit_price = req.body.data.unit_price
 
-  const query = `INSERT INTO medication (medication_id, name, inventory, unit_price)
-                  VALUES (:medication_id, :name, :inventory, :unit_price);`
+  const query = `INSERT INTO medication (name, inventory, unit_price)
+                  VALUES (:name, :inventory, :unit_price);`
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,
       replacements: {
-        medication_id: medication_id,
         name: name,
         inventory: inventory,
         unit_price: unit_price
