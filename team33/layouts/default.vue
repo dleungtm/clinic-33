@@ -38,7 +38,7 @@ a
   text-decoration none
 
 .view
-  max-width 800px
+  max-width 1000px
   margin 0 auto
   position relative
 
@@ -107,7 +107,6 @@ a
 
   input
     float left
-    margin-left 1em
     font-size 14px
     padding 2px
 
@@ -115,6 +114,11 @@ a
     float left
     min-width 80px
     padding-top 3px // to make the label vertically inline with the input element
+    
+#search
+  width inherit
+  input
+    width 300px
 
 select
   -webkit-appearance menulist-button

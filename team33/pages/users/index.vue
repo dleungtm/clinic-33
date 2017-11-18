@@ -4,7 +4,8 @@
       <div class="subsection">
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">Users</span>
-          <nuxt-link class="button--default" to="/users/add">Add User</nuxt-link>
+          <nuxt-link style="margin-right: 30px;" class="button--default" to="/users/add">Add User</nuxt-link>
+          <nuxt-link class="button--default" to="/users/is_active">Set Inactive</nuxt-link>
         </div>
 
         <form id="search">

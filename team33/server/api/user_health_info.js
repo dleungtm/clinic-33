@@ -6,7 +6,7 @@ const router = Router()
 
 /* GET user health information listing */
 router.get('/userhealthinfo', function (req, res, next) {
-  const query = 'SELECT * FROM user_health_info;'
+  const query = `SELECT * FROM user_health_info;`
   connection.query(query, { type: connection.QueryTypes.SELECT })
     .then(uhi => {
       console.log(uhi)
@@ -17,8 +17,8 @@ router.get('/userhealthinfo', function (req, res, next) {
 /* GET user health information by user_id */
 router.get('/userhealthinfo/:user_id', function (req, res, next) {
   const user_id = req.params.user_id
-  const query = 'SELECT * FROM user_health_info WHERE user_id = :user_id;'
-
+  const query = `SELECT * FROM user_health_info
+                  WHERE user_id = :user_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,
@@ -44,7 +44,9 @@ router.post('/userhealthinfo/update', bodyParser.json(), function (req, res, nex
   const blood_type = req.body.data.blood_type
   const sex = req.body.data.sex
 
-  const query = 'UPDATE medication SET dob = :dob, phn = :phn, height = :height, blood_type = :blood_type, sex = :sex WHERE user_id = :user_id ;'
+  const query = `UPDATE medication
+                  SET dob = :dob, phn = :phn, height = :height, blood_type = :blood_type, sex = :sex
+                  WHERE user_id = :user_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.UPDATE,
@@ -70,7 +72,8 @@ router.post('/userhealthinfo/add', bodyParser.json(), function (req, res, next) 
   const blood_type = req.body.data.blood_type
   const sex = req.body.data.sex
 
-  const query = 'INSERT INTO user_health_info (user_id, dob, phn, height, blood_type, sex) VALUES (:user_id, :dob, :phn, :height, :blood_type, :sex)'
+  const query = `INSERT INTO user_health_info (user_id, dob, phn, height, blood_type, sex)
+                  VALUES (:user_id, :dob, :phn, :height, :blood_type, :sex);`
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,

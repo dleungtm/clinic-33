@@ -6,7 +6,7 @@ const router = Router()
 
 /* GET all users along with their roles. */
 router.get('/users', function (req, res, next) {
-  const query = `SELECT c.user_id, first_name, last_name, role_name
+  const query = `SELECT c.user_id, first_name, last_name, initcap(role_name) as role_name
                   FROM clinic_user c
                   LEFT JOIN user_role u ON u.user_id = c.user_id
                   INNER JOIN role r ON r.role_id = u.role_id;`
@@ -65,7 +65,7 @@ router.get('/users/clinicians', function (req, res, next) {
 /* GET user by ID. */
 router.get('/users/:user_id', function (req, res, next) {
   const user_id = req.params.user_id
-  const query = 'SELECT * FROM clinic_user WHERE user_id = :user_id;'
+  const query = `SELECT * FROM clinic_user WHERE user_id = :user_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,
@@ -92,7 +92,9 @@ router.post('/users/update', bodyParser.json(), function (req, res, next) {
   const password = req.body.data.password
   const is_active = req.body.data.is_active
 
-  const query = 'UPDATE clinic_user SET first_name = :first_name, last_name = :last_name, phone_number = :phone_number, address = :address, password = :password, is_active = :is_active WHERE user_id = :user_id AND username = :username;'
+  const query = `UPDATE clinic_user
+                  SET first_name = :first_name, last_name = :last_name, phone_number = :phone_number, address = :address, password = :password, is_active = :is_active
+                  WHERE user_id = :user_id AND username = :username;`
   connection.query(query,
     {
       type: connection.QueryTypes.UPDATE,
@@ -128,7 +130,17 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
   const blood_type = req.body.data.blood_type
   const sex = req.body.data.sex
 
-  const query = ' WITH rows AS(INSERT INTO clinic_user (first_name, last_name, phone_number, address, username, password, is_active) VALUES (:first_name, :last_name, :phone_number, :address, :username, :password, :is_active) RETURNING user_id ), rows2 AS (INSERT INTO user_role (user_id, role_id) SELECT user_id, 5 FROM rows RETURNING user_id) INSERT INTO user_health_info (user_id, phn, dob, height, blood_type, sex) SELECT user_id, :phn, :dob, :height, :blood_type, :sex FROM rows2  ;'
+  const query = `WITH
+                  newUser AS (
+                    INSERT INTO clinic_user (first_name, last_name, phone_number, address, username, password, is_active)
+                    VALUES (:first_name, :last_name, :phone_number, :address, :username, :password, :is_active)
+                    RETURNING user_id
+                  ), newUserRole AS (
+                    INSERT INTO user_role (user_id, role_id) SELECT user_id, 5 FROM newUser
+                    RETURNING user_id
+                  )
+                    INSERT INTO user_health_info (user_id, phn, dob, height, blood_type, sex)
+                    SELECT user_id, :phn, :dob, :height, :blood_type, :sex FROM newUserRole;`
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,
@@ -251,7 +263,7 @@ router.post('/users/get_by_id_and_pass', bodyParser.json(), function (req, res) 
 // /* Initialize Availabilities by User ID */
 // router.post('/users/:user_id/availability/', function (req, res, next) {
 //   const user_id = req.params.user_id
-//   const query = 'SELECT * FROM availability WHERE clinician_id = :user_id ;'
+//   const query = `SELECT * FROM availability WHERE clinician_id = :user_id ;`
 //   connection.query(query,
 //     {
 //       type: connection.QueryType.SELECT,
@@ -268,7 +280,7 @@ router.post('/users/get_by_id_and_pass', bodyParser.json(), function (req, res) 
 router.get('/users/all_info/:user_id', function (req, res, next) {
   const user_id = req.params.user_id
   const query = `SELECT c.user_id, c.first_name, c.last_name, u.phn, u.dob, u.height, u.blood_type, u.sex
-	                FROM clinic_user c
+                  FROM clinic_user c
                   INNER JOIN user_health_info u ON c.user_id = u.user_id
                   WHERE c.user_id = :user_id;`
 
@@ -289,4 +301,24 @@ router.get('/users/all_info/:user_id', function (req, res, next) {
     })
 })
 
+/* update a clinic_user's active status */
+router.post('/users/is_active', bodyParser.json(), function (req, res, next) {
+  const user_id = req.body.data.user_id
+  const is_active = req.body.data.is_active
+
+  const query = `UPDATE clinic_user
+                  SET is_active = :is_active
+                  WHERE user_id = :user_id;`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.UPDATE,
+      replacements: {
+        user_id: user_id,
+        is_active: is_active
+      }
+    })
+    .then(result => {
+      res.send('/users')
+    })
+})
 export default router
