@@ -26,6 +26,7 @@
           </select>
         </div>
       </form>
+      <br>
       <nuxt-link class="button--default" to="/user/roles" @click.native="submitInsert">Update User</nuxt-link>
       </div>
     </div>
