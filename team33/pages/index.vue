@@ -25,14 +25,15 @@
         </div>
         <div v-else>
           <h1>Welcome, {{ $store.state.authUser.full_name }}.</h1>
-          <h5>These are your account details:</h5>
+          <br>
+          <h5>Here are your account details:</h5>
           <div style="margin:20px">
             <label><b>Username: </b></label>
             {{ $store.state.authUser.username }}
           </div>
           <div style="margin:20px">
             <label><b>Password: </b></label>
-            <nuxt-link class="button--default" to="/users/password">Change your password</nuxt-link>
+            <nuxt-link class="button--default" style="text-decoration: none;" to="/users/password">Change your password</nuxt-link>
           </div>
           <div style="margin:20px">
             <label><b>Role: </b></label>
