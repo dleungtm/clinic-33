@@ -80,7 +80,7 @@
         })
           .then((response) => {
             if (response.data.message === 'Medication Added.') {
-              self.$nuxt.$router.replace({path: '/pharmacy/'})
+              self.$nuxt.$router.replace({path: '/pharmacy'})
             }
           })
       }
