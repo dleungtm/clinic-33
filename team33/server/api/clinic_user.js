@@ -251,4 +251,24 @@ router.get('/users/all_info/:user_id', function (req, res, next) {
     })
 })
 
+/* update a clinic_user's active status */
+router.post('/users/is_active', bodyParser.json(), function (req, res, next) {
+  const user_id = req.body.data.user_id
+  const is_active = req.body.data.is_active
+
+  const query = `UPDATE clinic_user
+                  SET is_active = :is_active
+                  WHERE user_id = :user_id;`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.UPDATE,
+      replacements: {
+        user_id: user_id,
+        is_active: is_active
+      }
+    })
+    .then(result => {
+      res.send('/users')
+    })
+})
 export default router
