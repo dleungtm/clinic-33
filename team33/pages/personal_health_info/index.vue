@@ -26,13 +26,24 @@
         <div style="margin: 25px;">
           <span style="vertical-align: middle;"><b>Blood Type:</b> {{bloodType}}</span>
         </div>
-        <div style="margin: 25px 10px;">
-          <span class="subsection-title" style="vertical-align: middle;">Your Prescriptions</span>
+        <div>
+          <div style="margin: 25px 10px;">
+            <span class="subsection-title" style="vertical-align: middle;">Your Prescriptions</span>
+          </div>
+          <grid
+            :data="prescriptionItems"
+            :columns="prescriptionGridColumns">
+          </grid>
         </div>
-        <grid
-          :data="items"
-          :columns="gridColumns">
-        </grid>
+        <div>
+          <div style="margin: 25px 10px;">
+            <span class="subsection-title" style="vertical-align: middle;">Your Past Appointments</span>
+          </div>
+          <grid
+            :data="pastAppointmentItems"
+            :columns="pastAppointmentGridColumns">
+          </grid>
+        </div>
       </div>
     </div>
   </section>
@@ -51,12 +62,20 @@ export default {
       gender: '',
       height: 0,
       bloodType: '',
-      items: [],
-      gridColumns: [
+      prescriptionItems: [],
+      prescriptionGridColumns: [
+        { key: 'date', displayName: 'Date' },
         { key: 'name', displayName: 'Medication Name' },
         { key: 'dosage', displayName: 'Dosage' },
-        { key: 'cln', displayName: 'Prescribed by' },
-        { key: 'date_prescribed', displayName: 'Date Prescribed' }
+        { key: 'clinician_name', displayName: 'Prescribed by' },
+        { key: 'pharmacist_name', displayName: 'Filled by' }
+      ],
+      pastAppointmentItems: [],
+      pastAppointmentGridColumns: [
+        { key: 'date', displayName: 'Date' },
+        { key: 'start_time', displayName: 'Time' },
+        { key: 'clinician_name', displayName: 'Attended to by' },
+        { key: 'notes', displayName: 'Notes' }
       ]
     }
   },
@@ -71,7 +90,10 @@ export default {
       this.bloodType = response.data.blood_type
     })
     axios.get('/api/prescriptions/' + this.$store.state.authUser.user_id).then(response => {
-      this.items = response.data
+      this.prescriptionItems = response.data
+    })
+    axios.get('/api/appointment_records/' + this.$store.state.authUser.user_id).then(response => {
+      this.pastAppointmentItems = response.data
     })
   }
 }

@@ -9,7 +9,6 @@
           <nuxt-link v-if="$store.state.isAdmin" to="/users">Users</nuxt-link>
           <nuxt-link v-if="!$store.state.isAdmin && !$store.state.isReceptionist" to="/appointments">My Appointments</nuxt-link>
           <nuxt-link v-if="$store.state.isAdmin || $store.state.isReceptionist" to="/appointments">Appointments</nuxt-link>
-          <nuxt-link v-if="!$store.state.isAdmin && !$store.state.isReceptionist" to="/prescriptions">My Prescriptions</nuxt-link>
           <nuxt-link v-if="$store.state.isAdmin || $store.state.isPharmacist" to="/prescriptions">Prescriptions</nuxt-link>
           <nuxt-link v-if="$store.state.isAdmin || $store.state.isPharmacist" to="/pharmacy">Pharmacy</nuxt-link>
           <nuxt-link v-if="$store.state.isPatient" to="/personal_health_info">Your Record</nuxt-link>

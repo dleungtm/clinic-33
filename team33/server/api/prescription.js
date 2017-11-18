@@ -43,17 +43,18 @@ router.get('/prescriptions', bodyParser.json(), function (req, res, next) {
 router.get('/prescriptions/:patient_id', function (req, res, next) {
   const patient_id = req.params.patient_id
 
-  const query = `SELECT uc.first_name cfn, uc.last_name cln, up.first_name pfn, up.last_name pln, p.date_prescribed, p.dosage, m.name
-	                FROM prescription p
-                  INNER JOIN clinic_user uc ON p.clinician_id = uc.user_id
-                  LEFT JOIN clinic_user up ON p.filled_by = up.user_id
+  const query = `SELECT (cu.first_name || ' ' || cu.last_name) as clinician_name, CASE WHEN pu.first_name IS NOT NULL AND pu.last_name IS NOT NULL THEN (pu.first_name || ' ' || pu.last_name) ELSE 'Not Filled' END as pharmacist_name, to_char(p.date_prescribed, :date_format) as date, p.dosage, m.name
+                  FROM prescription p
+                  INNER JOIN clinic_user cu ON p.clinician_id = cu.user_id
+                  LEFT JOIN clinic_user pu ON p.filled_by = pu.user_id
                   INNER JOIN medication m ON p.medication_id = m.medication_id
                   WHERE p.patient_id = :patient_id`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,
       replacements: {
-        patient_id:  patient_id
+        patient_id:  patient_id,
+        date_format: 'Month d, YYYY'
       }
     })
     .then(prescriptions => {
