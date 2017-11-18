@@ -1,33 +1,33 @@
 <template>
   <section class="assign-view">
-  <div class="content">
-    <div class="subsection">
-      <div style="margin: 25px 10px;">
-          <span class="subsection-title" style="vertical-align: middle;">Assign User Role</span>
-      </div>
-      <form>
-        <div class="form-field">
-          <label>User ID:</label>
-          <input type="text" v-model="user_id"></input>
+    <div class="content">
+      <div class="subsection">
+        <div style="margin: 25px 10px;">
+            <span class="subsection-title" style="vertical-align: middle;">Assign User Role</span>
         </div>
+        <form>
+          <div class="form-field">
+            <label>User ID:</label>
+            <input type="text" v-model="user_id"></input>
+          </div>
+          <br>
+          <div class="form-field">
+          <label>Role ID:</label>
+            <!-- <input type="text" v-model="role_id"></input>
+            -->
+            <select v-model="role_id">
+              <option disabled value="">Please Select One</option>
+              <option value="1"> Administrator</option>
+              <option value="2"> Clinician</option>
+              <option value="3"> Receptionist</option>
+              <option value="4"> Pharmacist</option>
+              <option value="5"> Patient</option>
+              </option>
+            </select>
+          </div>
+        </form>
         <br>
-        <div class="form-field">
-         <label>Role ID:</label>
-          <!-- <input type="text" v-model="role_id"></input>
-          -->
-           <select v-model="role_id">
-            <option disabled value="">Please Select One</option>
-            <option value="1"> Administrator</option>
-            <option value="2"> Clinician</option>
-            <option value="3"> Receptionist</option>
-            <option value="4"> Pharmacist</option>
-            <option value="5"> Patient</option>
-            </option>
-          </select>
-        </div>
-      </form>
-      <br>
-      <nuxt-link class="button--default" to="/user/roles" @click.native="submitInsert">Update User</nuxt-link>
+        <nuxt-link class="button--default" to="/user/roles" @click.native="submitInsert">Update User</nuxt-link>
       </div>
     </div>
   </section>
