@@ -3,7 +3,7 @@
     <div class="content">
       <div class="subsection">
         <div style="margin: 25px 10px;">
-          <span class="subsection-title" style="vertical-align: middle;">Your Record</span>
+          <span class="subsection-title" style="vertical-align: middle;">{{titleName}} Record</span>
         </div>
         <div style="margin: 25px;">
           <span style="vertical-align: middle;"><b>First Name:</b> {{firstName}}</span>
@@ -28,7 +28,7 @@
         </div>
         <div>
           <div style="margin: 25px 10px;">
-            <span class="subsection-title" style="vertical-align: middle;">Your Prescriptions</span>
+            <span class="subsection-title" style="vertical-align: middle;">Prescriptions</span>
           </div>
           <grid
             :data="prescriptionItems"
@@ -37,7 +37,7 @@
         </div>
         <div>
           <div style="margin: 25px 10px;">
-            <span class="subsection-title" style="vertical-align: middle;">Your Past Appointments</span>
+            <span class="subsection-title" style="vertical-align: middle;">Past Appointments</span>
           </div>
           <grid
             :data="pastAppointmentItems"
@@ -55,6 +55,7 @@ import axios from '~/plugins/axios'
 export default {
   data () {
     return {
+      titleName: '',
       firstName: '',
       lastName: '',
       dateOfBirth: '',
@@ -80,7 +81,12 @@ export default {
     }
   },
   mounted () {
-    axios.get('/api/users/all_info/' + this.$store.state.authUser.user_id).then(response => {
+    axios.get('/api/users/all_info/' + this.$route.params.user_id).then(response => {
+      if (this.$route.params.user_id === this.$store.state.authUser.user_id) {
+        this.titleName = 'Your'
+      } else {
+        this.titleName = response.data.first_name + "'s"
+      }
       this.firstName = response.data.first_name
       this.lastName = response.data.last_name
       this.dateOfBirth = response.data.dob
@@ -89,10 +95,10 @@ export default {
       this.height = response.data.height
       this.bloodType = response.data.blood_type
     })
-    axios.get('/api/prescriptions/' + this.$store.state.authUser.user_id).then(response => {
+    axios.get('/api/prescriptions/' + this.$route.params.user_id).then(response => {
       this.prescriptionItems = response.data
     })
-    axios.get('/api/appointment_records/' + this.$store.state.authUser.user_id).then(response => {
+    axios.get('/api/appointment_records/' + this.$route.params.user_id).then(response => {
       this.pastAppointmentItems = response.data
     })
   }
