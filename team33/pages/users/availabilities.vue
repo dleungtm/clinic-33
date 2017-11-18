@@ -9,9 +9,9 @@
           :data="availabilities"
           :columns="gridColumns"
           :filter-key="searchQuery"
-          :hasAction="hasAction"
-          :buttonLabel="buttonLabel"
-          :buttonAction="buttonAction">
+          :hasAction1="hasAction1"
+          :buttonLabel1="buttonLabel1"
+          :buttonAction1="buttonAction1">
         </grid>
       </div>
     </div>
@@ -26,7 +26,7 @@ export default {
   data () {
     return {
       searchQuery: '',
-      buttonLabel: 'Toggle Availability',
+      buttonLabel1: 'Toggle Availability',
       gridColumns: [
         { key: 'day', displayName: 'Day' },
         { key: 'start_time', displayName: 'Time' },
@@ -68,11 +68,11 @@ export default {
   },
 
   methods: {
-    hasAction: function (entry) {
+    hasAction1: function (entry) {
       return true
     },
     // toggling availability
-    buttonAction: function (entry) {
+    buttonAction1: function (entry) {
       axios.post('/api/users/' + this.$store.state.authUser.user_id + '/availability', {
         headers:
           {

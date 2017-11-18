@@ -125,6 +125,7 @@ router.get('/users/:user_id', function (req, res, next) {
     })
 })
 
+/* Update User by ID and Username */
 router.post('/users/update', bodyParser.json(), function (req, res, next) {
   const user_id = req.body.data.user_id
   const first_name = req.body.data.first_name
@@ -158,6 +159,7 @@ router.post('/users/update', bodyParser.json(), function (req, res, next) {
     })
 })
 
+/* CREATE New User */
 router.post('/users/add', bodyParser.json(), function (req, res, next) {
   const user_id = req.body.data.user_id
   const first_name = req.body.data.first_name

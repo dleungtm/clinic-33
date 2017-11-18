@@ -72,7 +72,7 @@ export default {
       return true
     },
     buttonAction1: function (entry) {
-      // go to appointment record page
+      this.$router.push({ path: `/appointment_records/${entry.appointment_id}` })
     },
     hasAction2: function (entry) {
       return (new Date(entry.date) >= new Date())

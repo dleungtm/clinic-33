@@ -15,9 +15,9 @@
             :data="recordItems"
             :columns="recordGridColumns"
             :filter-key="searchQuery"
-            :hasAction="hasAction"
-            :buttonLabel="buttonLabel"
-            :buttonAction="buttonAction">
+            :hasAction1="hasAction1"
+            :buttonLabel1="buttonLabel1"
+            :buttonAction1="buttonAction1">
           </grid>
         </div>
       </div>
@@ -32,7 +32,7 @@ export default {
   data () {
     return {
       searchQuery: '',
-      buttonLabel: 'Details',
+      buttonLabel1: 'Details',
       recordItems: [],
       recordGridColumns: [
         { key: 'last_name', displayName: 'Last Name' },
@@ -49,10 +49,10 @@ export default {
     })
   },
   methods: {
-    hasAction: function (entry) {
+    hasAction1: function (entry) {
       return true
     },
-    buttonAction: function (entry) {
+    buttonAction1: function (entry) {
       this.$router.push({ path: `/user_health_info/${entry.user_id}` })
     }
   }
