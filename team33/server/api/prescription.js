@@ -27,7 +27,7 @@ router.get('/prescriptions', function (req, res, next) {
     {
       type: connection.QueryTypes.SELECT,
       replacements: {
-        date_format: 'Month d, YYYY'
+        date_format: 'Month dd, YYYY'
       }
     })
     .then(prescriptions => {
@@ -50,7 +50,7 @@ router.get('/prescriptions/user/:patient_id', function (req, res, next) {
       type: connection.QueryTypes.SELECT,
       replacements: {
         patient_id: patient_id,
-        date_format: 'Month d, YYYY'
+        date_format: 'Month dd, YYYY'
       }
     })
     .then(prescriptions => {

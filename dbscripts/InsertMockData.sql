@@ -183,8 +183,8 @@ INSERT INTO appointment ("date", "timeblock_id", "patient_id", "clinician_id") V
 INSERT INTO appointment ("date", "timeblock_id", "patient_id", "clinician_id") VALUES ('2018-01-08', 10, 18, 6);
 
 -- CREATE BILLING HISTORY
-INSERT INTO billing_history ("patient_id", "appointment_id", "amount", "date_paid") VALUES (10, 1, 300.00, '2017-11-23');
-INSERT INTO billing_history ("patient_id", "appointment_id", "amount", "date_paid") VALUES (12, 2, 300.00, NULL);
+INSERT INTO billing_history ("patient_id", "appointment_id", "amount", "date_paid") VALUES (10, 1, 175.00, '2017-11-23');
+INSERT INTO billing_history ("patient_id", "appointment_id", "amount", "date_paid") VALUES (12, 2, 175.00, NULL);
 
 -- CREATE APPOINTMENT RECORD
 INSERT INTO appointment_record ("appointment_id", "patient_id", "notes") VALUES (1, 10, 'Higher than normal blood pressure; prescribed 30 units Vasotec.');

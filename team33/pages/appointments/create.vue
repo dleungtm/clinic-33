@@ -84,6 +84,7 @@ export default {
       state: {
         date: null,
         disabled: {
+          to: new Date(Date.now() - 8640000),
           days: []
         }
       }

@@ -14,7 +14,7 @@ router.get('/appointments', function (req, res, next) {
   connection.query(query, {
     type: connection.QueryTypes.SELECT,
     replacements: {
-      date_format: 'Month d, YYYY',
+      date_format: 'Month dd, YYYY',
       time_format: 'HH24:MI'
     }
   })
@@ -61,7 +61,7 @@ router.get('/appointments/user/:user_id', function (req, res, next) {
       type: connection.QueryTypes.SELECT,
       replacements: {
         user_id: user_id,
-        date_format: 'Month d, YYYY',
+        date_format: 'Month dd, YYYY',
         time_format: 'HH24:MI'
       }
     })
@@ -97,8 +97,17 @@ router.post('/appointments/create', bodyParser.json(), function (req, res, next)
   const patient_id = req.body.data.patient_id
   const clinician_id = req.body.data.clinician_id
 
-  const query = `INSERT INTO appointment (date, timeblock_id, patient_id, clinician_id)
-                  VALUES (:date, :timeblock_id, :patient_id, :clinician_id);`
+  const query = `WITH
+                  newAppointment AS (
+                    INSERT INTO appointment (date, timeblock_id, patient_id, clinician_id)
+                    VALUES (:date, :timeblock_id, :patient_id, :clinician_id)
+                    RETURNING appointment_id, patient_id
+                  ), newRecord AS (
+                    INSERT INTO appointment_record (appointment_id, patient_id) SELECT appointment_id, patient_id FROM newAppointment
+                    RETURNING appointment_id, :patient_id
+                  )
+                    INSERT INTO billing_history (appointment_id, patient_id, amount)
+                    SELECT appointment_id, :patient_id, 175.00 FROM newRecord;`
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,

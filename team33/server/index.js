@@ -19,7 +19,7 @@ app.use(session({
   secret: 'team33',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 600000 }
 }))
 
 // Initialize connection to database

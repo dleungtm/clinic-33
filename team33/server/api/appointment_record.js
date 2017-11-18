@@ -19,7 +19,7 @@ router.get('/appointment_records/:patient_id', bodyParser.json(), function (req,
       type: connection.QueryTypes.SELECT,
       replacements: {
         patient_id: patient_id,
-        date_format: 'Month d, YYYY',
+        date_format: 'Month dd, YYYY',
         time_format: 'HH24:MI'
       }
     })
