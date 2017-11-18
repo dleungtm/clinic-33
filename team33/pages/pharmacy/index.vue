@@ -19,7 +19,11 @@
           <grid
             :data="medications"
             :columns="gridColumns"
-            :filter-key="searchQuery">
+            :filter-key="searchQuery"
+            :hasAction1="updateActionEnabled"
+            :buttonAction1="updateAction"
+            :buttonLabel1="buttonLabel1"
+          >
           </grid>
         </div>
         <h5 v-if="medications.length < 1">The pharmacy does not yet stock any medication.</h5>
@@ -40,7 +44,15 @@
           { key: 'inventory', displayName: 'Inventory Count' },
           { key: 'unit_price', displayName: 'Price per Unit ($)' }
         ],
-        medications: []
+        medications: [],
+        updateActionEnabled: function () {
+          return true
+        },
+        updateAction: function (entry) {
+          let entryID = entry.medication_id
+          this.$nuxt.$router.replace({path: '/pharmacy/update/' + entryID})
+        },
+        buttonLabel1: 'Update Medication'
       }
     },
     mounted () {
