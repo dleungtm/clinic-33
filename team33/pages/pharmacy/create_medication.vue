@@ -55,7 +55,7 @@
       }
     },
     mounted () {
-      axios.get('/api/medication/add').then(response => {
+      axios.get('/api/medications/add').then(response => {
         this.medications = response.data
       })
     },
@@ -66,7 +66,7 @@
     },
     methods: {
       submitInsert () {
-        axios.post('/api/medication/add', {
+        axios.post('/api/medications/add', {
           headers:
             {
               'Content-Type': 'application/json'
