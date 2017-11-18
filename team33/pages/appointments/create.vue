@@ -7,7 +7,7 @@
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">Create Appointment</span>
         </div>
-        <div v-if="$store.state.isAdmin || $store.state.isReceptionist" class="form-field">
+        <div v-if="$store.state.isAdmin || $store.state.isReceptionist || $store.state.isClinician" class="form-field">
           <label>Select Patient: </label>
           <br>
           <select v-model="selectedPatientId">
@@ -16,7 +16,6 @@
             {{ patient.name }}
             </option>
           </select>
-          {{ selectedPatientId }}
         </div>
         <br>
         <br>
@@ -29,7 +28,6 @@
             {{ clinician.name }}
             </option>
           </select>
-            {{ selectedClinicianId }}
         </div>
         <br>
         <br>
@@ -41,7 +39,6 @@
             :disabled="state.disabled">
           </datepicker>
         </div>
-        <p v-if="state.date">{{ state.date.toDateString() }}</p>
         <br>
         <br>
         <div class="form-field">
@@ -54,7 +51,6 @@
             {{ timeblock.start_time }}
             </option>
           </select>
-          {{ selectedTimeblockId }}
         </div>
         <br>
         <br>
@@ -98,6 +94,9 @@ export default {
     axios.get('/api/users/patients').then(response => {
       this.patients = response.data
     })
+    if (this.$store.state.isClinician) {
+      this.selectedClinicianId = this.$store.state.user_id
+    }
   },
 
   methods: {

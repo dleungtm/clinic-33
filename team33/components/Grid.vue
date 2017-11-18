@@ -9,7 +9,9 @@
           <span class="arrow" :class="sortOrders[attr.key] > 0 ? 'asc' : 'dsc'">
           </span>
         </th>
-        <th v-if="hasAction">
+        <th v-if="hasAction1">
+        </th>
+        <th v-if="hasAction2">
         </th>
       </tr>
     </thead>
@@ -18,8 +20,11 @@
         <td v-for="attr in columns">
           {{entry[attr.key]}}
         </td>
-        <td v-if="hasAction">
-          <button v-if="hasAction(entry)" class="button--default" @click="buttonAction(entry)">{{ buttonLabel }}</button>
+        <td v-if="hasAction1">
+          <button v-if="hasAction1(entry)" class="button--default" @click="buttonAction1(entry)">{{ buttonLabel1 }}</button>
+        </td>
+        <td v-if="hasAction2">
+          <button v-if="hasAction2(entry)" class="button--default" @click="buttonAction2(entry)">{{ buttonLabel2 }}</button>
         </td>
       </tr>
     </tbody>
@@ -32,9 +37,12 @@ export default {
     data: Array,
     columns: Array,
     filterKey: String,
-    hasAction: Function,
-    buttonLabel: String,
-    buttonAction: Function
+    hasAction1: Function,
+    buttonAction1: Function,
+    buttonLabel1: String,
+    hasAction2: Function,
+    buttonAction2: Function,
+    buttonLabel2: String
   },
   data: function () {
     var sortOrders = {}

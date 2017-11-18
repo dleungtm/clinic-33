@@ -51,11 +51,12 @@ router.post('/appointments/check', bodyParser.json(), function (req, res, next) 
 /* Get Appointments by User ID */
 router.get('/appointments/user/:user_id', function (req, res, next) {
   const user_id = req.params.user_id
-  const query = `SELECT appointment_id, to_char(date, :date_format) as date, to_char(start_time, :time_format) as start_time, first_name || ' ' || last_name as clinician_name
-                  FROM appointment a, timeblock t, clinic_user c
-                  WHERE a.clinician_id = :user_id OR a.patient_id = :user_id
-                    AND c.user_id = :user_id
-                    AND t.timeblock_id = a.timeblock_id;`
+  const query = `SELECT appointment_id, to_char(date, :date_format) as date, to_char(start_time, :time_format) as start_time, c.first_name || ' ' || c.last_name as clinician_name, p.first_name || ' ' || p.last_name as patient_name
+                  FROM appointment a
+                  LEFT JOIN clinic_user c ON c.user_id = a.clinician_id
+                  LEFT JOIN clinic_user p ON p.user_id = a.patient_id
+                  LEFT JOIN timeblock t ON t.timeblock_id = a.timeblock_id
+                  WHERE a.clinician_id = :user_id OR a.patient_id = :user_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,

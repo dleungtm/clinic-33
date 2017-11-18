@@ -19,9 +19,12 @@
             :data="appointments"
             :columns="gridColumns"
             :filter-key="searchQuery"
-            :hasAction="hasAction"
-            :buttonLabel="buttonLabel"
-            :buttonAction="buttonAction">
+            :hasAction1="hasAction1"
+            :buttonLabel1="buttonLabel1"
+            :buttonAction1="buttonAction1"
+            :hasAction2="hasAction2"
+            :buttonLabel2="buttonLabel2"
+            :buttonAction2="buttonAction2">
           </grid>
         </div>
         <h5 v-if="($store.state.isAdmin || $store.state.isReceptionist) && appointments.length < 1">No appointments have been booked yet.</h5>
@@ -40,7 +43,8 @@ export default {
   data () {
     return {
       searchQuery: '',
-      buttonLabel: 'Cancel',
+      buttonLabel1: 'Appointment Record',
+      buttonLabel2: 'Cancel',
       gridColumns: [
         { key: 'date', displayName: 'Date' },
         { key: 'start_time', displayName: 'Time' },
@@ -64,10 +68,16 @@ export default {
   },
 
   methods: {
-    hasAction: function (entry) {
+    hasAction1: function (entry) {
+      return true
+    },
+    buttonAction1: function (entry) {
+      // go to appointment record page
+    },
+    hasAction2: function (entry) {
       return (new Date(entry.date) >= new Date())
     },
-    buttonAction: function (entry) {
+    buttonAction2: function (entry) {
       if (this.$store.state.isAdmin || this.$store.state.isReceptionist) {
         axios.post('/api/appointments/delete/', {
           headers:
