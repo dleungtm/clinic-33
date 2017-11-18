@@ -37,7 +37,7 @@ module.exports = {
     }
   },
   modules: [
-    '@nuxtjs/pwa',
+    ['@nuxtjs/pwa', { icon: false }],
     '@nuxtjs/font-awesome',
     'bootstrap-vue/nuxt'
   ],

@@ -32,13 +32,27 @@ router.get('/users/staff', function (req, res, next) {
       res.json(users)
     })
 })
+/* GET All Active Patients. */
+router.get('/users/patients', function (req, res, next) {
+  const query = `SELECT DISTINCT c.user_id, first_name || ' ' || last_name as name
+                  FROM clinic_user c
+                  INNER JOIN user_role u ON u.user_id = c.user_id
+                  WHERE u.role_id = 5 AND is_active = true;`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.SELECT
+    })
+    .then(patients => {
+      res.json(patients)
+    })
+})
 
-/* GET all clinicians. */
+/* GET All Active Clinicians. */
 router.get('/users/clinicians', function (req, res, next) {
   const query = `SELECT DISTINCT c.user_id, first_name || ' ' || last_name as name
                   FROM clinic_user c
                   INNER JOIN user_role u ON u.user_id = c.user_id
-                  WHERE u.role_id = 2;`
+                  WHERE u.role_id = 2 AND is_active = TRUE;`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT
@@ -108,8 +122,13 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
   const username = req.body.data.username
   const password = req.body.data.password
   const is_active = req.body.data.is_active
+  const dob = req.body.data.dob
+  const phn = req.body.data.phn
+  const height = req.body.data.height
+  const blood_type = req.body.data.blood_type
+  const sex = req.body.data.sex
 
-  const query = ' WITH rows AS(INSERT INTO clinic_user (first_name, last_name, phone_number, address, username, password, is_active) VALUES (:first_name, :last_name, :phone_number, :address, :username, :password, :is_active) RETURNING user_id ) INSERT INTO user_role (user_id, role_id) SELECT user_id, 5 FROM rows ;'
+  const query = ' WITH rows AS(INSERT INTO clinic_user (first_name, last_name, phone_number, address, username, password, is_active) VALUES (:first_name, :last_name, :phone_number, :address, :username, :password, :is_active) RETURNING user_id ), rows2 AS (INSERT INTO user_role (user_id, role_id) SELECT user_id, 5 FROM rows RETURNING user_id) INSERT INTO user_health_info (user_id, phn, dob, height, blood_type, sex) SELECT user_id, :phn, :dob, :height, :blood_type, :sex FROM rows2  ;'
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,
@@ -120,7 +139,12 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
         address: address,
         username: username,
         password: password,
-        is_active: is_active
+        is_active: is_active,
+        dob: dob,
+        phn: phn,
+        height: height,
+        blood_type: blood_type,
+        sex: sex
       }
     }
   )
@@ -132,7 +156,7 @@ router.post('/users/add', bodyParser.json(), function (req, res, next) {
 /* Get Availabilities by User ID */
 router.get('/users/:user_id/availability', function (req, res, next) {
   const user_id = req.params.user_id
-  const query = `SELECT a.timeblock_id, to_char(start_time, :time_format) as start_time, day_of_week, day_of_week as day, clinician_id, is_active
+  const query = `SELECT a.timeblock_id, to_char(start_time, :time_format) as start_time, day_of_week, clinician_id, is_active
                   FROM availability a, timeblock t
                   WHERE clinician_id = :user_id
                     AND a.timeblock_id = t.timeblock_id;`

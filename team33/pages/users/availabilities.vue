@@ -39,7 +39,7 @@ export default {
   mounted () {
     axios.get('/api/users/' + this.$store.state.authUser.user_id + '/availability').then(response => {
       var data = response.data.map(function (obj) {
-        switch (obj.day) {
+        switch (obj.day_of_week) {
           case 0:
             obj.day = 'Sunday'
             break
@@ -71,6 +71,7 @@ export default {
     hasAction: function (entry) {
       return true
     },
+    // toggling availability
     buttonAction: function (entry) {
       axios.post('/api/users/' + this.$store.state.authUser.user_id + '/availability', {
         headers:
@@ -85,7 +86,7 @@ export default {
       }).then(response => {
         axios.get('/api/users/' + this.$store.state.authUser.user_id + '/availability').then(response => {
           var data = response.data.map(function (obj) {
-            switch (obj.day) {
+            switch (obj.day_of_week) {
               case 0:
                 obj.day = 'Sunday'
                 break
