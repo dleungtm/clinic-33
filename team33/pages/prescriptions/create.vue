@@ -97,7 +97,7 @@
     },
     head () {
       return {
-        title: 'Appointments'
+        title: 'Prescriptions'
       }
     },
     methods: {

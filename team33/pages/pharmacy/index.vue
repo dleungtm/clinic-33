@@ -6,9 +6,9 @@
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">Medication Inventory</span>
           <!-- TODO: NOT CORRECT. I WANT TO HAVE A WAY TO GOTO UPDATE Page BY CLICKING ITEM ON TABLE -->
-          <nuxt-link class="button--default" to="/medications/update">Update Medications</nuxt-link>
+          <nuxt-link class="button--default" to="/pharmacy/update">Update Medications</nuxt-link>
           <!-- TODO: implement "popup" window that comes up -->
-          <nuxt-link class="button--default" @click="getUnfilled">Unfilled Medications</nuxt-link>
+          <nuxt-link class="button--default" to="/pharmacy/create_medication">Add Medication</nuxt-link>
         </div>
         <div v-if="medications.length > 0">
           <form id="search">
