@@ -48,7 +48,7 @@ router.get('/appointments/user/:user_id', function (req, res, next) {
 /* Get Appointment by ID */
 router.get('/appointments/:id', function (req, res, next) {
   const appointment_id = req.params.id
-  const query = 'SELECT * FROM appointment WHERE appointment_id = :appointment_id;'
+  const query = `SELECT * FROM appointment WHERE appointment_id = :appointment_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,
@@ -73,7 +73,8 @@ router.post('/appointments/add', bodyParser.json(), function (req, res, next) {
   const patient_id = req.body.data.patient_id
   const clinician_id = req.body.data.clinician_id
 
-  const query = 'INSERT INTO appointment (appointment_id, date, timeblock_id, patient_id, clinician_id) VALUES (:appointment_id, :date, :timeblock_id, :patient_id, :clinician_id);'
+  const query = `INSERT INTO appointment (appointment_id, date, timeblock_id, patient_id, clinician_id)
+                  VALUES (:appointment_id, :date, :timeblock_id, :patient_id, :clinician_id);`
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,

@@ -5,7 +5,7 @@ const router = Router()
 
 /* Get all roles */
 router.get('/roles', function (req, res, next) {
-  const query = 'SELECT * FROM role;'
+  const query = `SELECT * FROM role;`
   connection.query(query, {type: connection.QueryTypes.SELECT})
     .then(roles => {
       res.json(roles)
@@ -16,7 +16,8 @@ router.get('/roles', function (req, res, next) {
 // TODO: does alternate key play into this?
 router.get('/roles/:id', function (req, res, next) {
   const role_id = req.body.data.role_id
-  const query = 'SELECT * FROM role WHERE role_id = :role_id ;'
+  const query = `SELECT * FROM role
+                  WHERE role_id = :role_id ;`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,
@@ -38,7 +39,8 @@ router.post('/roles/add', function (req, res, next) {
   const role_id = req.body.data.role_id
   const role_name = req.body.data.role_name
 
-  const query = 'INSERT INTO role (role_id, role_name) VALUES (:role_id, :role_name) ;'
+  const query = `INSERT INTO role (role_id, role_name)
+                  VALUES (:role_id, :role_name);`
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,

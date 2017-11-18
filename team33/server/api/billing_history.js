@@ -18,7 +18,8 @@ router.get('/billings', bodyParser.json(), function (req, res, next) {
   const patient_id = req.body.data.patient_id
   const appointment_id = req.body.data.appointment_id
 
-  const query = 'SELECT * FROM billing_history WHERE patient_id = :patient_id AND appointment_id = :appointment_id;'
+  const query = `SELECT * FROM billing_history
+                  WHERE patient_id = :patient_id AND appointment_id = :appointment_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,
@@ -40,7 +41,8 @@ router.get('/billings', bodyParser.json(), function (req, res, next) {
 router.get('/billings', bodyParser.json(), function (req, res, next) {
   const patient_id = req.body.data.patient_id
 
-  const query = 'SELECT * FROM billing_history WHERE patient_id = :patient_id'
+  const query = `SELECT * FROM billing_history
+                  WHERE patient_id = :patient_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,
@@ -63,7 +65,9 @@ router.post('/billings/update', bodyParser.json(), function (req, res, next) {
   const appointment_id = req.body.data.appointment_id
   const date_paid = req.body.data.date_paid
 
-  const query = 'UPDATE billings SET date_paid = :date_paid WHERE patient_id = :patient_id AND appointment_id = :appointment_id;'
+  const query = `UPDATE billing_history
+                  SET date_paid = :date_paid
+                  WHERE patient_id = :patient_id AND appointment_id = :appointment_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.UPDATE,
@@ -85,7 +89,8 @@ router.post('/billings/add', bodyParser.json(), function (req, res, next) {
   const amount = req.body.data.amount
   const date_paid = req.body.data.date_paid
 
-  const query = 'INSERT INTO billing_history (patient_id, appointment_id, amount, date_paid) VALUES (:patient_id, :appointment_id, :amount, :date_paid);'
+  const query = `INSERT INTO billing_history (patient_id, appointment_id, amount, date_paid)
+                  VALUES (:patient_id, :appointment_id, :amount, :date_paid);`
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,

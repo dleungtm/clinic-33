@@ -13,7 +13,8 @@ const router = Router()
 router.get('/user_roles/:user_id', function (req, res, next) {
   const user_id = req.params.user_id
 
-  const query = 'SELECT role_id FROM user_role WHERE user_id = :user_id;'
+  const query = `SELECT role_id FROM user_role
+                  WHERE user_id = :user_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,
@@ -37,7 +38,8 @@ router.post('/user_roles/add', bodyParser.json(), function (req, res, next) {
   const user_id = req.body.data.user_id
   const role_id = req.body.data.role_id
 
-  const query = 'INSERT INTO user_role (user_id, role_id) values (:user_id, :role_id);'
+  const query = `INSERT INTO user_role (user_id, role_id)
+                  VALUES (:user_id, :role_id);`
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,
@@ -66,7 +68,9 @@ router.post('/user_roles/update', bodyParser.json(), function (req, res, next) {
   const user_id = req.body.data.user_id
   const role_id = req.body.data.role_id
 
-  const query = 'UPDATE user_role SET role_id = :role_id WHERE user_id = :user_id;'
+  const query = `UPDATE user_role
+                  SET role_id = :role_id
+                  WHERE user_id = :user_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.UPDATE,
