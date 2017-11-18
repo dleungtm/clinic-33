@@ -198,6 +198,56 @@ router.post('/users/:user_id/availability', bodyParser.json(), function (req, re
     })
 })
 
+/* Update user password */
+router.post('/users/update_password', bodyParser.json(), function (req, res, next) {
+  const user_id = req.body.data.userId
+  const new_password = req.body.data.newPassword
+
+  const query = `UPDATE clinic_user
+                  SET password = :new_password
+                  WHERE user_id = :user_id;`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.UPDATE,
+      replacements: {
+        user_id: user_id,
+        new_password: new_password
+      }
+    })
+    .then(result => {    
+      res.json(result)
+    })
+})
+
+/* Get a user by id and password */
+router.post('/users/get_by_id_and_pass', bodyParser.json(), function (req, res) {
+  const user_id = req.body.data.userId
+  const password = req.body.data.password
+
+  const query = `SELECT user_id
+                  FROM clinic_user
+                  WHERE user_id = :user_id AND password = :password;`
+
+  connection.query(query,
+    {
+      type: connection.QueryTypes.SELECT,
+      replacements: {
+        user_id: user_id,
+        password: password
+      }
+    })
+    .then(user => {
+      if (user.length === 1) {
+        res.json(user[0])
+      } else {
+        res.status(401).json({ err: 'The password entered was incorrect.' })
+      }
+    })
+    .catch(err => {
+      res.status(401).json({ err })
+    })
+})
+
 // /* Initialize Availabilities by User ID */
 // router.post('/users/:user_id/availability/', function (req, res, next) {
 //   const user_id = req.params.user_id

@@ -3,39 +3,47 @@
     <div class="row-fluid">
       <div class="span12">
         <div v-if="!$store.state.authUser">
-          <h1>Welcome!</h1>
           <h5>Please login to continue.</h5>
+          <br>
+          <form @submit.prevent="login">
+            <p class="error" v-if="formError">{{ formError }}</p>
+            <div class="form-field">
+              <label for="username">Username:</label>
+              <input type="text" v-model="formUsername" name="username" />
+            </div>
+            <br>
+            <div class="form-field">
+              <label for="password">Password:</label>
+              <input type="password" v-model="formPassword" name="password" />
+            </div>
+            <br>
+            <br>
+            <div class="form-field">
+              <button type="submit" class="button--default">Login</button>
+            </div>
+          </form>
         </div>
-        <h1 v-if="$store.state.authUser"> Hello, {{ $store.state.authUser.username }}!</h1>
-        <br>
-      </div>
-      <div class="span12">
-        <form v-if="!$store.state.authUser" @submit.prevent="login">
-          <p class="error" v-if="formError">{{ formError }}</p>
-          <div class="form-field">
-            <label for="username">Username:</label>
-            <input type="text" v-model="formUsername" name="username" />
-          </div>
-          <br>
-          <div class="form-field">
-            <label for="password">Password:</label>
-            <input type="password" v-model="formPassword" name="password" />
-          </div>
-          <br>
-          <div class="form-field">
-            <button type="submit" class="button--default">Login</button>
-          </div>
-        </form>
         <div v-else>
-          <h5>This account is associated with the following roles:</h5>
-          <ul>
-            <li v-if="$store.state.isAdmin">Administrator</li>
-            <li v-if="$store.state.isClinician">Clinician</li>
-            <li v-if="$store.state.isReceptionist">Receptionist</li>
-            <li v-if="$store.state.isPharmacist">Pharmacist</li>
-            <li v-if="$store.state.isPatient">Patient</li>
-          </ul>
+          <h1>Welcome, {{ $store.state.authUser.full_name }}.</h1>
+          <h5>These are your account details:</h5>
+          <div style="margin:20px">
+            <label><b>Username: </b></label>
+            {{ $store.state.authUser.username }}
+          </div>
+          <div style="margin:20px">
+            <label><b>Password: </b></label>
+            <nuxt-link class="button--default" to="/users/password">Change your password</nuxt-link>
+          </div>
+          <div style="margin:20px">
+            <label><b>Role: </b></label>
+            <span v-if="$store.state.isAdmin">Administrator</span>
+            <span v-if="$store.state.isClinician">Clinician</span>
+            <span v-if="$store.state.isReceptionist">Receptionist</span>
+            <span v-if="$store.state.isPharmacist">Pharmacist</span>
+            <span v-if="$store.state.isPatient">Patient</span>
+          </div>
         </div>
+        <br>
       </div>
     </div>
   </div>
@@ -70,5 +78,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
+label {
+  margin-bottom:0px;
+  display:inline-block;
+  width:100px;
+}
 </style>

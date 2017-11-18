@@ -27,8 +27,21 @@ var connection = require('./configs/sequelize.js')
 
 // POST `/api/login` to log in the user and add user to the `req.session.authUser`
 app.post('/api/login', function (req, res) {
-  const query = "SELECT user_id, username FROM clinic_user WHERE username LIKE '" + req.body.username + "' AND password LIKE '" + req.body.password + "';"
-  connection.query(query, { type: connection.QueryTypes.SELECT })
+  const username = req.body.username
+  const password = req.body.password
+
+  const query = `SELECT user_id, username, (first_name || ' ' || last_name) as full_name
+                  FROM clinic_user
+                  WHERE username = :username AND password = :password;`
+
+  connection.query(query,
+    {
+      type: connection.QueryTypes.SELECT,
+      replacements: {
+        username: username,
+        password: password
+      }
+    })
     .then(user => {
       if (user[0]) {
         req.session.authUser = user[0]
