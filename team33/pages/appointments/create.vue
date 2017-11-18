@@ -56,6 +56,11 @@
           </select>
           {{ selectedTimeblockId }}
         </div>
+        <br>
+        <br>
+        <button v-if="!bookable" class="button--default" @click="checkAvailability">Check Availability</button>
+        <button v-if="bookable" class="button--default" @click="bookAppointment">Book Appointment</button>
+        <p style="visibility: hidden">{{ resetBookable }}</p>
       </div>
     </div>
   </section>
@@ -68,6 +73,7 @@ export default {
 
   data () {
     return {
+      bookable: false,
       clinicians: [],
       selectedClinicianId: null,
       patients: [],
@@ -93,7 +99,61 @@ export default {
     })
   },
 
+  methods: {
+    // checking appointment availability
+    checkAvailability () {
+      let self = this
+      axios.post('/api/appointments/check', {
+        headers:
+          {
+            'Content-Type': 'application/json'
+          },
+        data:
+          {
+            date: self.state.date.toDateString(),
+            timeblock_id: self.selectedTimeblockId,
+            patient_id: self.selectedPatientId,
+            clinician_id: self.selectedClinicianId
+          }
+      }).then(response => {
+        if (response.data.length < 1) {
+          this.bookable = true
+          alert('This appointment can be booked!')
+        } else {
+          alert('Sorry, there would be a scheduling conflict booking this appointment. Please try again later.')
+        }
+      })
+    },
+    // book appointment
+    bookAppointment () {
+      let self = this
+      axios.post('/api/appointments/create', {
+        headers:
+          {
+            'Content-Type': 'application/json'
+          },
+        data:
+          {
+            date: self.state.date.toDateString(),
+            timeblock_id: self.selectedTimeblockId,
+            patient_id: self.selectedPatientId,
+            clinician_id: self.selectedClinicianId
+          }
+      }).then(response => {
+        if (response.data.message === 'Appointment Created.') {
+          this.bookable = false
+          self.$nuxt.$router.replace({ path: '/appointments/' })
+        }
+      })
+    }
+  },
+
   computed: {
+    resetBookable: function () {
+      if (this.selectedClinicianId !== null && this.state.date !== '' && this.selectedTimeblockId !== null) {
+        this.bookable = false
+      }
+    },
     disabledDays: function () {
       if (this.selectedClinicianId !== null) {
         axios.get('/api/users/' + this.selectedClinicianId + '/availability').then(response => {

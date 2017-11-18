@@ -9,7 +9,7 @@
           <span v-if="!$store.state.isAdmin && !$store.state.isReceptionist" class="subsection-title" style="vertical-align: middle;">My Upcoming Appointments</span>
           <nuxt-link class="button--default" to="/appointments/create">Create Appointment</nuxt-link>
         </div>
-        <div v-if="appointments.length > 1">
+        <div v-if="appointments.length > 0">
           <form id="search">
             <i class="fa fa-search" aria-hidden="true"></i>
             <input name="query" v-model="searchQuery" >

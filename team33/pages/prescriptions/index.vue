@@ -8,7 +8,7 @@
           <span v-if="!$store.state.isAdmin && !$store.state.isPharmacist" class="subsection-title" style="vertical-align: middle;">My Prescriptions</span>
           <nuxt-link class="button--default" to="/prescriptions/create">Create Prescription</nuxt-link>
         </div>
-        <div v-if="prescriptions.length > 1">
+        <div v-if="prescriptions.length > 0">
           <form id="search">
             <i class="fa fa-search" aria-hidden="true"></i>
             <input name="query" v-model="searchQuery" >
@@ -20,7 +20,8 @@
             :filter-key="searchQuery">
           </grid>
         </div>
-        <h5 v-if="prescriptions.length < 1">There are no prescriptions</h5>
+        <h5 v-if="($store.state.isAdmin || $store.state.isPharmacist) && prescriptions.length < 1">There are no prescriptions</h5>
+        <h5 v-if="(!$store.state.isAdmin && !$store.state.isPharmacist) && prescriptions.length < 1">You do not have any appointments.</h5>
       </div>
     </div>
   </section>
@@ -35,19 +36,19 @@
       return {
         searchQuery: '',
         gridColumns: [
-          { key: 'patient_id', displayName: 'Patient ID' },
-          { key: 'clinician_id', displayName: 'Prescribing Clinician' },
-          { key: 'medication_id', displayName: 'Medication ID' },
+          { key: 'patient_name', displayName: 'Patient' },
+          { key: 'clinician_name', displayName: 'Prescribing Clinician' },
+          { key: 'medication_name', displayName: 'Medication' },
           { key: 'date_prescribed', displayName: 'Date Prescribed' },
           { key: 'dosage', displayName: 'Dosage' },
-          { key: 'filled_by', displayName: 'Filled By' }
+          { key: 'filled_by_name', displayName: 'Filled By' }
         ],
         prescriptions: []
       }
     },
 
     mounted () {
-      if (this.$store.state.isAdmin || this.$store.state.isReceptionist) {
+      if (this.$store.state.isAdmin || this.$store.state.isPharmacist) {
         axios.get('/api/prescriptions/').then(response => {
           this.prescriptions = response.data
         })

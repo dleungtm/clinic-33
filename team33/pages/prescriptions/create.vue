@@ -1,54 +1,54 @@
 <template>
-    <section class="create-prescription-view">
-        <div class="content">
-            <form id='prescriptionForm' style="margin: 15px 15px;">
-                <label> Select Patient: </label>
-                <br>
-                <select v-model="selectedPatientID">
-                    <option disabled value="">Select A Patient</option>
-                    <option v-for="patient in patients" :value="patient.user_id">
-                        {{ patient.name }}
-                    </option>
-                </select>
-                <br>
-                <label> Select Clincian: </label>
-                <br>
-                <select v-model="selectedClinicianID">
-                    <option disabled value="">Select Clinician</option>
-                    <option v-for="clinician in clinicians" :value="clinician.user_id">
-                        {{ clinician.name }}
-                    </option>
-                </select>
-                <br>
-                <label> Select Medication: </label>
-                <br>
-                <select v-model="selectedMedicationID">
-                    <option disabled value="">Medication</option>
-                    <option v-for="medication in medications" :value="medication.id">
-                        {{ medication.name }}
-                    </option>
-                </select>
-                <br>
-                <br>
-                <div class="form-field">
-                    <label>Date Prescribed: </label>
-                    <br>
-                    <datepicker v-model="state.date_prescribed"
-                                :disabled="state.disabled"
-                                :disabled-picker=true>
-                    </datepicker>
-                </div>
-                <br>
-                <br>
-                <div class="form-field">
-                    <label>Dosage (Numbers only): </label>
-                    <br>
-                    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" v-model="dosage">
-                </div>
-            </form>
-            <button type="button" class="button--default" @click="submitInsert">Add Presciption</button>
-        </div>
-    </section>
+  <section class="create-prescription-view">
+      <div class="content">
+        <div class="subsection">
+          <div style="margin: 25px 10px;">
+            <span class="subsection-title" style="vertical-align: middle;">Create Prescription</span>
+          </div>
+          <form id='prescriptionForm' style="margin: 25px 10px;">
+            <label>Select Patient:</label>
+            <br>
+            <select v-model="selectedPatientID">
+              <option disabled value="">Select A Patient</option>
+              <option v-for="patient in patients" :value="patient.user_id">
+                  {{ patient.name }}
+              </option>
+            </select>
+            <br>
+            <br>
+            <label>Select Medication:</label>
+            <br>
+            <select v-model="selectedMedicationID">
+              <option disabled value="">Medication</option>
+              <option v-for="medication in medications" :value="medication.id">
+                  {{ medication.name }}
+              </option>
+            </select>
+            <br>
+            <br>
+            <div class="form-field">
+              <label>Date Prescribed:</label>
+              <br>
+              <datepicker 
+                v-model="state.date_prescribed"
+                :disabled="state.disabled"
+                :disabled-picker="true">
+              </datepicker>
+            </div>
+            <br>
+            <br>
+            <div class="form-field">
+              <label>Dosage (Units of Medication Being Prescribed):</label>
+              <br>
+              <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" v-model="dosage">
+            </div>
+            <br>
+            <br>
+          <button type="button" class="button--default" @click="submitInsert">Add Prescription</button>
+        </form>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>

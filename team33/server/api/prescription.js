@@ -15,14 +15,21 @@ const router = Router()
 // Functional Dependencies:
 //   patient_id, clinician_id, medication_id, date_prescribed -> dosage, filled_by
 
-/* lookup a prescrip for all patients */
-router.get('/prescriptions', bodyParser.json(), function (req, res, next) {
-  const query = `SELECT appointment_id, to_char(date, :date_format) as date, to_char(start_time, :time_format) as start_time, p.first_name || ' ' || p.last_name as patient_name, c.first_name || ' ' || c.last_name as clinician_name
-                  FROM appointment a, timeblock t, clinic_user c, clinic_user p 
-                  WHERE a.patient_id = p.user_id
-                    AND a.clinician_id = c.user_id
-                    AND t.timeblock_id = a.timeblock_id;`
-  connection.query(query, { type: connection.QueryTypes.SELECT })
+/* Get All Prescriptions */
+router.get('/prescriptions', function (req, res, next) {
+  const query = `SELECT p.first_name || ' ' || p.last_name as patient_name, c.first_name || ' ' || c.last_name as clinician_name, m.name as medication_name, to_char(date_prescribed, :date_format) as date_prescribed, dosage, filled_by, f.first_name || ' ' || f.last_name as filled_by_name
+                  FROM prescription n, medication m, clinic_user c, clinic_user p, clinic_user f
+                  WHERE n.patient_id = p.user_id
+                    AND n.clinician_id = c.user_id
+                    AND n.filled_by = f.user_id
+                    AND n.medication_id = m.medication_id;`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.SELECT,
+      replacements: {
+        date_format: 'Month d, YYYY'
+      }
+    })
     .then(prescriptions => {
       res.json(prescriptions)
     })
@@ -50,20 +57,6 @@ router.get('/prescriptions/user/:patient_id', function (req, res, next) {
       res.json(prescriptions)
     })
 })
-
-// /* lookup all prescriptions for a patient */
-// router.get('/prescriptions', bodyParser.json(), function (req, res, next) {
-//   const patient_id = req.body.data.patient_id
-//   const clinician_id = req.body.data.clinician_id
-//   const medication_id = req.body.data.medication_id
-//
-//   const query = `SELECT * FROM prescription WHERE patient_id = :patient_id AND clinician_id = :clinician_id AND medication_id = :medication_id ;`
-//   connection.query(query, { type: connection.QueryTypes.SELECT })
-//     .then(prescriptions => {
-//       console.log(prescriptions)
-//       res.json(prescriptions)
-//     })
-// })
 
 /* Add a prescription for a particular patient */
 router.post('/prescriptions/create', bodyParser.json(), function (req, res, next) {

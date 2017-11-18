@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 
 const router = Router()
 
-/* Get all appointments */
+/* Get All Appointments */
 router.get('/appointments', function (req, res, next) {
   const query = `SELECT appointment_id, to_char(date, :date_format) as date, to_char(start_time, :time_format) as start_time, p.first_name || ' ' || p.last_name as patient_name, c.first_name || ' ' || c.last_name as clinician_name
                   FROM appointment a, timeblock t, clinic_user c, clinic_user p 
@@ -20,6 +20,31 @@ router.get('/appointments', function (req, res, next) {
   })
     .then(appointments => {
       res.json(appointments)
+    })
+})
+
+/* Check If Existing Appointment */
+router.post('/appointments/check', bodyParser.json(), function (req, res, next) {
+  const date = req.body.data.date
+  const timeblock_id = req.body.data.timeblock_id
+  const patient_id = req.body.data.patient_id
+  const clinician_id = req.body.data.clinician_id
+
+  const query = `SELECT * FROM appointment 
+                  WHERE date = :date
+                    AND patient_id = :patient_id OR clinician_id = :clinician_id
+                    AND timeblock_id = :timeblock_id;`
+  connection.query(query, {
+    type: connection.QueryTypes.SELECT,
+    replacements: {
+      date: date,
+      timeblock_id: timeblock_id,
+      patient_id: patient_id,
+      clinician_id: clinician_id
+    }
+  })
+    .then(appointment => {
+      res.json(appointment)
     })
 })
 
@@ -66,20 +91,18 @@ router.get('/appointments/:id', function (req, res, next) {
 })
 
 /* Create new appointment */
-router.post('/appointments/add', bodyParser.json(), function (req, res, next) {
-  const appointment_id = req.body.data.appointment_id
+router.post('/appointments/create', bodyParser.json(), function (req, res, next) {
   const date = req.body.data.date
   const timeblock_id = req.body.data.timeblock_id
   const patient_id = req.body.data.patient_id
   const clinician_id = req.body.data.clinician_id
 
-  const query = `INSERT INTO appointment (appointment_id, date, timeblock_id, patient_id, clinician_id)
-                  VALUES (:appointment_id, :date, :timeblock_id, :patient_id, :clinician_id);`
+  const query = `INSERT INTO appointment (date, timeblock_id, patient_id, clinician_id)
+                  VALUES (:date, :timeblock_id, :patient_id, :clinician_id);`
   connection.query(query,
     {
       type: connection.QueryTypes.INSERT,
       replacements: {
-        appointment_id: appointment_id,
         date: date,
         timeblock_id: timeblock_id,
         patient_id: patient_id,

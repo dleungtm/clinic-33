@@ -14,12 +14,12 @@
           <p class="error" v-if="formError">{{ formError }}</p>
           <div class="form-field">
             <label for="username">Username:</label>
-            <input type="text" v-model="formUsername" name="username" />
+            <input type="text" v-model="formUsername" style="margin-left: 1em;" name="username" />
           </div>
           <br>
           <div class="form-field">
             <label for="password">Password:</label>
-            <input type="password" v-model="formPassword" name="password" />
+            <input type="password" v-model="formPassword" style="margin-left: 1em;" name="password" />
           </div>
           <br>
           <div class="form-field">

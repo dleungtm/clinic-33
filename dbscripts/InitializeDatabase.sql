@@ -61,7 +61,8 @@ CREATE TABLE "appointment" (
 	patient_id int,
 	clinician_id int,
 	PRIMARY KEY (appointment_id),
-	UNIQUE (date, timeblock_id, patient_id, clinician_id),
+	UNIQUE (date, timeblock_id, patient_id),
+  UNIQUE (date, timeblock_id, clinician_id),
 	FOREIGN KEY (timeblock_id) REFERENCES "timeblock"(timeblock_id),
 	FOREIGN KEY (patient_id) REFERENCES "clinic_user"(user_id),
 	FOREIGN KEY (clinician_id) REFERENCES "clinic_user"(user_id)
