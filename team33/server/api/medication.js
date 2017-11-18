@@ -76,7 +76,7 @@ router.post('/medications/add', bodyParser.json(), function (req, res, next) {
       }
     })
     .then(result => {
-      res.json({message: 'Prescription Created.'})
+      res.json({message: 'Medication Added.'})
     })
 })
 
