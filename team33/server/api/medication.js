@@ -62,7 +62,7 @@ router.post('/medications/update/', bodyParser.json(), function (req, res, next)
 router.post('/medications/add', bodyParser.json(), function (req, res, next) {
   const name = req.body.data.name
   const inventory = req.body.data.inventory
-  const unit_price = req.body.data.unit_price.replace(/,|\$| /g, '')
+  const unit_price = req.body.data.unit_price
 
   const query = `INSERT INTO medication (name, inventory, unit_price)
                   VALUES (:name, :inventory, :unit_price);`

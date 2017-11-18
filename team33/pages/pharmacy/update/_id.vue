@@ -23,7 +23,7 @@
                 <div class="form-field">
                     <label>Medication Price Per Unit:</label>
                     <br>
-                    <input v-money="money" v-model.lazy="medicationPrice">
+                    <input type="number" v-model="medicationPrice">
                 </div>
                 <br>
                 <br>
@@ -35,23 +35,13 @@
 
 <script>
   import axios from '~/plugins/axios'
-  import {VMoney} from 'v-money'
 
   export default {
-    directives: {money: VMoney},
     data () {
       return {
-        medicationName: 'WubbaLubbDub',
+        medicationName: null,
         medicationInventory: null,
-        medicationPrice: null,
-        money: {
-          decimal: '.',
-          thousands: ',',
-          prefix: '$ ',
-          suffix: '',
-          precision: 2,
-          masked: false /* doesn't work with directive */
-        }
+        medicationPrice: null
       }
     },
 

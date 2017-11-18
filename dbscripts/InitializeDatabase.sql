@@ -101,7 +101,7 @@ CREATE TABLE "billing_history" (
 
 CREATE TABLE "medication" (
 	medication_id serial,
-	name varchar(30) NOT NULL,
+	name varchar(80) UNIQUE NOT NULL,
 	inventory int,
 	unit_price decimal,
 	PRIMARY KEY (medication_id)
