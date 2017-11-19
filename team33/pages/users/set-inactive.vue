@@ -22,7 +22,7 @@
         </form>
         <br>
         <br>
-        <button type="button" class="button--default" @click="submitInsert">Update</button>        
+        <button type="button" class="button--default" @click="toggleStatus">Save</button>        
       </div>
     </div>
   </section>
@@ -41,7 +41,7 @@ export default {
   },
 
   methods: {
-    submitInsert () {
+    toggleStatus () {
       let self = this
 
       axios.post('/api/users/is_active', {

@@ -110,6 +110,7 @@ table {
   border: 2px solid #42b983;
   border-radius: 3px;
   background-color: #fff;
+  max-width: 1000px;
 }
 
 th {

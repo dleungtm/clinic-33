@@ -25,12 +25,12 @@
       <div class="subsection">
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">Medication Inventory</span>
-          <nuxt-link class="button--default" to="/pharmacy/add_medication">Add Medication</nuxt-link>
         </div>
         <div v-if="medications.length > 0">
           <form id="search">
             <i class="fa fa-search" aria-hidden="true"></i>
             <input name="query" v-model="searchQuery2" >
+            <nuxt-link class="button--default" style="margin-left:1em;" to="/pharmacy/add_medication">Add Medication</nuxt-link>
           </form>
           <br>
           <grid
@@ -57,8 +57,8 @@
         searchQuery1: '',
         summaryItems: [],
         summaryGridColumns: [
-          { key: 'count', displayName: 'Count' },
-          { key: 'name', displayName: 'Name' }
+          { key: 'name', displayName: 'Name' },
+          { key: 'sum', displayName: 'Units Required' }
         ],
         searchQuery2: '',
         gridColumns: [

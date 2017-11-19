@@ -4,14 +4,14 @@
       <div class="subsection">
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">Users</span>
-          <nuxt-link style="margin-right: 30px;" class="button--default" to="/users/add">Add User</nuxt-link>
-          <nuxt-link class="button--default" to="/users/set-inactive">Set Inactive</nuxt-link>
         </div>
 
         <form id="search">
           <i class="fa fa-search" aria-hidden="true"></i>
           <input name="query" v-model="searchQuery" >
-          <nuxt-link class="button--default" style="margin-left: 1em" to="/users/assign">Edit User Roles</nuxt-link>
+          <nuxt-link class="button--default" style="margin-left: 1em; margin-right: 20px;" to="/users/add">Add User</nuxt-link>
+          <nuxt-link class="button--default" style="margin-right: 20px;" to="/users/assign">Edit User Roles</nuxt-link>
+          <nuxt-link class="button--default" to="/users/set-inactive">Set Inactive</nuxt-link>
         </form>
         <br>
         <grid

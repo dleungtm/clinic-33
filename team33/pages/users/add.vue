@@ -83,7 +83,7 @@
           </div>
         </form>
         <br>
-        <button type="button" class="button--default" @click="submitInsert">Add User</button>
+        <button type="button" class="button--default" @click="addUser">Add User</button>
       </div>
     </div>
   </section>
@@ -114,7 +114,7 @@ export default {
   },
 
   methods: {
-    submitInsert () {
+    addUser () {
       let self = this
 
       axios.post('/api/users/add', {

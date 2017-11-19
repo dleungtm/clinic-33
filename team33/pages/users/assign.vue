@@ -27,7 +27,7 @@
           </div>
         </form>
         <br>
-        <nuxt-link class="button--default" to="/user/roles" @click.native="submitInsert">Update User</nuxt-link>
+        <nuxt-link class="button--default" to="/user/roles" @click.native="updateUserRole">Update User</nuxt-link>
       </div>
     </div>
   </section>
@@ -46,7 +46,7 @@ export default {
   },
 
   methods: {
-    submitInsert () {
+    updateUserRole () {
       let self = this
 
       axios.post('/api/user_roles/update', {

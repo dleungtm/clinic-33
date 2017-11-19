@@ -26,7 +26,7 @@
                 </div>
                 <br>
                 <br>
-                <button type="button" class="button--default" @click="submitInsert">Add Medication</button>
+                <button type="button" class="button--default" @click="addMedication">Add Medication</button>
             </div>
         </div>
     </section>
@@ -60,7 +60,7 @@
           return medication.name === testName
         })
       },
-      submitInsert () {
+      addMedication () {
         axios.post('/api/medications/add', {
           headers:
             {

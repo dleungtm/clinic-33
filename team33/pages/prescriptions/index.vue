@@ -5,13 +5,13 @@
       <div class="subsection">
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">Prescriptions</span>
-          <nuxt-link class="button--default" to="/prescriptions/create">Create Prescription</nuxt-link>
-          <nuxt-link class="button--default" to="/prescriptions/fill">Fill A Prescription</nuxt-link>
         </div>
         <div v-if="prescriptions.length > 0">
           <form id="search">
             <i class="fa fa-search" aria-hidden="true"></i>
             <input name="query" v-model="searchQuery" >
+            <nuxt-link style="margin-left: 1em; margin-right: 20px;" class="button--default" to="/prescriptions/create">Create Prescription</nuxt-link>
+            <nuxt-link class="button--default" to="/prescriptions/fill">Fill A Prescription</nuxt-link>
           </form>
           <br>
           <grid

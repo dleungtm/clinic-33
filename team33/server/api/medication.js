@@ -13,9 +13,9 @@ router.get('/medications', function (req, res, next) {
     })
 })
 
-/* GROUP BY query, get total medication numbers from pending prescriptions */
+/* GROUP BY query, get total medication (dosage counts) from unfilled prescriptions */
 router.get('/medications/pending_prescriptions', function (req, res, next) {
-  const query = `SELECT COUNT(dosage), name
+  const query = `SELECT SUM(dosage), name
                   FROM Prescription p, Medication m
                   WHERE p.medication_id = m.medication_id AND p.filled_by IS NULL
                   GROUP BY name`
