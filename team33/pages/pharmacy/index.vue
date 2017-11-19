@@ -5,8 +5,7 @@
       <div class="subsection">
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">Medication Inventory</span>
-          <nuxt-link class="button--default" to="/create-medication">Add Medication</nuxt-link>
-          <nuxt-link class="button--default" to="/pharmacy/update">Update Medications</nuxt-link>
+          <nuxt-link class="button--default" to="/pharmacy/add_medication">Add Medication</nuxt-link>
         </div>
         <div v-if="medications.length > 0">
           <form id="search">
@@ -47,7 +46,7 @@
           return true
         },
         updateAction: function (entry) {
-          this.$router.push({ path: `/pharmacy/${entry.medication_id}` })
+          this.$router.push({ path: `/pharmacy/update/${entry.medication_id}` })
         },
         buttonLabel1: 'Update Medication'
       }
