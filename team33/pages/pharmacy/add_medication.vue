@@ -1,10 +1,9 @@
-<!-- TODO: Needs a lookup to make sure we don't insert duplicate medication names -->
 <template>
     <section class="create-medication-view">
         <div class="content">
             <div class="subsection">
                 <div style="margin: 25px 10px;">
-                    <span class="subsection-title" style="vertical-align: middle;">Create Medication</span>
+                    <span class="subsection-title" style="vertical-align: middle;">Add Medication</span>
                 </div>
                 <div class="form-field">
                     <label>Medication Name:</label>
@@ -39,13 +38,14 @@
   export default {
     data () {
       return {
+        nameExists: false,
         medicationName: null,
         medicationInventory: null,
         medicationPrice: null
       }
     },
     mounted () {
-      axios.get('/api/medications/add').then(response => {
+      axios.get('/api/medications/').then(response => {
         this.medications = response.data
       })
     },
@@ -55,6 +55,11 @@
       }
     },
     methods: {
+      checkNameExists (testName) {
+        this.medications.filter(function (medication) {
+          return medication.name === testName
+        })
+      },
       submitInsert () {
         axios.post('/api/medications/add', {
           headers:
@@ -71,6 +76,8 @@
           .then((response) => {
             if (response.data.message === 'Medication Added.') {
               self.$nuxt.$router.replace({path: '/pharmacy'})
+            } else {
+              alert('Error adding medication. Note that medication names must be unique. Please try again.')
             }
           })
       }
@@ -80,7 +87,7 @@
 
 <style lang="stylus" scoped>
 
-    .create-appointment-view
+    .create-medication-view
         padding-top 0
 
 </style>

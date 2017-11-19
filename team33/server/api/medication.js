@@ -61,8 +61,8 @@ router.post('/medications/update/', bodyParser.json(), function (req, res, next)
       for (var i in error.errors) {
         console.log(error.errors[i])
         if (error.errors[i].type === 'unique violation') {
-          console.log('Unique Constraint Violation - Insertion Failed.')
-          res.json({'message': 'Unique Constraint Violation - Insertion Failed.'})
+          console.log('Unique Medication Name Violation - Update Failed.')
+          res.json({'message': 'Medication Name Already Exists - Could Not Update.'})
           return
         }
       }
@@ -87,6 +87,16 @@ router.post('/medications/add', bodyParser.json(), function (req, res, next) {
     })
     .then(result => {
       res.json({message: 'Medication Added.'})
+    })
+    .catch((error) => {
+      for (var i in error.errors) {
+        if (error.errors[i].type === 'unique violation') {
+          res.json({
+            message: 'Medication Name Already Exists - Could Not Add.'
+          })
+          return
+        }
+      }
     })
 })
 
