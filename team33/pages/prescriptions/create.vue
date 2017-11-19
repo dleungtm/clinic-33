@@ -59,7 +59,7 @@
         </div>
         <br>
         <br>
-        <button type="button" class="button--default" @click="submitInsert">Save Prescription</button>
+        <button type="button" class="button--default" @click="savePrescription">Save Prescription</button>
       </div>
     </div>
   </section>
@@ -100,7 +100,7 @@
       }
     },
     methods: {
-      submitInsert () {
+      savePrescription () {
         axios.post('/api/prescriptions/create', {
           headers:
             {

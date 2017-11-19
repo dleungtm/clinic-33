@@ -7,12 +7,12 @@
         <div style="margin: 25px 10px;">
           <span v-if="$store.state.isAdmin || $store.state.isReceptionist" class="subsection-title" style="vertical-align: middle;">All Appointments</span>
           <span v-if="!$store.state.isAdmin && !$store.state.isReceptionist" class="subsection-title" style="vertical-align: middle;">My Appointments</span>
-          <nuxt-link class="button--default" to="/appointments/create">Create Appointment</nuxt-link>
         </div>
         <div v-if="appointments.length > 0">
           <form id="search">
             <i class="fa fa-search" aria-hidden="true"></i>
             <input name="query" v-model="searchQuery" >
+            <nuxt-link class="button--default" style="margin-left: 1em;" to="/appointments/create">Create Appointment</nuxt-link>
           </form>
           <br>
           <grid
