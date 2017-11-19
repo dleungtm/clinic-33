@@ -44,26 +44,29 @@
             <span class="subsection-title" style="vertical-align: middle;">Prescriptions</span>
           </div>
           <grid
+            v-if="prescriptionItems.length > 0"
             :data="prescriptionItems"
             :columns="prescriptionGridColumns">
           </grid>
-          <h5 v-if="prescriptionItems.length < 1">You do not have any prescription records.</h5>
+          <h5 v-if="prescriptionItems.length < 1">No prescriptions records available.</h5>
         </div>
         <div>
           <div style="margin: 25px 10px;">
             <span class="subsection-title" style="vertical-align: middle;">Past Appointments</span>
           </div>
           <grid
+            v-if="pastAppointmentItems.length > 0"
             :data="pastAppointmentItems"
             :columns="pastAppointmentGridColumns">
           </grid>
-          <h5 v-if="pastAppointmentItems.length < 1">You have not had any appointments yet.</h5>
+          <h5 v-if="pastAppointmentItems.length < 1">No appointment records available.</h5>
         </div>
         <div v-if="$store.state.isAdmin || $store.state.isReceptionist || isViewingSelf()">
           <div style="margin: 25px 10px;">
             <span class="subsection-title" style="vertical-align: middle;">Billing History</span>
           </div>
           <grid
+            v-if="billingItems.length > 0"
             :data="billingItems"
             :columns="billingGridColumns"
             :filter-key="searchQuery"
@@ -74,7 +77,7 @@
             :buttonLabel2="buttonLabel2"
             :buttonAction2="buttonAction2">
           </grid>
-          <h5 v-if="billingItems.length < 1">You do not have any billing history records.</h5>
+          <h5 v-if="billingItems.length < 1">No billing history records available.</h5>
         </div>
       </div>
     </div>
