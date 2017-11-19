@@ -9,7 +9,6 @@ router.get('/userhealthinfo', function (req, res, next) {
   const query = `SELECT * FROM user_health_info;`
   connection.query(query, { type: connection.QueryTypes.SELECT })
     .then(uhi => {
-      console.log(uhi)
       res.json(uhi)
     })
 })

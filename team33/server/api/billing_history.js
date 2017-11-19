@@ -37,25 +37,24 @@ router.get('/billings', bodyParser.json(), function (req, res, next) {
     })
 })
 
-/* Get all of a patient's bills */
-router.get('/billings', bodyParser.json(), function (req, res, next) {
-  const patient_id = req.body.data.patient_id
+/* Get all of a patient's billing history including date from appointment */
+router.get('/billings/:user_id', function (req, res, next) {
+  const user_id = req.params.user_id
+  const query = `SELECT to_char(a.date, :date_format) as date_billed, b.amount, to_char(b.date_paid, :date_format) as date_paid, b.patient_id, b.appointment_id
+	                FROM billing_history b
+                  INNER JOIN appointment a ON b.appointment_id = a.appointment_id
+                  WHERE b.patient_id = :user_id;`
 
-  const query = `SELECT * FROM billing_history
-                  WHERE patient_id = :patient_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,
       replacements: {
-        patient_id: patient_id
+        user_id: user_id,
+        date_format: 'Month dd, YYYY'
       }
     })
     .then(bills => {
-      if (bills) { // If non-zero length of bills, return it?
         res.json(bills)
-      } else {
-        res.status(404).json({})
-      }
     })
 })
 
@@ -79,7 +78,31 @@ router.post('/billings/update', bodyParser.json(), function (req, res, next) {
     })
     .then(result => {
       // result[1] is the number of rows changed
-      res.send('/users')
+      res.json(result)
+    })
+})
+
+/* update the amount in a bill. User this to change the bill amount */
+router.post('/billings/update_amount', bodyParser.json(), function (req, res, next) {
+  const patient_id = req.body.data.patient_id
+  const appointment_id = req.body.data.appointment_id
+  const new_bill_amount = req.body.data.new_bill_amount
+
+  const query = `UPDATE billing_history
+                  SET amount = :new_bill_amount
+                  WHERE patient_id = :patient_id AND appointment_id = :appointment_id;`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.UPDATE,
+      replacements: {
+        patient_id: patient_id,
+        appointment_id: appointment_id,
+        new_bill_amount: new_bill_amount
+      }
+    })
+    .then(result => {
+      // result[1] is the number of rows changed
+      res.json(result)
     })
 })
 

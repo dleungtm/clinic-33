@@ -3,7 +3,7 @@
     <div class="content">
       <div class="subsection">
         <div style="margin: 25px 10px;">
-          <span class="subsection-title" style="vertical-align: middle;">Patient Medical Records</span>
+          <span class="subsection-title" style="vertical-align: middle;">Patients on Record</span>
         </div>
         <form id="search">
             <i class="fa fa-search" aria-hidden="true"></i>
