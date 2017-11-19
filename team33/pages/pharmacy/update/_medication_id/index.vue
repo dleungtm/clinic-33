@@ -79,7 +79,7 @@
     },
     head () {
       return {
-        title: 'Medication Update Page'
+        title: 'Update Medication Details'
       }
     }
   }
