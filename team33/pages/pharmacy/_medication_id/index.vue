@@ -1,10 +1,9 @@
-<!-- TODO: Needs a lookup to make sure we don't insert duplicate medication names -->
 <template>
-    <section class="create-medication-view">
+    <section class="update-medication-view">
         <div class="content">
             <div class="subsection">
                 <div style="margin: 25px 10px;">
-                    <span class="subsection-title" style="vertical-align: middle;">Create Medication</span>
+                    <span class="subsection-title" style="vertical-align: middle;">Update Medication</span>
                 </div>
                 <div class="form-field">
                     <label>Medication Name:</label>
@@ -27,7 +26,7 @@
                 </div>
                 <br>
                 <br>
-                <button type="button" class="button--default" @click="submitInsert">Add Medication</button>
+                <button type="button" class="button--default" @click="submitUpdate">Update Medication</button>
             </div>
         </div>
     </section>
@@ -39,48 +38,50 @@
   export default {
     data () {
       return {
+        originalMedicationName: null,
         medicationName: null,
         medicationInventory: null,
         medicationPrice: null
       }
     },
+
     mounted () {
-      axios.get('/api/medications/add').then(response => {
-        this.medications = response.data
+      axios.get('/api/medications/' + this.$route.params.medication_id).then(response => {
+        this.originalMedicationName = response.data.name
+        this.medicationName = response.data.name
+        this.medicationInventory = response.data.inventory
+        this.medicationPrice = response.data.unit_price
       })
     },
-    head () {
-      return {
-        title: 'Medications'
-      }
-    },
     methods: {
-      submitInsert () {
-        axios.post('/api/medications/add', {
+      submitUpdate () {
+        axios.post('/api/medications/update', {
           headers:
             {
               'Content-Type': 'application/json'
             },
           data:
             {
+              originalName: this.originalMedicationName,
               name: this.medicationName,
               inventory: this.medicationInventory,
               unit_price: this.medicationPrice
             }
         })
           .then((response) => {
-            if (response.data.message === 'Medication Added.') {
-              self.$nuxt.$router.replace({path: '/pharmacy'})
+            if (response.data.message === 'Medication Updated.') {
+              this.$nuxt.$router.replace({path: '/pharmacy/'})
+            } else {
+              alert('Error updating medication. Note that medication names must be unique. Please try again.')
             }
           })
+      }
+    },
+    head () {
+      return {
+        title: 'Medication Update Page'
       }
     }
   }
 </script>
 
-<style lang="stylus" scoped>
-
-    .create-appointment-view
-        padding-top 0
-
-</style>

@@ -15,9 +15,9 @@ router.get('/medications', function (req, res, next) {
 
 /* GET medication by id */
 router.get('/medications/:id', function (req, res, next) {
-  const medication_id = req.params.medication_id
+  const medication_id = req.params.id
   const query = `SELECT * FROM medication
-                  WHERE medication_id = :id ;`
+                  WHERE medication_id = :medication_id;`
 
   connection.query(query,
     {
@@ -30,32 +30,42 @@ router.get('/medications/:id', function (req, res, next) {
       if (medication.length === 1) {
         res.json(medication[0])
       } else {
-        res.status(404).json({})
+        res.send({'message': 'The requested medication was not found.'})
       }
     })
 })
 
 router.post('/medications/update/', bodyParser.json(), function (req, res, next) {
-  const medication_id = req.body.data.medication_id
+  const originalName = req.body.data.originalName
   const name = req.body.data.name
   const inventory = req.body.data.inventory
   const unit_price = req.body.data.unit_price
 
   const query = `UPDATE medication
                   SET name = :name, inventory = :inventory, unit_price = :unit_price
-                  WHERE medication_id = :medication_id ;`
+                  WHERE name = :originalName;`
   connection.query(query,
     {
       type: connection.QueryTypes.UPDATE,
       replacements: {
-        medication_id: medication_id,
+        originalName: originalName,
         name: name,
         inventory: inventory,
         unit_price: unit_price
       }
     })
     .then(result => {
-      res.send('/medications')
+      res.send({'message': 'Medication Updated.'})
+    })
+    .catch((error) => {
+      for (var i in error.errors) {
+        console.log(error.errors[i])
+        if (error.errors[i].type === 'unique violation') {
+          console.log('Unique Constraint Violation - Insertion Failed.')
+          res.json({'message': 'Unique Constraint Violation - Insertion Failed.'})
+          return
+        }
+      }
     })
 })
 

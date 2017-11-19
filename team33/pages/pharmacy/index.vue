@@ -49,8 +49,7 @@
           return true
         },
         updateAction: function (entry) {
-          let entryID = entry.medication_id
-          this.$nuxt.$router.replace({path: '/pharmacy/update/' + entryID})
+          this.$router.push({ path: `/pharmacy/${entry.medication_id}` })
         },
         buttonLabel1: 'Update Medication'
       }
