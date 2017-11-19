@@ -47,6 +47,7 @@ router.get('/medications/:id', function (req, res, next) {
     })
 })
 
+/* UPDATE Medication by name (unique) */
 router.post('/medications/update/', bodyParser.json(), function (req, res, next) {
   const originalName = req.body.data.originalName
   const name = req.body.data.name
@@ -81,6 +82,7 @@ router.post('/medications/update/', bodyParser.json(), function (req, res, next)
     })
 })
 
+/* Create Medication */
 router.post('/medications/add', bodyParser.json(), function (req, res, next) {
   const name = req.body.data.name
   const inventory = req.body.data.inventory

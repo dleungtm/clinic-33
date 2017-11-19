@@ -210,7 +210,7 @@ INSERT INTO medication("name", "inventory", "unit_price")
           ('Metformin', 250, 0.35),
           ('Aleve', 250, 1.00),
           ('Aspirin', 250, 0.42),
-          ('Tylenol 3', 250, 0.75);
+          ('Tylenol 3', 50, 0.75);
 
 -- CREATE PRESCRIPTION
 INSERT INTO prescription ("patient_id", "clinician_id", "medication_id", "date_prescribed", "dosage", "filled_by")

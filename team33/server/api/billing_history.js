@@ -41,7 +41,7 @@ router.get('/billings', bodyParser.json(), function (req, res, next) {
 router.get('/billings/:user_id', function (req, res, next) {
   const user_id = req.params.user_id
   const query = `SELECT to_char(a.date, :date_format) as date_billed, b.amount, to_char(b.date_paid, :date_format) as date_paid, b.patient_id, b.appointment_id
-	                FROM billing_history b
+                  FROM billing_history b
                   INNER JOIN appointment a ON b.appointment_id = a.appointment_id
                   WHERE b.patient_id = :user_id;`
 
@@ -54,7 +54,7 @@ router.get('/billings/:user_id', function (req, res, next) {
       }
     })
     .then(bills => {
-        res.json(bills)
+      res.json(bills)
     })
 })
 

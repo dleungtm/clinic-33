@@ -84,11 +84,6 @@
         this.summaryItems = response.data
       })
     },
-    methods: {
-      getUnfilled () {
-        console.log('not yet implemented')
-      }
-    },
     head () {
       return {
         title: 'Medications'

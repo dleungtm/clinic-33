@@ -1,5 +1,5 @@
 <template>
-    <section class="update-medication-view">
+    <section class="fill-prescription-view">
         <div class="content">
             <div class="subsection">
                 <div style="margin: 25px 10px;">
@@ -20,7 +20,6 @@
       }
     },
     mounted () {
-      console.log(this.$route.query)
       axios.get('/api/prescriptions/get', {params: this.$route.query})
         .then(response => {
           this.prescription = response.data

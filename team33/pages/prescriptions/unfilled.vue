@@ -1,5 +1,5 @@
 <template>
-    <section class="fill-prescriptions-view">
+    <section class="unfilled-prescriptions-view">
         <div class="content">
             <div class="subsection">
                 <div style="margin: 25px 10px;">
@@ -12,13 +12,12 @@
                     </form>
                     <br>
                     <grid
-                            :data="prescriptions"
-                            :columns="gridColumns"
-                            :filter-key="searchQuery"
-                            :hasAction1="fillPrescriptionEnabled"
-                            :buttonAction1="fillPrescription"
-                            :buttonLabel1="buttonLabel1"
-                    >
+                      :data="prescriptions"
+                      :columns="gridColumns"
+                      :filter-key="searchQuery"
+                      :hasAction1="fillPrescriptionEnabled"
+                      :buttonAction1="fillPrescription"
+                      :buttonLabel1="buttonLabel1">
                     </grid>
                 </div>
                 <h5 v-if="prescriptions.length < 1">No unfilled prescriptions.</h5>
@@ -42,20 +41,6 @@
           { key: 'dosage', displayName: 'Dosage' }
         ],
         prescriptions: [],
-        fillPrescriptionEnabled: function () {
-          return true
-        },
-        fillPrescription: function (entry) {
-          this.$router.push({
-            path: '/prescriptions/fill_prescription/',
-            query: {
-              patient_id: entry.patient_id,
-              clinician_id: entry.clinician_id,
-              medication_id: entry.medication_id,
-              date: entry.date_prescribed
-            }
-          })
-        },
         buttonLabel1: 'Fill Prescription'
       }
     },
@@ -65,13 +50,39 @@
       })
     },
     methods: {
-      getUnfilled () {
-        console.log('not yet implemented')
+      fillPrescriptionEnabled: function () {
+        return true
+      },
+      fillPrescription: function (entry) {
+        axios.post('/api/prescriptions/fill', {
+          headers:
+            {
+              'Content-Type': 'application/json'
+            },
+          data:
+            {
+              pharmacist_id: this.$store.state.authUser.user_id,
+              patient_id: entry.patient_id,
+              clinician_id: entry.clinician_id,
+              medication_id: entry.medication_id,
+              date_prescribed: entry.date_prescribed.split('T')[0],
+              dosage: entry.dosage
+            }
+        }).then(response => {
+          if (response.data.message === 'Prescription Filled.') {
+            axios.get('/api/prescriptions/unfilled').then(response => {
+              this.prescriptions = response.data
+              alert('The selected prescription was successfully filled.')
+            })
+          } else {
+            alert('There is insufficient inventory of the requested medication. Please restock before reattempting to fill this prescription.')
+          }
+        })
       }
     },
     head () {
       return {
-        title: 'Medications'
+        title: 'Unfilled Prescriptions'
       }
     }
   }

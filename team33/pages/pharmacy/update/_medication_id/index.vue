@@ -71,6 +71,7 @@
           .then((response) => {
             if (response.data.message === 'Medication Updated.') {
               this.$nuxt.$router.replace({path: '/pharmacy/'})
+              alert('Medication successfully updated.')
             } else {
               alert('Error updating medication. Note that medication names must be unique. Please try again.')
             }
