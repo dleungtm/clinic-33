@@ -159,6 +159,30 @@ router.post('/users/update', bodyParser.json(), function (req, res, next) {
     })
 })
 
+/* Update User first name and last name by user id */
+router.post('/users/update_first_and_last_names', bodyParser.json(), function (req, res, next) {
+  const user_id = req.body.data.user_id
+  const first_name = req.body.data.first_name
+  const last_name = req.body.data.last_name
+
+  const query = `UPDATE clinic_user
+                  SET first_name = :first_name, last_name = :last_name
+                  WHERE user_id = :user_id;`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.UPDATE,
+      replacements: {
+        user_id: user_id,
+        first_name: first_name,
+        last_name: last_name
+      }
+    })
+    .then(result => {
+      // result[1] is the number of rows changed
+      res.send('/users')
+    })
+})
+
 /* CREATE New User */
 router.post('/users/add', bodyParser.json(), function (req, res, next) {
   const user_id = req.body.data.user_id

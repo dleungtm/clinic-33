@@ -37,6 +37,9 @@
             <div style="margin: 25px;">
               <span style="vertical-align: middle;"><b>Blood Type:</b> {{bloodType}}</span>
             </div>
+            <div style="margin: 25px;" v-if="$store.state.isClinician">
+              <nuxt-link class="button--default" :to="{ path: `/user_health_info/${this.$route.params.id}/edit-info`, query: { first_name: firstName, last_name: lastName, height: height } }">Edit Record</nuxt-link>
+            </div>
           </div>
         </div>
         <div>
@@ -70,12 +73,12 @@
             :data="billingItems"
             :columns="billingGridColumns"
             :filter-key="searchQuery"
-            :hasAction1="hasAction1"
+            :hasAction1="displayButton"
             :buttonLabel1="buttonLabel1"
-            :buttonAction1="buttonAction1"
-            :hasAction2="hasAction2"
+            :buttonAction1="editBill"
+            :hasAction2="displayButton"
             :buttonLabel2="buttonLabel2"
-            :buttonAction2="buttonAction2">
+            :buttonAction2="updateBill">
           </grid>
           <h5 v-if="billingItems.length < 1">No billing history records available.</h5>
         </div>
@@ -149,16 +152,13 @@ export default {
     isViewingSelf: function () {
       return this.$store.state.authUser.user_id === parseInt(this.$route.params.id)
     },
-    hasAction1: function (entry) {
+    displayButton: function (entry) {
       return (this.$store.state.isAdmin || this.$store.state.isReceptionist) && !entry.date_paid
     },
-    buttonAction1: function (entry) {
+    editBill: function (entry) {
       this.$router.push({ path: `/user_health_info/${this.$route.params.id}/edit-bill`, query: { appointment_id: entry.appointment_id } })
     },
-    hasAction2: function (entry) {
-      return (this.$store.state.isAdmin || this.$store.state.isReceptionist) && !entry.date_paid
-    },
-    buttonAction2: function (entry) {
+    updateBill: function (entry) {
       if (this.$store.state.isAdmin || this.$store.state.isReceptionist) {
         axios.post('/api/billings/update', {
           headers:

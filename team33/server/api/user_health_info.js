@@ -35,27 +35,20 @@ router.get('/userhealthinfo/:user_id', function (req, res, next) {
     })
 })
 
+/* Update user health information by user id, only can update height */
 router.post('/userhealthinfo/update', bodyParser.json(), function (req, res, next) {
   const user_id = req.body.data.user_id
-  const dob = req.body.data.dob
-  const phn = req.body.data.phn
   const height = req.body.data.height
-  const blood_type = req.body.data.blood_type
-  const sex = req.body.data.sex
 
-  const query = `UPDATE medication
-                  SET dob = :dob, phn = :phn, height = :height, blood_type = :blood_type, sex = :sex
+  const query = `UPDATE user_health_info
+                  SET height = :height
                   WHERE user_id = :user_id;`
   connection.query(query,
     {
       type: connection.QueryTypes.UPDATE,
       replacements: {
-        user_id: user_id,
-        dob: dob,
-        phn: phn,
         height: height,
-        blood_type: blood_type,
-        sex: sex
+        user_id: user_id
       }
     })
     .then(result => {
