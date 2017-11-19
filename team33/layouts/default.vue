@@ -143,6 +143,7 @@ select
 .button--default:hover
   color #fff
   background-color #35495e
+  text-decoration none
   cursor pointer
 
 .page-enter-active, .page-leave-active

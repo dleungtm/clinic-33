@@ -6,7 +6,7 @@
           <h1>Oops! An unexpected error has occurred.</h1>
           <h5>You are likely not authenticated properly, please re-login to the app.</h5>
           <br>
-          <a class="button--default" style="text-decoration: none" href="/">Login</a>
+          <a class="button--default" href="/">Login</a>
         </div>
       </div>
     <footer-component />

@@ -33,7 +33,7 @@
           </div>
           <div style="margin:20px">
             <label><b>Password: </b></label>
-            <nuxt-link class="button--default" style="text-decoration: none;" to="/users/password">Change your password</nuxt-link>
+            <nuxt-link class="button--default" to="/users/password">Change your password</nuxt-link>
           </div>
           <div style="margin:20px">
             <label><b>Role: </b></label>
@@ -79,9 +79,12 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-label {
-  margin-bottom:0px;
-  display:inline-block;
-  width:100px;
-}
+label
+  margin-bottom 0px
+  display inline-block
+  width 100px
+
+.error
+  color red
+
 </style>
