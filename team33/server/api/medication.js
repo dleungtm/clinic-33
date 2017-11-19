@@ -13,6 +13,18 @@ router.get('/medications', function (req, res, next) {
     })
 })
 
+/* GROUP BY query, get total medication numbers from pending prescriptions */
+router.get('/medications/pending_prescriptions', function (req, res, next) {
+  const query = `SELECT COUNT(dosage), name
+                  FROM Prescription p, Medication m
+                  WHERE p.medication_id = m.medication_id AND p.filled_by IS NULL
+                  GROUP BY name`
+  connection.query(query, { type: connection.QueryTypes.SELECT })
+    .then(medications => {
+      res.json(medications)
+    })
+})
+
 /* GET medication by id */
 router.get('/medications/:id', function (req, res, next) {
   const medication_id = req.params.id

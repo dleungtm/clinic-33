@@ -6,6 +6,7 @@
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">Prescriptions</span>
           <nuxt-link class="button--default" to="/prescriptions/create">Create Prescription</nuxt-link>
+          <nuxt-link class="button--default" to="/prescriptions/fill">Fill A Prescription</nuxt-link>
         </div>
         <div v-if="prescriptions.length > 0">
           <form id="search">
@@ -16,7 +17,10 @@
           <grid
             :data="prescriptions"
             :columns="gridColumns"
-            :filter-key="searchQuery">
+            :filter-key="searchQuery"
+            :hasAction1="getPatientPrescripEnabled"
+            :buttonAction1="getPatientPrescrip"
+            :buttonLabel1="buttonLabel1">
           </grid>
         </div>
         <h5 v-if="($store.state.isAdmin || $store.state.isPharmacist) && prescriptions.length < 1">There are no prescription records.</h5>
@@ -42,7 +46,14 @@
           { key: 'dosage', displayName: 'Dosage' },
           { key: 'pharmacist_name', displayName: 'Filled By' }
         ],
-        prescriptions: []
+        prescriptions: [],
+        getPatientPrescripEnabled: function () {
+          return true
+        },
+        getPatientPrescrip: function (entry) {
+          this.$router.push({ path: `/prescriptions/bypatient/${entry.user_id}` })
+        },
+        buttonLabel1: 'Patient Prescription'
       }
     },
 

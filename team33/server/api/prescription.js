@@ -17,12 +17,33 @@ const router = Router()
 
 /* Get All Prescriptions */
 router.get('/prescriptions', function (req, res, next) {
-  const query = `SELECT pu.first_name || ' ' || pu.last_name as patient_name, (cu.first_name || ' ' || cu.last_name) as clinician_name, CASE WHEN fu.first_name IS NOT NULL AND fu.last_name IS NOT NULL THEN (fu.first_name || ' ' || fu.last_name) ELSE 'Not Filled' END as pharmacist_name, to_char(p.date_prescribed, :date_format) as date, p.dosage, m.name
+  const query = `SELECT pu.first_name || ' ' || pu.last_name as patient_name, (cu.first_name || ' ' || cu.last_name) as clinician_name, CASE WHEN fu.first_name IS NOT NULL AND fu.last_name IS NOT NULL THEN (fu.first_name || ' ' || fu.last_name) ELSE 'Not Filled' END as pharmacist_name, to_char(p.date_prescribed, :date_format) as date, p.dosage, m.name, pu.user_id
                   FROM prescription p
                   INNER JOIN clinic_user pu ON p.patient_id = pu.user_id
                   INNER JOIN clinic_user cu ON p.clinician_id = cu.user_id
                   LEFT JOIN clinic_user fu ON p.filled_by = fu.user_id
                   INNER JOIN medication m ON p.medication_id = m.medication_id`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.SELECT,
+      replacements: {
+        date_format: 'Month dd, YYYY'
+      }
+    })
+    .then(prescriptions => {
+      res.json(prescriptions)
+    })
+})
+
+/* Get Unfilled Prescriptions */
+router.get('/prescriptions/unfilled', function (req, res, next) {
+  const query = `SELECT pu.first_name || ' ' || pu.last_name as patient_name, (cu.first_name || ' ' || cu.last_name) as clinician_name, CASE WHEN fu.first_name IS NOT NULL AND fu.last_name IS NOT NULL THEN (fu.first_name || ' ' || fu.last_name) ELSE 'Not Filled' END as pharmacist_name, to_char(p.date_prescribed, :date_format) as date, p.dosage, m.name, pu.user_id
+                  FROM prescription p
+                  INNER JOIN clinic_user pu ON p.patient_id = pu.user_id
+                  INNER JOIN clinic_user cu ON p.clinician_id = cu.user_id
+                  LEFT JOIN clinic_user fu ON p.filled_by = fu.user_id
+                  INNER JOIN medication m ON p.medication_id = m.medication_id
+                  WHERE p.filled_by IS NULL`
   connection.query(query,
     {
       type: connection.QueryTypes.SELECT,

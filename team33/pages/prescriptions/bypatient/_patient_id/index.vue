@@ -1,9 +1,10 @@
 <template>
-    <section class="fill-prescriptions-view">
+    <section class="prescriptions-view">
+        <!-- ALL PRESCRIPTIONS -->
         <div class="content">
             <div class="subsection">
                 <div style="margin: 25px 10px;">
-                    <span class="subsection-title" style="vertical-align: middle;">Unfilled Prescriptions</span>
+                    <span class="subsection-title" style="vertical-align: middle;">Prescriptions for patient</span>
                 </div>
                 <div v-if="prescriptions.length > 0">
                     <form id="search">
@@ -14,14 +15,10 @@
                     <grid
                             :data="prescriptions"
                             :columns="gridColumns"
-                            :filter-key="searchQuery"
-                            :hasAction1="fillPrescriptionEnabled"
-                            :buttonAction1="fillPrescription"
-                            :buttonLabel1="buttonLabel1"
-                    >
+                            :filter-key="searchQuery">
                     </grid>
                 </div>
-                <h5 v-if="prescriptions.length < 1">No unfilled prescriptions.</h5>
+                <h5 v-if="($store.state.isAdmin || $store.state.isPharmacist) && prescriptions.length < 1">There are no prescriptions for this patient.</h5>
             </div>
         </div>
     </section>
@@ -31,47 +28,36 @@
   import axios from '~/plugins/axios'
 
   export default {
+
     data () {
       return {
         searchQuery: '',
         gridColumns: [
-          { key: 'patient_name', displayName: 'Patient' },
           { key: 'clinician_name', displayName: 'Prescribing Clinician' },
           { key: 'name', displayName: 'Medication' },
           { key: 'date', displayName: 'Date Prescribed' },
-          { key: 'dosage', displayName: 'Dosage' }
+          { key: 'dosage', displayName: 'Dosage' },
+          { key: 'pharmacist_name', displayName: 'Filled By' }
         ],
-        prescriptions: [],
-        fillPrescriptionEnabled: function () {
-          return true
-        },
-        fillPrescription: function (entry) {
-          this.$router.push({ path: `/pharmacy/fill/${entry.prescription_id}` })
-        },
-        buttonLabel1: 'Fill Prescription'
+        prescriptions: []
       }
     },
     mounted () {
-      axios.get('/api/prescriptions/unfilled').then(response => {
-        this.prescriptions = response.data
-      })
-    },
-    methods: {
-      getUnfilled () {
-        console.log('not yet implemented')
+      if (this.$store.state.isAdmin || this.$store.state.isPharmacist) {
+        axios.get('/api/prescriptions/patient/' + this.$route.params.patient_id).then(response => {
+          this.prescriptions = response.data
+        })
       }
     },
     head () {
       return {
-        title: 'Medications'
+        title: 'Patient Prescriptions'
       }
     }
   }
 </script>
 
 <style lang="stylus" scoped>
-
     .prescriptions-view
         padding-top 0
-
 </style>
