@@ -6,7 +6,7 @@
       <div class="subsection">
         <div style="margin: 25px 10px;">
           <span v-if="$store.state.isAdmin || $store.state.isReceptionist" class="subsection-title" style="vertical-align: middle;">All Appointments</span>
-          <span v-if="!$store.state.isAdmin && !$store.state.isReceptionist" class="subsection-title" style="vertical-align: middle;">My Upcoming Appointments</span>
+          <span v-if="!$store.state.isAdmin && !$store.state.isReceptionist" class="subsection-title" style="vertical-align: middle;">My Appointments</span>
           <nuxt-link class="button--default" to="/appointments/create">Create Appointment</nuxt-link>
         </div>
         <div v-if="appointments.length > 0">
