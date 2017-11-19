@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS "role" CASCADE;
 DROP TABLE IF EXISTS "timeblock" CASCADE;
 DROP TABLE IF EXISTS "user_health_info" CASCADE;
 DROP TABLE IF EXISTS "user_role" CASCADE;
+DROP VIEW IF EXISTS "medication_patient_view" CASCADE;
 
 -- CREATE TABLES
 CREATE TABLE "clinic_user" (
@@ -120,3 +121,8 @@ CREATE TABLE "prescription" (
 	FOREIGN KEY (medication_id) REFERENCES "medication"(medication_id),
 	FOREIGN KEY (filled_by) REFERENCES "clinic_user"(user_id)
 );
+
+CREATE VIEW medication_patient_view AS
+  SELECT name, unit_price
+  FROM medication
+  WHERE inventory > 0;

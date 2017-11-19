@@ -2,7 +2,7 @@
   <section class="pharmacy-view">
     <!-- ALL PRESCRIPTIONS -->
     <div class="content">
-      <div class="subsection">
+      <div v-if="!$store.state.isPatient" class="subsection">
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">Unfilled Prescriptions Summary</span>
         </div>
@@ -24,13 +24,14 @@
       </div>
       <div class="subsection">
         <div style="margin: 25px 10px;">
-          <span class="subsection-title" style="vertical-align: middle;">Medication Inventory</span>
+          <span v-if="$store.state.isPatient" class="subsection-title" style="vertical-align: middle;">Available Medication</span>
+          <span v-if="!$store.state.isPatient" class="subsection-title" style="vertical-align: middle;">Medication Inventory</span>
         </div>
         <div v-if="medications.length > 0">
           <form id="search">
             <i class="fa fa-search" aria-hidden="true"></i>
             <input name="query" v-model="searchQuery2" >
-            <nuxt-link class="button--default" style="margin-left:1em;" to="/pharmacy/add_medication">Add Medication</nuxt-link>
+            <nuxt-link v-if="!$store.state.isPatient" class="button--default" style="margin-left:1em;" to="/pharmacy/add_medication">Add Medication</nuxt-link>
           </form>
           <br>
           <grid
@@ -61,15 +62,9 @@
           { key: 'sum', displayName: 'Units Required' }
         ],
         searchQuery2: '',
-        gridColumns: [
-          { key: 'name', displayName: 'Name' },
-          { key: 'inventory', displayName: 'Inventory Count' },
-          { key: 'unit_price', displayName: 'Price per Unit ($)' }
-        ],
+        gridColumns: [],
         medications: [],
-        updateActionEnabled: function () {
-          return true
-        },
+        updateActionEnabled: null,
         updateAction: function (entry) {
           this.$router.push({ path: `/pharmacy/update/${entry.medication_id}` })
         },
@@ -77,9 +72,29 @@
       }
     },
     mounted () {
-      axios.get('/api/medications').then(response => {
-        this.medications = response.data
-      })
+      if (!this.$store.state.isPatient) {
+        axios.get('/api/medications').then(response => {
+          this.medications = response.data
+          this.gridColumns =
+          [
+            { key: 'name', displayName: 'Name' },
+            { key: 'inventory', displayName: 'Inventory Count' },
+            { key: 'unit_price', displayName: 'Price per Unit ($)' }
+          ]
+          this.updateActionEnabled = function () {
+            return true
+          }
+        })
+      } else {
+        axios.get('/api/available_medications').then(response => {
+          this.medications = response.data
+          this.gridColumns =
+          [
+            { key: 'name', displayName: 'Name' },
+            { key: 'unit_price', displayName: 'Price per Unit ($)' }
+          ]
+        })
+      }
       axios.get('/api/medications/pending_prescriptions').then(response => {
         this.summaryItems = response.data
       })

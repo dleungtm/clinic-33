@@ -10,7 +10,7 @@
           <nuxt-link v-if="!$store.state.isAdmin && !$store.state.isReceptionist" to="/appointments">My Appointments</nuxt-link>
           <nuxt-link v-if="$store.state.isAdmin || $store.state.isReceptionist" to="/appointments">Appointments</nuxt-link>
           <nuxt-link v-if="$store.state.isAdmin || $store.state.isPharmacist || $store.state.isClinician" to="/prescriptions">Prescriptions</nuxt-link>
-          <nuxt-link v-if="$store.state.isAdmin || $store.state.isPharmacist" to="/pharmacy">Pharmacy</nuxt-link>
+          <nuxt-link v-if="!$store.state.isClinician && !$store.state.isReceptionist" to="/pharmacy">Pharmacy</nuxt-link>
           <nuxt-link v-if="$store.state.isPatient" :to="{ path:'/user_health_info/' + $store.state.authUser.user_id }">Your Record</nuxt-link>
           <nuxt-link v-if="$store.state.isAdmin || $store.state.isReceptionist || $store.state.isClinician" to="/user_health_info">Patient Information</nuxt-link>
           <nuxt-link v-if="$store.state.isClinician" to="/users/availability">My Availability</nuxt-link>

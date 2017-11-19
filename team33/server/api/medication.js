@@ -13,6 +13,15 @@ router.get('/medications', function (req, res, next) {
     })
 })
 
+/* GET medications listing from medication_patient_view */
+router.get('/available_medications', function (req, res, next) {
+  const query = `SELECT * FROM medication_patient_view;`
+  connection.query(query, { type: connection.QueryTypes.SELECT })
+    .then(medications => {
+      res.json(medications)
+    })
+})
+
 /* GROUP BY query, get total medication (dosage counts) from unfilled prescriptions */
 router.get('/medications/pending_prescriptions', function (req, res, next) {
   const query = `SELECT SUM(dosage), name
