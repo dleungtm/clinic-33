@@ -59,7 +59,7 @@
         </div>
         <br>
         <br>
-        <button type="button" class="button--default" @click="submitInsert">Add Prescription</button>
+        <button type="button" class="button--default" @click="submitInsert">Save Prescription</button>
       </div>
     </div>
   </section>
@@ -80,8 +80,7 @@
         state: {
           date_prescribed: new Date()
         },
-        dosage: null,
-        filledBy: null
+        dosage: null
       }
     },
     mounted () {
@@ -113,8 +112,7 @@
               clinician_id: this.selectedClinicianID,
               medication_id: this.selectedMedicationID,
               date_prescribed: this.state.date_prescribed,
-              dosage: this.dosage,
-              filled_by: this.selectedClinicianID
+              dosage: this.dosage
             }
         })
           .then((response) => {

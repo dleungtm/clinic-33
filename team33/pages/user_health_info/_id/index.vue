@@ -47,6 +47,7 @@
             :data="prescriptionItems"
             :columns="prescriptionGridColumns">
           </grid>
+          <h5 v-if="prescriptionItems.length < 1">You do not have any prescription records.</h5>
         </div>
         <div>
           <div style="margin: 25px 10px;">
@@ -56,6 +57,7 @@
             :data="pastAppointmentItems"
             :columns="pastAppointmentGridColumns">
           </grid>
+          <h5 v-if="pastAppointmentItems.length < 1">You have not had any appointments yet.</h5>
         </div>
         <div v-if="$store.state.isAdmin || $store.state.isReceptionist || isViewingSelf()">
           <div style="margin: 25px 10px;">
@@ -72,6 +74,7 @@
             :buttonLabel2="buttonLabel2"
             :buttonAction2="buttonAction2">
           </grid>
+          <h5 v-if="billingItems.length < 1">You do not have any billing history records.</h5>
         </div>
       </div>
     </div>
@@ -127,7 +130,7 @@ export default {
       this.height = response.data.height
       this.bloodType = response.data.blood_type
     })
-    axios.get('/api/prescriptions/' + this.$route.params.id).then(response => {
+    axios.get('/api/prescriptions/patient/' + this.$route.params.id).then(response => {
       this.prescriptionItems = response.data
     })
     axios.get('/api/appointment_records/' + this.$route.params.id).then(response => {
