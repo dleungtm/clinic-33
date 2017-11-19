@@ -5,7 +5,7 @@
       <div class="subsection">
         <div style="margin: 25px 10px;">
           <span class="subsection-title" style="vertical-align: middle;">Medication Inventory</span>
-          <nuxt-link class="button--default" to="/pharmacy/create_medication">Add Medication</nuxt-link>
+          <nuxt-link class="button--default" to="/create-medication">Add Medication</nuxt-link>
           <nuxt-link class="button--default" to="/pharmacy/update">Update Medications</nuxt-link>
         </div>
         <div v-if="medications.length > 0">

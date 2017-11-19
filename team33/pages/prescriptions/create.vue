@@ -55,7 +55,7 @@
         <div class="form-field">
           <label>Dosage (Units of Medication Being Prescribed):</label>
           <br>
-          <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" v-model="dosage">
+          <input type="number" onkeypress="return event.charCode >= 48 && event.charCode <= 57" v-model="dosage">
         </div>
         <br>
         <br>
@@ -114,7 +114,7 @@
               medication_id: this.selectedMedicationID,
               date_prescribed: this.state.date_prescribed,
               dosage: this.dosage,
-              filled_by: null
+              filled_by: this.selectedClinicianID
             }
         })
           .then((response) => {
