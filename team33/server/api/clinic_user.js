@@ -251,7 +251,108 @@ router.post('/users/:user_id/availability', bodyParser.json(), function (req, re
       }
     })
     .then(result => {
-      res.send('/users/availabilities')
+      res.send('/users/availability')
+    })
+})
+
+/* Initialize Availabilities by User ID */
+router.post('/users/availability/init', function (req, res, next) {
+  const user_id = req.body.data.user_id
+  const query = `INSERT INTO availability (timeblock_id, day_of_week, clinician_id)
+                  VALUES
+                  (1, 0, :user_id),
+                  (2, 0, :user_id),
+                  (3, 0, :user_id),
+                  (4, 0, :user_id),
+                  (5, 0, :user_id),
+                  (6, 0, :user_id),
+                  (7, 0, :user_id),
+                  (8, 0, :user_id),
+                  (9, 0, :user_id),
+                  (10, 0, :user_id),
+                  (11, 0, :user_id),
+                  (12, 0, :user_id),
+                  (1, 1, :user_id),
+                  (2, 1, :user_id),
+                  (3, 1, :user_id),
+                  (4, 1, :user_id),
+                  (5, 1, :user_id),
+                  (6, 1, :user_id),
+                  (7, 1, :user_id),
+                  (8, 1, :user_id),
+                  (9, 1, :user_id),
+                  (10, 1, :user_id),
+                  (11, 1, :user_id),
+                  (12, 1, :user_id),
+                  (1, 2, :user_id),
+                  (2, 2, :user_id),
+                  (3, 2, :user_id),
+                  (4, 2, :user_id),
+                  (5, 2, :user_id),
+                  (6, 2, :user_id),
+                  (7, 2, :user_id),
+                  (8, 2, :user_id),
+                  (9, 2, :user_id),
+                  (10, 2, :user_id),
+                  (11, 2, :user_id),
+                  (12, 2, :user_id),
+                  (1, 3, :user_id),
+                  (2, 3, :user_id),
+                  (3, 3, :user_id),
+                  (4, 3, :user_id),
+                  (5, 3, :user_id),
+                  (6, 3, :user_id),
+                  (7, 3, :user_id),
+                  (8, 3, :user_id),
+                  (9, 3, :user_id),
+                  (10, 3, :user_id),
+                  (11, 3, :user_id),
+                  (12, 3, :user_id),
+                  (1, 4, :user_id),
+                  (2, 4, :user_id),
+                  (3, 4, :user_id),
+                  (4, 4, :user_id),
+                  (5, 4, :user_id),
+                  (6, 4, :user_id),
+                  (7, 4, :user_id),
+                  (8, 4, :user_id),
+                  (9, 4, :user_id),
+                  (10, 4, :user_id),
+                  (11, 4, :user_id),
+                  (12, 4, :user_id),
+                  (1, 5, :user_id),
+                  (2, 5, :user_id),
+                  (3, 5, :user_id),
+                  (4, 5, :user_id),
+                  (5, 5, :user_id),
+                  (6, 5, :user_id),
+                  (7, 5, :user_id),
+                  (8, 5, :user_id),
+                  (9, 5, :user_id),
+                  (10, 5, :user_id),
+                  (11, 5, :user_id),
+                  (12, 5, :user_id),
+                  (1, 6, :user_id),
+                  (2, 6, :user_id),
+                  (3, 6, :user_id),
+                  (4, 6, :user_id),
+                  (5, 6, :user_id),
+                  (6, 6, :user_id),
+                  (7, 6, :user_id),
+                  (8, 6, :user_id),
+                  (9, 6, :user_id),
+                  (10, 6, :user_id),
+                  (11, 6, :user_id),
+                  (12, 6, :user_id);`
+  connection.query(query,
+    {
+      type: connection.QueryTypes.INSERT,
+      replacements: {
+        user_id: user_id
+      }
+    })
+    .then(result => {
+      res.json({'message': 'Successfully initialized availabilities.'})
     })
 })
 
@@ -304,22 +405,6 @@ router.post('/users/get_by_id_and_pass', bodyParser.json(), function (req, res) 
       res.status(401).json({ err })
     })
 })
-
-// /* Initialize Availabilities by User ID */
-// router.post('/users/:user_id/availability/', function (req, res, next) {
-//   const user_id = req.params.user_id
-//   const query = `SELECT * FROM availability WHERE clinician_id = :user_id ;`
-//   connection.query(query,
-//     {
-//       type: connection.QueryType.SELECT,
-//       replacements: {
-//         user_id: user_id
-//       }
-//     })
-//     .then(availabilities => {
-//       res.json(availabilities)
-//     })
-// })
 
 /* update a clinic_user's active status */
 router.post('/users/is_active', bodyParser.json(), function (req, res, next) {
