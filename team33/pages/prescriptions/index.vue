@@ -17,10 +17,7 @@
           <grid
             :data="prescriptions"
             :columns="gridColumns"
-            :filter-key="searchQuery"
-            :hasAction1="getPatientPrescripEnabled"
-            :buttonAction1="getPatientPrescrip"
-            :buttonLabel1="buttonLabel1">
+            :filter-key="searchQuery">
           </grid>
         </div>
         <h5 v-if="($store.state.isAdmin || $store.state.isPharmacist) && prescriptions.length < 1">There are no prescription records.</h5>
@@ -46,14 +43,7 @@
           { key: 'dosage', displayName: 'Dosage' },
           { key: 'pharmacist_name', displayName: 'Filled By' }
         ],
-        prescriptions: [],
-        getPatientPrescripEnabled: function () {
-          return true
-        },
-        getPatientPrescrip: function (entry) {
-          this.$router.push({ path: `/prescriptions/bypatient/${entry.user_id}` })
-        },
-        buttonLabel1: 'Patient Prescription'
+        prescriptions: []
       }
     },
 
