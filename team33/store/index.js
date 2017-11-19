@@ -33,7 +33,7 @@ const store = () => new Vuex.Store({
       } if (roleIds.includes(3)) {
         state.isReceptionist = true
       } if (roleIds.includes(4)) {
-        state.isReceptionist = true
+        state.isPharmacist = true
       } if (roleIds.includes(5)) {
         state.isPatient = true
       }
@@ -44,7 +44,7 @@ const store = () => new Vuex.Store({
       state.isAdmin = false
       state.isClinician = false
       state.isReceptionist = false
-      state.isReceptionist = false
+      state.isPharmacist = false
       state.isPatient = false
     }
   },
