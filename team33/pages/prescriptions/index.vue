@@ -11,7 +11,7 @@
             <i class="fa fa-search" aria-hidden="true"></i>
             <input name="query" v-model="searchQuery" >
             <nuxt-link style="margin-left: 1em; margin-right: 20px;" class="button--default" to="/prescriptions/create">Create Prescription</nuxt-link>
-            <nuxt-link v-if="$store.state.isAdmin || $store.state.isPharmacist" class="button--default" to="/prescriptions/fill">Fill A Prescription</nuxt-link>
+            <nuxt-link v-if="$store.state.isAdmin || $store.state.isPharmacist" class="button--default" to="/prescriptions/unfilled">Fill A Prescription</nuxt-link>
           </form>
           <br>
           <grid

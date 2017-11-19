@@ -46,7 +46,15 @@
           return true
         },
         fillPrescription: function (entry) {
-          this.$router.push({ path: `/pharmacy/fill/${entry.prescription_id}` })
+          this.$router.push({
+            path: '/prescriptions/fill_prescription/',
+            query: {
+              patient_id: entry.patient_id,
+              clinician_id: entry.clinician_id,
+              medication_id: entry.medication_id,
+              date: entry.date_prescribed
+            }
+          })
         },
         buttonLabel1: 'Fill Prescription'
       }
