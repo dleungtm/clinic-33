@@ -55,6 +55,11 @@ export default {
     buttonAction1: function (entry) {
       this.$router.push({ path: `/user_health_info/${entry.user_id}` })
     }
+  },
+  head () {
+    return {
+      title: 'Patient Information'
+    }
   }
 }
 </script>

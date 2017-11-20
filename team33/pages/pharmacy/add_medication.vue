@@ -49,11 +49,6 @@
         this.medications = response.data
       })
     },
-    head () {
-      return {
-        title: 'Medications'
-      }
-    },
     methods: {
       checkNameExists (testName) {
         this.medications.filter(function (medication) {
@@ -80,6 +75,11 @@
               alert('Error adding medication. Note that medication names must be unique. Please try again.')
             }
           })
+      }
+    },
+    head () {
+      return {
+        title: 'Add Medication'
       }
     }
   }

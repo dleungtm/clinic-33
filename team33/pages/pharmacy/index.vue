@@ -101,7 +101,7 @@
     },
     head () {
       return {
-        title: 'Medications'
+        title: 'Pharmacy'
       }
     }
   }

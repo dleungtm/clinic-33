@@ -66,7 +66,7 @@ export default {
 
   head () {
     return {
-      title: `Add New User`
+      title: `Toggle User Status`
     }
   }
 }

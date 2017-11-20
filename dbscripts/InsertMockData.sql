@@ -12,11 +12,11 @@ INSERT INTO clinic_user ("first_name", "last_name", "phone_number", "address", "
           ('Nicholas', 'Chim', '778-321-7890', '2205 Lower Mall, Vancouver, BC V6T 1Z4', 'nchim', 'no'),
           ('Cynthia', 'Deng', '778-356-7848', '2424 E 1st Ave, Vancouver, BC V5N 1C3', 'cdeng', 'no'),
           ('Bryan', 'Chiu', '778-423-8575', '4620 Dunbar St, Vancouver, BC V6S 2G8', 'bchiu', 'no'),
-          ('Sullivan', 'Keith', '778-818-7032', '208 Hastings Street, Vancouver, BC V6C 1B4', 'skeith', 'no'),
-          ('Aaron', 'Chan', '778-889-0361', '4370 Robson St, Vancouver, BC V6B 3K9', 'achan', 'no'),
-          ('Phoebe', 'Wong', '778-645-0812', '3080 Hastings Street, Vancouver, BC V62 1X4', 'pwong', 'no'),
-          ('Meredith', 'Little', '778-782-5194', '1881 Nootka Street, Vancouver, BC V5M 3M5', 'mlittle', 'no'),
-          ('Cara', 'Ross', '778-638-5414', '3982 Cordova Street, Vancouver, BC V6B 1E1', 'cross', 'no'),
+          ('Carl', 'Evans', '778-818-7032', '208 Hastings Street, Vancouver, BC V6C 1B4', 'cevans', 'no'),
+          ('Caleb', 'Lane', '778-889-0361', '4370 Robson St, Vancouver, BC V6B 3K9', 'clane', 'no'),
+          ('Cara', 'Ross', '778-645-0812', '3080 Hastings Street, Vancouver, BC V62 1X4', 'cross', 'no'),
+          ('Rebecca', 'Smith', '778-782-5194', '1881 Nootka Street, Vancouver, BC V5M 3M5', 'rsmith', 'no'),
+          ('Phoebe', 'Wong', '778-638-5414', '3982 Cordova Street, Vancouver, BC V6B 1E1', 'pwong', 'no'),
           ('Isabelle', 'Duncan', '778-335-8179', '2826 Hastings Street, Vancouver, BC V6C 1B4', 'iduncan', 'no'),
           ('Alice', 'Sherman', '778-542-0372', '3935 Cardero St, Vancouver, BC S4P 3Y2', 'alsherma', 'hunter1'),
           ('Kaia', 'Miller', '778-168-9173', '122 Walter Hardwick Ave, Vancouver, BC V5Y 0C9', 'kaimille', 'hunter1'),
@@ -27,7 +27,7 @@ INSERT INTO clinic_user ("first_name", "last_name", "phone_number", "address", "
           ('Christina', 'Bullock', '778-499-1149', '1410 Tolmie St, Vancouver, BC V6R 4B3', 'christbullock', 'hunter1'),
           ('Harrison', 'Norman', '778-897-8170', '836 30th Ave E, Vancouver, BC V5V 2W1', 'harrnorma', 'hunter1'),
           ('Elaine', 'Mcclain', '778-122-4024', '2439 7th Ave W, Vancouver, BC V6K 1Y6', 'elainemcclain', 'hunter1'),
-          ('Peter', 'Ryan', '778-391-5708', '2425 7th Ave W, Vancouver, BC V6K 1Y6', 'petrya', 'hunter1');
+          ('Demo', 'User', '778-391-5708', '2425 7th Ave W, Vancouver, BC V6K 1Y6', 'demo', 'demo');
 
 -- ASSIGN USER ROLES
 INSERT INTO user_role ("user_id", "role_id")
@@ -50,7 +50,7 @@ INSERT INTO user_role ("user_id", "role_id")
           (17, 5),
           (18, 5),
           (19, 5),
-          (20, 5);
+          (20, 1);
 
 -- ASSIGN USER HEALTH INFO
 INSERT INTO user_health_info ("user_id", "phn", "dob", "height", "blood_type", "sex")
@@ -179,7 +179,91 @@ INSERT INTO availability ("timeblock_id", "day_of_week", "clinician_id")
           (9, 6, 5),
           (10, 6, 5),
           (11, 6, 5),
-          (12, 6, 5);
+          (12, 6, 5),
+          (1, 0, 6),
+          (2, 0, 6),
+          (3, 0, 6),
+          (4, 0, 6),
+          (5, 0, 6),
+          (6, 0, 6),
+          (7, 0, 6),
+          (8, 0, 6),
+          (9, 0, 6),
+          (10, 0, 6),
+          (11, 0, 6),
+          (12, 0, 6),
+          (1, 1, 6),
+          (2, 1, 6),
+          (3, 1, 6),
+          (4, 1, 6),
+          (5, 1, 6),
+          (6, 1, 6),
+          (7, 1, 6),
+          (8, 1, 6),
+          (9, 1, 6),
+          (10, 1, 6),
+          (11, 1, 6),
+          (12, 1, 6),
+          (1, 2, 6),
+          (2, 2, 6),
+          (3, 2, 6),
+          (4, 2, 6),
+          (5, 2, 6),
+          (6, 2, 6),
+          (7, 2, 6),
+          (8, 2, 6),
+          (9, 2, 6),
+          (10, 2, 6),
+          (11, 2, 6),
+          (12, 2, 6),
+          (1, 3, 6),
+          (2, 3, 6),
+          (3, 3, 6),
+          (4, 3, 6),
+          (5, 3, 6),
+          (6, 3, 6),
+          (7, 3, 6),
+          (8, 3, 6),
+          (9, 3, 6),
+          (10, 3, 6),
+          (11, 3, 6),
+          (12, 3, 6),
+          (1, 4, 6),
+          (2, 4, 6),
+          (3, 4, 6),
+          (4, 4, 6),
+          (5, 4, 6),
+          (6, 4, 6),
+          (7, 4, 6),
+          (8, 4, 6),
+          (9, 4, 6),
+          (10, 4, 6),
+          (11, 4, 6),
+          (12, 4, 6),
+          (1, 5, 6),
+          (2, 5, 6),
+          (3, 5, 6),
+          (4, 5, 6),
+          (5, 5, 6),
+          (6, 5, 6),
+          (7, 5, 6),
+          (8, 5, 6),
+          (9, 5, 6),
+          (10, 5, 6),
+          (11, 5, 6),
+          (12, 5, 6),
+          (1, 6, 6),
+          (2, 6, 6),
+          (3, 6, 6),
+          (4, 6, 6),
+          (5, 6, 6),
+          (6, 6, 6),
+          (7, 6, 6),
+          (8, 6, 6),
+          (9, 6, 6),
+          (10, 6, 6),
+          (11, 6, 6),
+          (12, 6, 6);
 
 
 -- CREATE APPOINTMENTS
@@ -192,12 +276,16 @@ INSERT INTO appointment ("date", "timeblock_id", "patient_id", "clinician_id")
 -- CREATE BILLING HISTORY
 INSERT INTO billing_history ("patient_id", "appointment_id", "amount", "date_paid")
 VALUES (10, 1, 175.00, '2017-11-23'),
-        (12, 2, 175.00, NULL);
+        (12, 2, 175.00, NULL),
+        (10, 3, 175.00, NULL),
+        (18, 4, 175.00, NULL);
 
 -- CREATE APPOINTMENT RECORD
 INSERT INTO appointment_record ("appointment_id", "patient_id", "notes")
   VALUES (1, 10, 'Higher than normal blood pressure; prescribed 30 units Vasotec.'),
-          (2, 12, 'Prolonged cold; prescribed 60 units Tylenol 3.');
+          (2, 12, 'Prolonged cold; prescribed 60 units Tylenol 3.'),
+          (3, 10, ''),
+          (4, 18, '');
 
 -- POPULATE MEDICATIONS
 INSERT INTO medication("name", "inventory", "unit_price")

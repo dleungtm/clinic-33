@@ -183,7 +183,7 @@ export default {
 
   head () {
     return {
-      title: 'Appointments'
+      title: 'Create Appointment'
     }
   }
 }
