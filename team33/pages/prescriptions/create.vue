@@ -94,11 +94,6 @@
         this.medications = response.data
       })
     },
-    head () {
-      return {
-        title: 'Prescriptions'
-      }
-    },
     methods: {
       savePrescription () {
         axios.post('/api/prescriptions/create', {
@@ -120,6 +115,11 @@
               self.$nuxt.$router.replace({path: '/prescriptions/'})
             }
           })
+      }
+    },
+    head () {
+      return {
+        title: 'Create Prescription'
       }
     }
   }

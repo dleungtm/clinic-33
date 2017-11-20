@@ -12,11 +12,11 @@ INSERT INTO clinic_user ("first_name", "last_name", "phone_number", "address", "
           ('Nicholas', 'Chim', '778-321-7890', '2205 Lower Mall, Vancouver, BC V6T 1Z4', 'nchim', 'no'),
           ('Cynthia', 'Deng', '778-356-7848', '2424 E 1st Ave, Vancouver, BC V5N 1C3', 'cdeng', 'no'),
           ('Bryan', 'Chiu', '778-423-8575', '4620 Dunbar St, Vancouver, BC V6S 2G8', 'bchiu', 'no'),
-          ('Sullivan', 'Keith', '778-818-7032', '208 Hastings Street, Vancouver, BC V6C 1B4', 'skeith', 'no'),
-          ('Aaron', 'Chan', '778-889-0361', '4370 Robson St, Vancouver, BC V6B 3K9', 'achan', 'no'),
-          ('Phoebe', 'Wong', '778-645-0812', '3080 Hastings Street, Vancouver, BC V62 1X4', 'pwong', 'no'),
-          ('Meredith', 'Little', '778-782-5194', '1881 Nootka Street, Vancouver, BC V5M 3M5', 'mlittle', 'no'),
-          ('Cara', 'Ross', '778-638-5414', '3982 Cordova Street, Vancouver, BC V6B 1E1', 'cross', 'no'),
+          ('Carl', 'Evans', '778-818-7032', '208 Hastings Street, Vancouver, BC V6C 1B4', 'cevans', 'no'),
+          ('Caleb', 'Lane', '778-889-0361', '4370 Robson St, Vancouver, BC V6B 3K9', 'clane', 'no'),
+          ('Cara', 'Ross', '778-645-0812', '3080 Hastings Street, Vancouver, BC V62 1X4', 'cross', 'no'),
+          ('Rebecca', 'Smith', '778-782-5194', '1881 Nootka Street, Vancouver, BC V5M 3M5', 'rsmith', 'no'),
+          ('Phoebe', 'Wong', '778-638-5414', '3982 Cordova Street, Vancouver, BC V6B 1E1', 'pwong', 'no'),
           ('Isabelle', 'Duncan', '778-335-8179', '2826 Hastings Street, Vancouver, BC V6C 1B4', 'iduncan', 'no'),
           ('Alice', 'Sherman', '778-542-0372', '3935 Cardero St, Vancouver, BC S4P 3Y2', 'alsherma', 'hunter1'),
           ('Kaia', 'Miller', '778-168-9173', '122 Walter Hardwick Ave, Vancouver, BC V5Y 0C9', 'kaimille', 'hunter1'),
@@ -27,7 +27,7 @@ INSERT INTO clinic_user ("first_name", "last_name", "phone_number", "address", "
           ('Christina', 'Bullock', '778-499-1149', '1410 Tolmie St, Vancouver, BC V6R 4B3', 'christbullock', 'hunter1'),
           ('Harrison', 'Norman', '778-897-8170', '836 30th Ave E, Vancouver, BC V5V 2W1', 'harrnorma', 'hunter1'),
           ('Elaine', 'Mcclain', '778-122-4024', '2439 7th Ave W, Vancouver, BC V6K 1Y6', 'elainemcclain', 'hunter1'),
-          ('Peter', 'Ryan', '778-391-5708', '2425 7th Ave W, Vancouver, BC V6K 1Y6', 'petrya', 'hunter1');
+          ('Demo', 'User', '778-391-5708', '2425 7th Ave W, Vancouver, BC V6K 1Y6', 'demo', 'demo');
 
 -- ASSIGN USER ROLES
 INSERT INTO user_role ("user_id", "role_id")
@@ -50,7 +50,7 @@ INSERT INTO user_role ("user_id", "role_id")
           (17, 5),
           (18, 5),
           (19, 5),
-          (20, 5);
+          (20, 1);
 
 -- ASSIGN USER HEALTH INFO
 INSERT INTO user_health_info ("user_id", "phn", "dob", "height", "blood_type", "sex")

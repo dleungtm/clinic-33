@@ -3,7 +3,7 @@
     <div class="content">
       <div class="subsection">
         <div style="margin: 25px 10px;">
-            <span class="subsection-title" style="vertical-align: middle;">Assign User Role</span>
+            <span class="subsection-title" style="vertical-align: middle;">Update User Role</span>
         </div>
         <form>
           <div class="form-field">
@@ -71,7 +71,7 @@ export default {
 
   head () {
     return {
-      title: `Add New User`
+      title: `Update User Role`
     }
   }
 }

@@ -178,6 +178,11 @@ export default {
         })
       }
     }
+  },
+  head () {
+    return {
+      title: 'User Record'
+    }
   }
 }
 </script>
